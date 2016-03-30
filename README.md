@@ -45,8 +45,8 @@ To use the tool, please simply follow the steps and copy and paste the following
 
 	Use a C++ compiler to compile the two c++ script countKmer.cpp and computeMeasure.cpp.
 
-	g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
-	g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
+		g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
+		g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
 
 * Step 3: count kmer frequency and compute the various measures
 
