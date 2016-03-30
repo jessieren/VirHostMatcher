@@ -21,7 +21,6 @@ To use the tool, please simply follow the steps and copy and paste the following
 	We set the kmer length k=6, and the Markov chian order=2.
 
 		k=6
-
 		order=2
 
 
@@ -33,20 +32,17 @@ To use the tool, please simply follow the steps and copy and paste the following
 	Users need to put the fasta sequences under a directory. The phage sequences and the host sequences can be in different folders. Let phageFaDIR be the path to the phage fasta files and hostFaDIR be the path to the host fasta files respectively.
 
 		phageFaDIR=/Users/jessie/Desktop/alignment-free/script/test/phage
-
 		hostFaDIR=/Users/jessie/Desktop/alignment-free/script/test/host
 
 	An output directory need to be created and set, 
 
 		outDIR=/Users/jessie/Desktop/alignment-free/script/test/output
-
 		mkdir $outDIR
 
 * Step 2: compile the two c++ scripts
 	Use a C++ compiler to compile the two c++ script countKmer.cpp and computeMeasure.cpp.
 
 		g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
-
 		g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
 
 * Step 3: count kmer frequency and compute the various measures
@@ -54,7 +50,6 @@ To use the tool, please simply follow the steps and copy and paste the following
 	Two files containing the list of phages and the list of hosts are going to be generated. These files will be used in the final step: computing the various measures. 
 
 		> $outDIR/hostList
-
 		> $outDIR/phageList
 
 	Now let count the 1-6-mers for each of the phage and host fasta sequences.
