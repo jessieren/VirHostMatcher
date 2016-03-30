@@ -20,9 +20,9 @@ To use the tool, please simply follow the steps and copy and paste the following
 * Step 0: parameter settings
 	We set the kmer length k=6, and the Markov chian order=2.
 
-		> k=6
+		k=6
 
-		> order=2
+		order=2
 
 
 * Step 1: path settings
