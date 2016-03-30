@@ -1,31 +1,29 @@
 Sequence comparison oligonucleotide frequency (ONF)
 ===========
 
-basic tools for computing various oligonucleotide frequency (ONF) based distance/dissimialrity measures
+Basic tools for computing various oligonucleotide frequency (ONF) based distance/dissimialrity measures
 
 
 Requirements
 ---------------
 
-AlignFreeTools is intended to be used in a Unix-based environment. It has been tested
-on Mac OS and Linux.
+The source code is written by C++. Thus it requires a C++ compiler. It has been tested on Mac and Linux, but it should work under Windows, Linux or Mac environment. 
 
 
 Usage
 ---------------
 
-Description
-This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2, d2*, d2S, Hao, Teeling, EuF and Willner. See paper "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. The source code is written by C++, and it should be compiled and executed under Windows, Linux or Mac environment.
+This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2, d2*, d2S, Hao, Teeling, EuF and Willner. See paper "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
 
 
-#### parameter setting ####
+1. parameter setting
 > k=6
 > order=2
 
-#### path setting ####
-## directory to the c++ code ##
+2. path setting
+2.1 directory to the c++ code
 > codeDIR=/Users/jessie/Desktop/alignment-free/script/
-## directories to the phage and host fasta files ##
+2.2 directories to the phage and host fasta files ##
 > phageFaDIR=/Users/jessie/Desktop/alignment-free/script/test/phage
 > hostFaDIR=/Users/jessie/Desktop/alignment-free/script/test/host
 ## directory to the output ##
