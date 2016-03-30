@@ -18,6 +18,7 @@ This program is used to compute various oligonucleotide frequency (ONF) based di
 To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. You can find an folder named "test" containing 2 phage sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
 * Step 0: parameter settings
+
 	We set the kmer length k=6, and the Markov chian order=2.
 
 		k=6
@@ -25,6 +26,7 @@ To use the tool, please simply follow the steps and copy and paste the following
 
 
 * Step 1: path settings
+
 	Let codeDIR be the directory where the two c++ scripts locate.
 
 		codeDIR=/Users/jessie/Desktop/alignment-free/script/
@@ -40,6 +42,7 @@ To use the tool, please simply follow the steps and copy and paste the following
 		mkdir $outDIR
 
 * Step 2: compile the two c++ scripts
+
 	Use a C++ compiler to compile the two c++ script countKmer.cpp and computeMeasure.cpp.
 
 		g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
