@@ -15,41 +15,60 @@ Usage
 
 This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2, d2*, d2S, Hao, Teeling, EuF and Willner. See paper "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
 
+To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. You can find an folder named "test" containing 2 phage sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
-1. parameter setting
-> k=6
-> order=2
+* Step 0: parameter settings
+	We set the kmer length k=6, and the Markov chian order=2.
 
-2. path setting
-2.1 directory to the c++ code
-> codeDIR=/Users/jessie/Desktop/alignment-free/script/
-2.2 directories to the phage and host fasta files ##
-> phageFaDIR=/Users/jessie/Desktop/alignment-free/script/test/phage
-> hostFaDIR=/Users/jessie/Desktop/alignment-free/script/test/host
-## directory to the output ##
-> outDIR=/Users/jessie/Desktop/alignment-free/script/test/output
-> mkdir $outDIR
+		> k=6
 
-#### compile the code ####
-> g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
-> g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
+		> order=2
 
-#### copy the following to the command line ####
-## generate the file containing the phage and host file paths ##
-> > $outDIR/hostList
-> > $outDIR/phageList
 
-## count the 1-6-mers for phage and host fasta sequences ##
-> for fa in $phageFaDIR/*
-do
-name=`basename $fa`
-kmerDIR=$outDIR/kmerCount/$name
-for klength in $(seq 1 $k)
-do
-$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
-done
-echo $name $kmerDIR $order >> $outDIR/phageList
-done
+* Step 1: path settings
+	Let codeDIR be the directory where the two c++ scripts locate.
+
+		> codeDIR=/Users/jessie/Desktop/alignment-free/script/
+
+	Users need to put the fasta sequences under a directory. The phage sequences and the host sequences can be in different folders. Let phageFaDIR be the path to the phage fasta files and hostFaDIR be the path to the host fasta files respectively.
+
+		> phageFaDIR=/Users/jessie/Desktop/alignment-free/script/test/phage
+
+		> hostFaDIR=/Users/jessie/Desktop/alignment-free/script/test/host
+
+	An output directory need to be created and set, 
+
+		> outDIR=/Users/jessie/Desktop/alignment-free/script/test/output
+
+		> mkdir $outDIR
+
+* Step 2: compile the two c++ scripts
+	Use a C++ compiler to compile the two c++ script countKmer.cpp and computeMeasure.cpp.
+
+		> g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
+
+		> g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
+
+* Step 3: count kmer frequency and compute the various measures
+
+	Two files containing the list of phages and the list of hosts are going to be generated.
+
+		> > $outDIR/hostList
+
+		> > $outDIR/phageList
+
+	Now let count the 1-6-mers for each of the phage and host fasta sequences.
+		
+		> for fa in $phageFaDIR/*
+		> do
+		> name=`basename $fa`
+		> kmerDIR=$outDIR/kmerCount/$name
+		>	for klength in $(seq 1 $k)
+		> do
+		> $codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
+		> done
+		> echo $name $kmerDIR $order >> $outDIR/phageList
+		> done
 
 >for fa in $hostFaDIR/*
 do
