@@ -28,63 +28,65 @@ To use the tool, please simply follow the steps and copy and paste the following
 * Step 1: path settings
 	Let codeDIR be the directory where the two c++ scripts locate.
 
-		> codeDIR=/Users/jessie/Desktop/alignment-free/script/
+		codeDIR=/Users/jessie/Desktop/alignment-free/script/
 
 	Users need to put the fasta sequences under a directory. The phage sequences and the host sequences can be in different folders. Let phageFaDIR be the path to the phage fasta files and hostFaDIR be the path to the host fasta files respectively.
 
-		> phageFaDIR=/Users/jessie/Desktop/alignment-free/script/test/phage
+		phageFaDIR=/Users/jessie/Desktop/alignment-free/script/test/phage
 
-		> hostFaDIR=/Users/jessie/Desktop/alignment-free/script/test/host
+		hostFaDIR=/Users/jessie/Desktop/alignment-free/script/test/host
 
 	An output directory need to be created and set, 
 
-		> outDIR=/Users/jessie/Desktop/alignment-free/script/test/output
+		outDIR=/Users/jessie/Desktop/alignment-free/script/test/output
 
-		> mkdir $outDIR
+		mkdir $outDIR
 
 * Step 2: compile the two c++ scripts
 	Use a C++ compiler to compile the two c++ script countKmer.cpp and computeMeasure.cpp.
 
-		> g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
+		g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
 
-		> g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
+		g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
 
 * Step 3: count kmer frequency and compute the various measures
 
-	Two files containing the list of phages and the list of hosts are going to be generated.
+	Two files containing the list of phages and the list of hosts are going to be generated. These files will be used in the final step: computing the various measures. 
 
-		> > $outDIR/hostList
+		> $outDIR/hostList
 
-		> > $outDIR/phageList
+		> $outDIR/phageList
 
 	Now let count the 1-6-mers for each of the phage and host fasta sequences.
 		
-		> for fa in $phageFaDIR/*
-		> do
-		> name=`basename $fa`
-		> kmerDIR=$outDIR/kmerCount/$name
-		>	for klength in $(seq 1 $k)
-		> do
-		> $codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
-		> done
-		> echo $name $kmerDIR $order >> $outDIR/phageList
-		> done
+		for fa in $phageFaDIR/*
+		do
+		name=`basename $fa`
+		kmerDIR=$outDIR/kmerCount/$name
+		for klength in $(seq 1 $k)
+		do
+		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
+		done
+		echo $name $kmerDIR $order >> $outDIR/phageList
+		done
 
->for fa in $hostFaDIR/*
-do
-name=`basename $fa`
-kmerDIR=$outDIR/kmerCount/$name
-for klength in $(seq 1 $k)
-do
-$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
-done
-echo $name $kmerDIR $order >> $outDIR/hostList
-done
+		for fa in $hostFaDIR/*
+		do
+		name=`basename $fa`
+		kmerDIR=$outDIR/kmerCount/$name
+		for klength in $(seq 1 $k)
+		do
+		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
+		done
+		echo $name $kmerDIR $order >> $outDIR/hostList
+		done
+	
+	Now we can finally compute the various distance/dissimialrity measures
 
-## compute distance/dissimialrity using various measures ##
-> $codeDIR/computeMeasure.out -k $k -i $outDIR/phageList -j $outDIR/hostList > $outDIR/results.csv
+		$codeDIR/computeMeasure.out -k $k -i $outDIR/phageList -j $outDIR/hostList > $outDIR/results.csv
 
-#### the results can be find in $outDIR/results.csv done! ####
+
+* Congratulations! The results can be find in $outDIR/results.csv. 
 
 
 
