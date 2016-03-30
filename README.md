@@ -15,7 +15,9 @@ Usage
 
 This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2, d2*, d2S, Hao, Teeling, EuF and Willner. See paper "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
 
-To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. You can find an folder named "test" containing 2 phage sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
+To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (replace "/Users/jessie/Desktop/" with your own path). 
+
+You can find an folder named "test" containing 2 phage sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
 * Step 0: parameter settings
 
