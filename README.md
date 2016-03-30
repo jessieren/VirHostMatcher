@@ -1,7 +1,7 @@
 Sequence comparison oligonucleotide frequency (ONF)
 ===========
 
-Basic tools for computing various oligonucleotide frequency (ONF) based distance/dissimilarity measures
+Basic tools for computing various oligonucleotide frequency (ONF) based distance/dissimialrity measures
 
 
 Requirements
@@ -13,13 +13,13 @@ The source code is written by C++. Thus it requires a C++ compiler. It has been 
 Usage
 ---------------
 
-This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimilarity measures between a pair of DNA sequences. These measures include Euclidean distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2, d2*, d2S, Hao, Teeling, EuF and Willner. See paper "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
+This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2, d2*, d2S, Hao, Teeling, EuF and Willner. See paper "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
 
 To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. You can find an folder named "test" containing 2 phage sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
 * Step 0: parameter settings
 
-We set the kmer length k=6, and the Markov chain order=2.
+We set the kmer length k=6, and the Markov chian order=2.
 
 k=6
 order=2
@@ -29,16 +29,16 @@ order=2
 
 Let codeDIR be the directory where the two c++ scripts locate.
 
-codeDIR=/Users/jessie/Desktop/alignment-free/script/
+codeDIR=/Users/jessie/Desktop/ONF-comparison-master
 
 Users need to put the fasta sequences under a directory. The phage sequences and the host sequences can be in different folders. Let phageFaDIR be the path to the phage fasta files and hostFaDIR be the path to the host fasta files respectively.
 
-phageFaDIR=/Users/jessie/Desktop/alignment-free/script/test/phage
-hostFaDIR=/Users/jessie/Desktop/alignment-free/script/test/host
+phageFaDIR=/Users/jessie/Desktop/ONF-comparison-master/test/phage
+hostFaDIR=/Users/jessie/Desktop/ONF-comparison-master/test/host
 
 An output directory need to be created and set, 
 
-outDIR=/Users/jessie/Desktop/alignment-free/script/test/output
+outDIR=/Users/jessie/Desktop/ONF-comparison-master/test/output
 mkdir $outDIR
 
 * Step 2: compile the two c++ scripts
@@ -125,4 +125,3 @@ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
 this program. If not, see http://www.gnu.org/licenses/.
-
