@@ -1,4 +1,4 @@
-Sequence comparison oligonucleotide frequency (ONF)
+Sequence comparison based on oligonucleotide frequency (ONF)
 ===========
 
 Basic tools for computing various oligonucleotide frequency (ONF) based distance/dissimialrity measures
