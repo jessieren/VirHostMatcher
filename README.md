@@ -85,7 +85,7 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 
 		$codeDIR/computeMeasure.out -k $k -i $outDIR/phageList -j $outDIR/hostList > $outDIR/results.csv
 
-	If the user only need the pairwise dissimilairty matrix for d2*
+	If the user need only the pairwise dissimilairty matrix for d2*
 
 		$codeDIR/computeMeasure_onlyd2star.out -k $k -i $outDIR/phageList -j $outDIR/hostList > $outDIR/results_onlyd2star.csv
 
