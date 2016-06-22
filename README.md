@@ -13,7 +13,7 @@ The source code is written by C++. Thus it requires a C++ compiler. It has been 
 Usage
 ---------------
 
-This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2, d2*, d2S, Hao, Teeling, EuF and Willner. See paper "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
+This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2 dissimilarity, d2\* dissimilarity, d2S dissimilarity, Hao dissimilarity, Teeling dissimilarity, EuF distance and Willner distance. See paper "Alignment-free d2\* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
 
 To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (replace "/Users/jessie/Desktop/" with your own path). 
 
