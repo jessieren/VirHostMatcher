@@ -1,4 +1,4 @@
-Sequence comparison based on oligonucleotide frequency (ONF)
+VirHostMatcher: matching hosts of viruses based on oligonucleotide frequency (ONF) comparison
 ===========
 
 Basic tools for computing various oligonucleotide frequency (ONF) based distance/dissimialrity measures
