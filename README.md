@@ -26,21 +26,25 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 		k=6
 		order=2
 
+	To predict the hosts of viruses, users need to prepare "csv" file that saves the taxonomy inforation of each host sequences. See hostTaxa.csv for an example.
+
+		taxaFile=/Path_to_taxonomy_file/hostTaxa.csv
+
 
 * Step 1: path settings
 
 	Let codeDIR be the directory where the two c++ scripts locate.
 
-		codeDIR=/Users/jessie/Desktop/ONF-comparison-master
+		codeDIR=/Path_to_VirHostMatcher_dir/VirHostMatcher
 
 	Users need to put the fasta sequences under a directory. The phage sequences and the host sequences can be in different folders. Let phageFaDIR be the path to the phage fasta files and hostFaDIR be the path to the host fasta files respectively.
 
-		phageFaDIR=/Users/jessie/Desktop/ONF-comparison-master/test/phage
-		hostFaDIR=/Users/jessie/Desktop/ONF-comparison-master/test/host
+		phageFaDIR=/Path_to_phageFa_dir/phage
+		hostFaDIR=/Path_to_hostFa_dir/host
 
 	An output directory need to be created and set, 
 
-		outDIR=/Users/jessie/Desktop/ONF-comparison-master/test/output
+		outDIR=/Path_to_output_dir/output
 		mkdir $outDIR
 
 * Step 2: compile the two c++ scripts
@@ -54,43 +58,44 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 
 	Two files containing the list of phages and the list of hosts are going to be generated. These files will be used in the final step: computing the various measures. 
 
-		> $outDIR/hostList
-		> $outDIR/phageList
+		outDIRtmp=$outDIR/tmp
+		mkdir $outDIRtmp
+		> $outDIRtmp/hostList
+		> $outDIRtmp/phageList
 
-	Now let count the 1-6-mers for each of the phage and host fasta sequences.
+	Now let us count the 1-6-mers for each of the phage and host fasta sequences.
 
 		for fa in $phageFaDIR/*
 		do
 		name=`basename $fa`
-		kmerDIR=$outDIR/kmerCount/$name
+		kmerDIR=$outDIRtmp/kmerCount/$name
 		for klength in $(seq 1 $k)
 		do
 		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
 		done
-		echo $name $kmerDIR $order >> $outDIR/phageList
+		echo $name $kmerDIR $order >> $outDIRtmp/phageList
 		done
 
 		for fa in $hostFaDIR/*
 		do
 		name=`basename $fa`
-		kmerDIR=$outDIR/kmerCount/$name
+		kmerDIR=$outDIRtmp/kmerCount/$name
 		for klength in $(seq 1 $k)
 		do
 		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
 		done
-		echo $name $kmerDIR $order >> $outDIR/hostList
+		echo $name $kmerDIR $order >> $outDIRtmp/hostList
 		done
 
 	Now we can finally compute the various distance/dissimialrity measures
 
-		$codeDIR/computeMeasure.out -k $k -i $outDIR/phageList -j $outDIR/hostList > $outDIR/results.csv
+		$codeDIR/computeMeasure.out -k $k -i $outDIRtmp/phageList -j $outDIRtmp/hostList -o $outDIR -t $taxaFile
 
 	If the user need only the pairwise dissimilairty matrix for d2*
 
-		$codeDIR/computeMeasure_onlyd2star.out -k $k -i $outDIR/phageList -j $outDIR/hostList > $outDIR/results_onlyd2star.csv
+		$codeDIR/computeMeasure_onlyd2star.out -k $k -i $outDIRtmp/phageList -j $outDIRtmp/hostList -o $outDIR -t $taxaFile
 
-
-* Congratulations! The results can be find in $outDIR/results.csv. 
+* Congratulations! The results can be find in $outDIR/*_k*.csv. 
 
 
 
