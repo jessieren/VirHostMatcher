@@ -104,6 +104,12 @@ Contacts and bug reports
 Jie Ren
 renj@usc.edu
 
+Yang Lu
+ylu465@usc.edu 
+
+Nathan Ahlgren
+ahlgren@usc.edu 
+
 Fengzhu Sun
 fsun@usc.edu
 

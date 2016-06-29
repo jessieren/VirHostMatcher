@@ -1583,6 +1583,8 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	
 	string speciesInfoFilePathNameA;
 	string speciesInfoFilePathNameB;
+	string taxaFile;
+	string outDIR;
 	
 	vector<string> *measureNames = new vector<string>;
 	
@@ -1609,12 +1611,14 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			{"kvalue",  required_argument, 0, 'k'},
 			{"inputFileDir1",  required_argument, 0, 'i'},
 			{"inputFileDir2",  required_argument, 0, 'j'},
+			{"taxaFile",  required_argument, 0, 't'},
+			{"outDir",  required_argument, 0, 'o'},
 			{0,         0,                 0,  0 }
 		};
 		/* getopt_long stores the option index here. */
 		int option_index = 0;
 		
-		c = getopt_long (argc, argv, "k:i:j:",
+		c = getopt_long (argc, argv, "k:i:j:t:o:",
 										 long_options, &option_index);
 		
 		/* Detect the end of the options. */
@@ -1665,6 +1669,16 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			case 'j':
 				speciesInfoFilePathNameB = string(optarg);
 				//printf ("option -j, the input kmer count file directory, with value `%s'\n", optarg);
+				break;
+				
+			case 't':
+				taxaFile = string(optarg);
+				//printf ("option -t, the taxonomy file for host contigs, with value `%s'\n", optarg);
+				break;
+				
+			case 'o':
+				outDIR = string(optarg);
+				//printf ("option -o, the output directory, with value `%s'\n", optarg);
 				break;
 				
 			case '?':
@@ -1945,32 +1959,46 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	{
 		string statName = measureNames->at(statID);
 		
+		ofstream csvOut;
+		string csvFileName = outDIR + "/" + statName + "_k" + kstr + ".csv";
+		csvOut.open(csvFileName.c_str());
+		
 		// first row: statName and colnames
-		cout << statName << ",";
+		csvOut << statName << ",";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 		{
 			SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
-			cout << speciesInfoB.name << ",";
+			csvOut << speciesInfoB.name << ",";
 		}
-		cout << endl;
+		csvOut << endl;
 		
 		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
 		{
 			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
-			cout << speciesInfoA.name << ",";
+			csvOut << speciesInfoA.name << ",";
 			
 			for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 			{
 				SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
-				cout << resultMatrix[statID][IDA][IDB] << ",";
+				csvOut << resultMatrix[statID][IDA][IDB] << ",";
 			}
-			cout << endl;
+			csvOut << endl;
 		}
+		
+		csvOut.close();
 	}
 	
 	
-  //fout.close();
-  
+	// cp taxaFile to outDIR
+	string cpTaxaCMD = "cp " + taxaFile + " " + outDIR;
+	system(cpTaxaCMD.c_str());
+	
+	// cp Yang's visualization files to outDIR
+	string cmdString = string(argv[0]);
+	size_t found = cmdString.find_last_of("/");
+	string cmdDIR = cmdString.substr(0,found);
+	string cpVisCMD = "cp -r " + cmdDIR + "/visual" + " " + outDIR;
+	system(cpVisCMD.c_str());
 
   return 0;
 }
