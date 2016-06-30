@@ -544,6 +544,98 @@ void loadSpeciesInfo(string speciesInfoFilePathName, vector<SPECIESINFO>& specie
 
 
 
+int loadTaxaInfo (string taxaFile, vector<string>& hostNCBIName, vector<string>& hostSuperkingdom, vector<string>& hostPhylum, vector<string>& hostClass, vector<string>& hostOrder, vector<string>& hostFamily, vector<string>& hostGenus)
+{
+	ifstream taxaFileIn(taxaFile.c_str());
+	string currentTaxaLine;
+	string token;
+	int lineNum = 0;
+	int taxaColCount = 0;
+	int errorTaxa = 0;
+	
+	while( getline(taxaFileIn, currentTaxaLine) )
+	{
+		//cout << currentTaxaLine << endl;
+		lineNum++;
+		
+		if( lineNum == 1 )
+		{
+			// first line is the header
+			std::istringstream ss(currentTaxaLine);
+			taxaColCount = 0;
+			while(std::getline(ss, token, '\t')) {
+				taxaColCount++;
+				//cout << taxaColCount << endl;
+				//cout << token << endl;
+				if(taxaColCount == 1){
+					if(token != "hostNCBIName"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 2){
+					if(token != "hostSuperkingdom"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 3){
+					if(token != "hostPhylum"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 4){
+					if(token != "hostClass"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 5){
+					if(token != "hostOrder"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 6){
+					if(token != "hostFamily"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 7){
+					if(token != "hostGenus"){
+						errorTaxa = 1;
+					}
+				}
+			}
+			if(errorTaxa == 1)
+			{
+				cerr << "the format of taxaFile is not correct!" << endl;
+				return 0;
+			}
+			
+		}else{
+			
+			std::istringstream ss(currentTaxaLine);
+			taxaColCount = 0;
+			while(std::getline(ss, token, '\t')) {
+				taxaColCount++;
+				//cout << taxaColCount << endl;
+				//cout << token << endl;
+				if(taxaColCount == 1){
+					hostNCBIName.push_back(token);
+					//cout << "check token " << hostNCBIName[0] << endl;
+				}else if(taxaColCount == 2){
+					hostSuperkingdom.push_back(token);
+					//cout << "check token " << token << endl;
+				}else if(taxaColCount == 3){
+					hostPhylum.push_back(token);
+				}else if(taxaColCount == 4){
+					hostClass.push_back(token);
+				}else if(taxaColCount == 5){
+					hostOrder.push_back(token);
+				}else if(taxaColCount == 6){
+					hostFamily.push_back(token);
+				}else if(taxaColCount == 7){
+					hostGenus.push_back(token);
+					//cout << "check token " << token << endl;
+				}
+			}
+		}
+		
+	}
+	
+	return lineNum-1;
+}
 
 
 
@@ -1690,8 +1782,18 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		}
 	}
 
-	
+	// loading taxa files
+	vector<string> hostNCBIName;
+	vector<string> hostSuperkingdom;
+	vector<string> hostPhylum;
+	vector<string> hostClass;
+	vector<string> hostOrder;
+	vector<string> hostFamily;
+	vector<string> hostGenus;
+	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus);
 
+	
+	cerr << "......computing measures......" << endl;
 	///////////////////////////////////////////////////////////////////////
 	//////////////////// load the species information /////////////////////
 	///////////////////////////////////////////////////////////////////////
@@ -1728,6 +1830,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
   // load the kmer count hashtables of the first file list (the fat list)
 	// those files are only loaded once. They will be repeatedly used for many times
 	// how many files you put on this list depend on the memory size
+
 	vector<KMERINFO*> speciesKmerInfoListA( speciesInfoListA.size() );
 	for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
 	{
@@ -1958,6 +2061,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	for( int statID = 0; statID < measureNames->size(); statID++ )
 	{
 		string statName = measureNames->at(statID);
+		cerr << "...measure:" << statName << "..." << endl;
 		
 		ofstream csvOut;
 		string csvFileName = outDIR + "/" + statName + "_k" + kstr + ".csv";
@@ -1965,17 +2069,24 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		
 		// first row: statName and colnames
 		csvOut << statName << ",";
+		
+		// create variables for Yang's visualization: hostName
+		vector<string> hostName;
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 		{
 			SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
 			csvOut << speciesInfoB.name << ",";
+			hostName.push_back(speciesInfoB.name);
 		}
 		csvOut << endl;
 		
+		// create variables for Yang's visualization: virusName
+		vector<string> virusName;
 		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
 		{
 			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
 			csvOut << speciesInfoA.name << ",";
+			virusName.push_back(speciesInfoA.name);
 			
 			for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 			{
@@ -1986,20 +2097,77 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		}
 		
 		csvOut.close();
+		
+		
+		
+		
+		//////////////////// preparation for visualization ////////////////////////
+		// create variables for Yang's visualization: virusName
+		cerr << "1. virusName:";
+		for(int VID = 0; VID < virusName.size(); VID++){
+			cerr << virusName[VID] << " ";
+		}
+		cerr << endl;
+		
+		// create variables for Yang's visualization: hostName
+		cerr << "2. hostName:";
+		for(int HID = 0; HID < hostName.size(); HID++){
+			cerr << hostName[HID] << " ";
+		}
+		cerr << endl;
+		
+		// create variable for Yang's visualization: host taxonomy
+		if( taxaLineNum != hostName.size() )
+		{
+			cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
+			return 0;
+		}
+		cerr << "3. host taxonomy" << endl;
+		for(int HID = 0; HID < hostNCBIName.size(); HID++  )
+		{
+			cerr << "hostName:" << hostNCBIName[HID] << " superkingdom:" << hostSuperkingdom[HID]
+			<< " phylum:" << hostPhylum[HID] << " class:" << hostClass[HID]
+			<< " order:" << hostOrder[HID] << " family:" << hostFamily[HID]
+			<< " genus:" << hostGenus[HID] << endl;
+		}
+
+		// create variable for Yang's visualization: distMatrix
+		cerr << "4. pairwise distance/dissimilarity" << endl;
+		vector<vector<double> > distMatrix = resultMatrix[statID];
+		cerr << "\t" ;
+		for(int HID = 0; HID < hostName.size(); HID++)
+		{
+			cerr << hostName[HID] << "\t";
+		}
+		cerr << endl;
+		for(int VID = 0; VID < virusName.size(); VID++ )
+		{
+			cerr << virusName[VID] << "\t";
+			for(int HID = 0; HID < hostName.size(); HID++)
+			{
+				cerr << distMatrix[VID][HID] << "\t";
+			}
+			cerr << endl;
+		}
+		
 	}
 	
-	
-	// cp taxaFile to outDIR
-	string cpTaxaCMD = "cp " + taxaFile + " " + outDIR;
-	system(cpTaxaCMD.c_str());
-	
-	// cp Yang's visualization files to outDIR
-	string cmdString = string(argv[0]);
-	size_t found = cmdString.find_last_of("/");
-	string cmdDIR = cmdString.substr(0,found);
-	string cpVisCMD = "cp -r " + cmdDIR + "/visual" + " " + outDIR;
-	system(cpVisCMD.c_str());
-
-  return 0;
+	return 0;
 }
+
+
+
+
+
+// cp taxaFile to outDIR
+//	string cpTaxaCMD = "cp " + taxaFile + " " + outDIR;
+//	system(cpTaxaCMD.c_str());
+
+//	// cp Yang's visualization files to outDIR
+//	string cmdString = string(argv[0]);
+//	size_t found = cmdString.find_last_of("/");
+//	string cmdDIR = cmdString.substr(0,found);
+//	string cpVisCMD = "cp -r " + cmdDIR + "/visual" + " " + outDIR;
+//	system(cpVisCMD.c_str());
+
 

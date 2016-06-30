@@ -1,0 +1,4 @@
+hostNCBIName	hostSuperkingdom	hostPhylum	hostClass	hostOrder	hostFamily	hostGenus
+NC_007795.1.fasta	Bacteria	Firmicutes	Bacilli	Bacillales	Staphylococcaceae	Staphylococcus
+NC_003197.1.fasta	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Salmonella
+NC_002163.1.fasta	Bacteria	Proteobacteria	Epsilonproteobacteria	Campylobacterales	Campylobacteraceae	Campylobacter

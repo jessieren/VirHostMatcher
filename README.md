@@ -26,9 +26,9 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 		k=6
 		order=2
 
-	To predict the hosts of viruses, users need to prepare "csv" file that saves the taxonomy inforation of each host sequences. See hostTaxa.csv for an example.
+	To predict the hosts of viruses, users need to prepare "csv" file that saves the taxonomy inforation of each host sequences. The file should be Tab delimited and each line for one host sequence. See hostTaxa.txt for an example.
 
-		taxaFile=/Path_to_taxonomy_file/hostTaxa.csv
+		taxaFile=/Path_to_taxonomy_file/hostTaxa.txt
 
 
 * Step 1: path settings
