@@ -13,7 +13,7 @@ The source code is written by C++. Thus it requires a C++ compiler. It has been 
 Usage
 ---------------
 
-This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2 dissimilarity, d2\* dissimilarity, d2S dissimilarity, Hao dissimilarity, Teeling dissimilarity, EuF distance and Willner distance. See paper "Alignment-free d2\* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. 
+This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2 dissimilarity, d2\* dissimilarity, d2S dissimilarity, Hao dissimilarity, Teeling dissimilarity, EuF distance and Willner distance. See paper "Alignment-free d2\* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. The tool also provides visualization of virus-host interactions based on the pairwise distance/dissimilarity between virus-host. 
 
 To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (replace "/Users/jessie/Desktop/" with your own path). 
 
@@ -95,7 +95,11 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 
 		$codeDIR/computeMeasure_onlyd2star.out -k $k -i $outDIRtmp/phageList -j $outDIRtmp/hostList -o $outDIR -t $taxaFile
 
-* Congratulations! The results can be find in $outDIR/*_k*.csv. 
+* Congratulations! The results can be find in $outDIR. The output folder contains,
+	[measure Name]_k[k-tuple length].csv	The dissimilarity/distance matrix for paris of virus and hosts;
+	[measure Name]_k[k-tuple length].main.html	The html file for visulization of the virus-host interactions;
+	
+
 
 
 

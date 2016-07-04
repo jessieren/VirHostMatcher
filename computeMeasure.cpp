@@ -2298,7 +2298,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		
 	}
 	
-	//system(("rm -rf " + htmlTmpDIR).c_str());
+	system(("rm -rf " + htmlTmpDIR).c_str());
 	
 	return 0;
 }
