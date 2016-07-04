@@ -544,7 +544,7 @@ void loadSpeciesInfo(string speciesInfoFilePathName, vector<SPECIESINFO>& specie
 
 
 
-int loadTaxaInfo (string taxaFile, vector<string>& hostNCBIName, vector<string>& hostSuperkingdom, vector<string>& hostPhylum, vector<string>& hostClass, vector<string>& hostOrder, vector<string>& hostFamily, vector<string>& hostGenus)
+int loadTaxaInfo (string taxaFile, vector<string>& hostNCBIName, vector<string>& hostName, vector<string>& hostSuperkingdom, vector<string>& hostPhylum, vector<string>& hostClass, vector<string>& hostOrder, vector<string>& hostFamily, vector<string>& hostGenus, vector<string>& hostSpecies)
 {
 	ifstream taxaFileIn(taxaFile.c_str());
 	string currentTaxaLine;
@@ -572,30 +572,38 @@ int loadTaxaInfo (string taxaFile, vector<string>& hostNCBIName, vector<string>&
 						errorTaxa = 1;
 					}
 				}else if(taxaColCount == 2){
-					if(token != "hostSuperkingdom"){
+					if(token != "hostName"){
 						errorTaxa = 1;
 					}
 				}else if(taxaColCount == 3){
-					if(token != "hostPhylum"){
+					if(token != "hostSuperkingdom"){
 						errorTaxa = 1;
 					}
 				}else if(taxaColCount == 4){
-					if(token != "hostClass"){
+					if(token != "hostPhylum"){
 						errorTaxa = 1;
 					}
 				}else if(taxaColCount == 5){
-					if(token != "hostOrder"){
+					if(token != "hostClass"){
 						errorTaxa = 1;
 					}
 				}else if(taxaColCount == 6){
-					if(token != "hostFamily"){
+					if(token != "hostOrder"){
 						errorTaxa = 1;
 					}
 				}else if(taxaColCount == 7){
+					if(token != "hostFamily"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 8){
 					if(token != "hostGenus"){
 						errorTaxa = 1;
 					}
+				}else if(taxaColCount == 9){
+				if(token != "hostSpecies"){
+					errorTaxa = 1;
 				}
+			}
 			}
 			if(errorTaxa == 1)
 			{
@@ -615,18 +623,24 @@ int loadTaxaInfo (string taxaFile, vector<string>& hostNCBIName, vector<string>&
 					hostNCBIName.push_back(token);
 					//cout << "check token " << hostNCBIName[0] << endl;
 				}else if(taxaColCount == 2){
-					hostSuperkingdom.push_back(token);
+					hostName.push_back(token);
 					//cout << "check token " << token << endl;
 				}else if(taxaColCount == 3){
-					hostPhylum.push_back(token);
+					hostSuperkingdom.push_back(token);
+					//cout << "check token " << token << endl;
 				}else if(taxaColCount == 4){
-					hostClass.push_back(token);
+					hostPhylum.push_back(token);
 				}else if(taxaColCount == 5){
-					hostOrder.push_back(token);
+					hostClass.push_back(token);
 				}else if(taxaColCount == 6){
-					hostFamily.push_back(token);
+					hostOrder.push_back(token);
 				}else if(taxaColCount == 7){
+					hostFamily.push_back(token);
+				}else if(taxaColCount == 8){
 					hostGenus.push_back(token);
+					//cout << "check token " << token << endl;
+				}else if(taxaColCount == 9){
+					hostSpecies.push_back(token);
 					//cout << "check token " << token << endl;
 				}
 			}
@@ -1677,6 +1691,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	string speciesInfoFilePathNameB;
 	string taxaFile;
 	string outDIR;
+	string htmlTmpDIR;
 	
 	vector<string> *measureNames = new vector<string>;
 	
@@ -1782,21 +1797,40 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		}
 	}
 
-	// loading taxa files
+	
+	// preparation for visualization: loading taxa files
 	vector<string> hostNCBIName;
+	vector<string> hostName;
 	vector<string> hostSuperkingdom;
 	vector<string> hostPhylum;
 	vector<string> hostClass;
 	vector<string> hostOrder;
 	vector<string> hostFamily;
 	vector<string> hostGenus;
-	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus);
+	vector<string> hostSpecies;
+	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus, hostSpecies);
 
+	// cp Yang's visualization files to outDIR
+	string cmdString = string(argv[0]);
+	size_t found = cmdString.find_last_of("/");
+	string cmdDIR = cmdString.substr(0,found);
+
+	string cpCssCMD = "cp -r " + cmdDIR + "/css" + " " + outDIR;
+	system(cpCssCMD.c_str());
+	string cpLibCMD = "cp -r " + cmdDIR + "/lib" + " " + outDIR;
+	system(cpLibCMD.c_str());
+	string cpLogoCMD = "cp -r " + cmdDIR + "/logo.jpg" + " " + outDIR;
+	system(cpLogoCMD.c_str());
 	
-	cerr << "......computing measures......" << endl;
+	htmlTmpDIR = outDIR + "/" + "tmp_html";
+	system(("mkdir " + htmlTmpDIR).c_str());
+	
+
 	///////////////////////////////////////////////////////////////////////
 	//////////////////// load the species information /////////////////////
 	///////////////////////////////////////////////////////////////////////
+		cerr << "......computing measures......" << endl;
+	
 	vector<SPECIESINFO> speciesInfoListA;
 	loadSpeciesInfo(speciesInfoFilePathNameA, speciesInfoListA);
 	
@@ -2057,100 +2091,182 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		delete transMatrixB;
 	}
 
-	// output the matrix
+	
+	if( taxaLineNum != speciesInfoListB.size() )
+	{
+		cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
+		return 0;
+	}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////// output //////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
 	for( int statID = 0; statID < measureNames->size(); statID++ )
 	{
 		string statName = measureNames->at(statID);
-		cerr << "...measure:" << statName << "..." << endl;
+		//cerr << "...measure:" << statName << "..." << endl;
 		
 		ofstream csvOut;
 		string csvFileName = outDIR + "/" + statName + "_k" + kstr + ".csv";
 		csvOut.open(csvFileName.c_str());
 		
+		ofstream html2Out;
+		string html2FileName = htmlTmpDIR + "/" + statName + "_k" + kstr + "_main.html_part2";
+		html2Out.open(html2FileName.c_str());
+		
+		// create variables for Yang's visualization: virusNameArr
+		html2Out << "var virusNameArr = [";
+		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
+		{
+			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
+			html2Out << "\"" << speciesInfoA.name << "\"";
+			if(IDA != speciesInfoListA.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+
 		// first row: statName and colnames
 		csvOut << statName << ",";
 		
-		// create variables for Yang's visualization: hostName
-		vector<string> hostName;
+		// create variables for Yang's visualization: hostNameArr
+		html2Out << "var hostNameArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 		{
 			SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
 			csvOut << speciesInfoB.name << ",";
-			hostName.push_back(speciesInfoB.name);
+			html2Out << "\"" << speciesInfoB.name << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
 		}
 		csvOut << endl;
+		html2Out << "];" << endl;
 		
-		// create variables for Yang's visualization: virusName
-		vector<string> virusName;
+		/////////////// output the matrix: csv files //////////////
+		// create variables for Yang's visualization: virusHostMat
+		html2Out << "var virusHostMat = [";
 		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
 		{
 			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
 			csvOut << speciesInfoA.name << ",";
-			virusName.push_back(speciesInfoA.name);
-			
+			html2Out << "[";
 			for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 			{
 				SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
 				csvOut << resultMatrix[statID][IDA][IDB] << ",";
+				html2Out << resultMatrix[statID][IDA][IDB];
+				if( IDB != speciesInfoListB.size()-1 )
+				{
+					html2Out << ",";
+				}
 			}
+			html2Out << "]";
 			csvOut << endl;
+			if(IDA != speciesInfoListA.size()-1 )
+			{
+				html2Out << "," << endl;
+			}
 		}
-		
 		csvOut.close();
-		
-		
+		html2Out << "];" << endl;
 		
 		
 		//////////////////// preparation for visualization ////////////////////////
-		// create variables for Yang's visualization: virusName
-		cerr << "1. virusName:";
-		for(int VID = 0; VID < virusName.size(); VID++){
-			cerr << virusName[VID] << " ";
-		}
-		cerr << endl;
-		
-		// create variables for Yang's visualization: hostName
-		cerr << "2. hostName:";
-		for(int HID = 0; HID < hostName.size(); HID++){
-			cerr << hostName[HID] << " ";
-		}
-		cerr << endl;
-		
 		// create variable for Yang's visualization: host taxonomy
-		if( taxaLineNum != hostName.size() )
+		html2Out << "var superkingdomArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
-			return 0;
-		}
-		cerr << "3. host taxonomy" << endl;
-		for(int HID = 0; HID < hostNCBIName.size(); HID++  )
-		{
-			cerr << "hostName:" << hostNCBIName[HID] << " superkingdom:" << hostSuperkingdom[HID]
-			<< " phylum:" << hostPhylum[HID] << " class:" << hostClass[HID]
-			<< " order:" << hostOrder[HID] << " family:" << hostFamily[HID]
-			<< " genus:" << hostGenus[HID] << endl;
-		}
-
-		// create variable for Yang's visualization: distMatrix
-		cerr << "4. pairwise distance/dissimilarity" << endl;
-		vector<vector<double> > distMatrix = resultMatrix[statID];
-		cerr << "\t" ;
-		for(int HID = 0; HID < hostName.size(); HID++)
-		{
-			cerr << hostName[HID] << "\t";
-		}
-		cerr << endl;
-		for(int VID = 0; VID < virusName.size(); VID++ )
-		{
-			cerr << virusName[VID] << "\t";
-			for(int HID = 0; HID < hostName.size(); HID++)
-			{
-				cerr << distMatrix[VID][HID] << "\t";
+			html2Out << "\"" << hostSuperkingdom[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
 			}
-			cerr << endl;
 		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var phylumArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostPhylum[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var classArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostClass[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var orderArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostOrder[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var familyArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostFamily[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var genusArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostGenus[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var speciesArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostSpecies[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var organismArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostName[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		
+		// cat html_part1, 2 and 3
+		string html1FileName = cmdDIR + "/main.html_part1";
+		string html3FileName = cmdDIR + "/main.html_part3";
+		string htmlFileName = outDIR + "/" + statName + "_k" + kstr + "_main.html";
+		string catCMD = "cat " + html1FileName + " " + html2FileName + " " + html3FileName + " > " + htmlFileName;
+		system(catCMD.c_str());
 		
 	}
+	
+	system(("rm -rf " + htmlTmpDIR).c_str());
 	
 	return 0;
 }
@@ -2158,16 +2274,5 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 
 
 
-
-// cp taxaFile to outDIR
-//	string cpTaxaCMD = "cp " + taxaFile + " " + outDIR;
-//	system(cpTaxaCMD.c_str());
-
-//	// cp Yang's visualization files to outDIR
-//	string cmdString = string(argv[0]);
-//	size_t found = cmdString.find_last_of("/");
-//	string cmdDIR = cmdString.substr(0,found);
-//	string cpVisCMD = "cp -r " + cmdDIR + "/visual" + " " + outDIR;
-//	system(cpVisCMD.c_str());
 
 
