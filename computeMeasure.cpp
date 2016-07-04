@@ -50,7 +50,11 @@ struct SPECIESINFO
 	std::string name;
 	std::string dir;
 	int order;
+	
 };
+
+
+
 
 
 
@@ -1798,18 +1802,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	}
 
 	
-	// preparation for visualization: loading taxa files
-	vector<string> hostNCBIName;
-	vector<string> hostName;
-	vector<string> hostSuperkingdom;
-	vector<string> hostPhylum;
-	vector<string> hostClass;
-	vector<string> hostOrder;
-	vector<string> hostFamily;
-	vector<string> hostGenus;
-	vector<string> hostSpecies;
-	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus, hostSpecies);
-
+	/////////// preparation for visualization: loading taxa files ////////////////
 	// cp Yang's visualization files to outDIR
 	string cmdString = string(argv[0]);
 	size_t found = cmdString.find_last_of("/");
@@ -2091,11 +2084,47 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		delete transMatrixB;
 	}
 
+	////////////////////////// load taxa file ////////////////////////////////////
+	vector<string> hostNCBIName;
+	vector<string> hostName;
+	vector<string> hostSuperkingdom;
+	vector<string> hostPhylum;
+	vector<string> hostClass;
+	vector<string> hostOrder;
+	vector<string> hostFamily;
+	vector<string> hostGenus;
+	vector<string> hostSpecies;
+	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus, hostSpecies);
 	
 	if( taxaLineNum != speciesInfoListB.size() )
 	{
 		cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
 		return 0;
+	}
+	////////// sort the taxa info by NCBINames in the input hostList file /////////
+	vector<string> hostName_sort;
+	vector<string> hostSuperkingdom_sort;
+	vector<string> hostPhylum_sort;
+	vector<string> hostClass_sort;
+	vector<string> hostOrder_sort;
+	vector<string> hostFamily_sort;
+	vector<string> hostGenus_sort;
+	vector<string> hostSpecies_sort;
+	for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+	{
+		SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
+		string currentHostNCBIName = speciesInfoB.name;
+		vector<string>::iterator it=find(hostNCBIName.begin(),hostNCBIName.end(),currentHostNCBIName);
+		int pos = distance(hostNCBIName.begin(), it);
+		cout << currentHostNCBIName << ":" << pos << endl;
+		hostName_sort.push_back(hostName[pos]);
+		hostSuperkingdom_sort.push_back(hostSuperkingdom[pos]);
+		hostPhylum_sort.push_back(hostPhylum[pos]);
+		hostClass_sort.push_back(hostClass[pos]);
+		hostOrder_sort.push_back(hostOrder[pos]);
+		hostFamily_sort.push_back(hostFamily[pos]);
+		hostGenus_sort.push_back(hostGenus[pos]);
+		hostSpecies_sort.push_back(hostSpecies[pos]);
 	}
 	
 	
@@ -2176,10 +2205,13 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		
 		//////////////////// preparation for visualization ////////////////////////
 		// create variable for Yang's visualization: host taxonomy
+
+		
+		
 		html2Out << "var superkingdomArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostSuperkingdom[IDB] << "\"";
+			html2Out << "\"" << hostSuperkingdom_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2189,7 +2221,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		html2Out << "var phylumArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostPhylum[IDB] << "\"";
+			html2Out << "\"" << hostPhylum_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2199,7 +2231,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		html2Out << "var classArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostClass[IDB] << "\"";
+			html2Out << "\"" << hostClass_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2209,7 +2241,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		html2Out << "var orderArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostOrder[IDB] << "\"";
+			html2Out << "\"" << hostOrder_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2219,7 +2251,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		html2Out << "var familyArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostFamily[IDB] << "\"";
+			html2Out << "\"" << hostFamily_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2229,7 +2261,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		html2Out << "var genusArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostGenus[IDB] << "\"";
+			html2Out << "\"" << hostGenus_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2239,7 +2271,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		html2Out << "var speciesArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostSpecies[IDB] << "\"";
+			html2Out << "\"" << hostSpecies_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2249,7 +2281,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		html2Out << "var organismArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
 		{
-			html2Out << "\"" << hostName[IDB] << "\"";
+			html2Out << "\"" << hostName_sort[IDB] << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
 			}
@@ -2266,7 +2298,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		
 	}
 	
-	system(("rm -rf " + htmlTmpDIR).c_str());
+	//system(("rm -rf " + htmlTmpDIR).c_str());
 	
 	return 0;
 }
