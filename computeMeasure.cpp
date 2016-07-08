@@ -2116,7 +2116,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		string currentHostNCBIName = speciesInfoB.name;
 		vector<string>::iterator it=find(hostNCBIName.begin(),hostNCBIName.end(),currentHostNCBIName);
 		int pos = distance(hostNCBIName.begin(), it);
-		cout << currentHostNCBIName << ":" << pos << endl;
+		//cout << currentHostNCBIName << ":" << pos << endl;
 		hostName_sort.push_back(hostName[pos]);
 		hostSuperkingdom_sort.push_back(hostSuperkingdom[pos]);
 		hostPhylum_sort.push_back(hostPhylum[pos]);

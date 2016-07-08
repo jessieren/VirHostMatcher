@@ -13,9 +13,9 @@ The source code is written by C++. Thus it requires a C++ compiler. It works und
 Usage
 ---------------
 
-This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. These measures include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2 dissimilarity, d2\* dissimilarity, d2S dissimilarity, Hao dissimilarity, Teeling dissimilarity, EuF distance and Willner distance. See paper "Alignment-free d2\* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" for the definitions. The tool also provides user-friendly visualization of virus-host interactions based on the pairwise distance/dissimilarity between viruses and hosts. 
+This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. Computing these measures with VirHostMatcher is specifically used to predict the potential host of a query virus by identifying the host to which it has the strongest similarity. Predictions are based on the observation that viruses and hosts often share similar ONF patterns (Ahlgren, Ren et al. submitted). The measures computed by VirHostMatcher include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2 dissimilarity, d2\* dissimilarity, d2S dissimilarity, Hao dissimilarity, Teeling dissimilarity, EuF distance and Willner distance. There is also the option to only compute d2* dissimilarity. See paper "Alignment-free d2\* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" (Ahlgren, Ren et al. submitted) for the definitions. The tool also provides user-friendly visualization of virus-host interactions based on the pairwise distance/dissimilarity between viruses and hosts. 
 
-To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (replace "/Users/jessie/Desktop/" with your own path). 
+To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (i.e. replace "/Path_to_XXX/" with your own path). 
 
 You can find an folder named "test" containing 2 phage sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
@@ -26,7 +26,7 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 		k=6
 		order=2
 
-	To predict the hosts of viruses, users need to prepare "csv" file that saves the taxonomy inforation of each host sequences. The file should be Tab delimited and each line for one host sequence. See hostTaxa.txt for an example.
+	To predict the hosts of viruses, users need to prepare ".txt" file that saves the taxonomy information of each host sequences. The file should be Tab delimited and each line for one host sequence. See hostTaxa.txt for an example.
 
 		taxaFile=/Path_to_taxonomy_file/hostTaxa.txt
 
@@ -65,25 +65,31 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 
 	Now let us count the 1-6-mers for each of the phage and host fasta sequences.
 
+		##  for each of the phage fasta file, count the 1-6 mers and register the species to the list of phages (file phageList)
 		for fa in $phageFaDIR/*
 		do
 		name=`basename $fa`
 		kmerDIR=$outDIRtmp/kmerCount/$name
+		## count 1-6 mer freq using a for loop from k=1,2,...,6
 		for klength in $(seq 1 $k)
 		do
-		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
+		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR 
 		done
-		echo $name $kmerDIR $order >> $outDIRtmp/phageList
+		## register the species into the list of phages (file phageList) with its name, kmer freq files and the order of MC.
+		echo $name $kmerDIR $order >> $outDIRtmp/phageList 
 		done
 
+		##  for each of the host fasta file, count the 1-6 mers and register the species to the list of hosts (file hostList)
 		for fa in $hostFaDIR/*
 		do
 		name=`basename $fa`
 		kmerDIR=$outDIRtmp/kmerCount/$name
+		## count 1-6 mer freq using a for loop from k=1,2,...,6
 		for klength in $(seq 1 $k)
 		do
 		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
 		done
+		## register the species into the list of hosts (file hostList) with its name, kmer freq files and the order of MC.
 		echo $name $kmerDIR $order >> $outDIRtmp/hostList
 		done
 
