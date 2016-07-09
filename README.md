@@ -15,9 +15,9 @@ Usage
 
 This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. Computing these measures with VirHostMatcher is specifically used to predict the potential host of a query virus by identifying the host to which it has the strongest similarity. Predictions are based on the observation that viruses and hosts often share similar ONF patterns (Ahlgren, Ren et al. submitted). The measures computed by VirHostMatcher include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2 dissimilarity, d2\* dissimilarity, d2S dissimilarity, Hao dissimilarity, Teeling dissimilarity, EuF distance and Willner distance. There is also the option to only compute d2* dissimilarity. See paper "Alignment-free d2\* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" (Ahlgren, Ren et al. submitted) for the definitions. The tool also provides user-friendly visualization of virus-host interactions based on the pairwise distance/dissimilarity between viruses and hosts. 
 
-To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (i.e. replace "/Path_to_XXX/" with your own path). 
+To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (i.e. replace "<Path_to_XXX>" with your own path). 
 
-You can find an folder named "test" containing 2 phage sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
+You can find an folder named "test" containing 2 virus sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
 * Step 0: parameter settings
 
@@ -26,80 +26,18 @@ You can find an folder named "test" containing 2 phage sequences and 3 host sequ
 		k=6
 		order=2
 
-	To predict the hosts of viruses, users need to prepare ".txt" file that saves the taxonomy information of each host sequences. The file should be Tab delimited and each line for one host sequence. See hostTaxa.txt for an example.
+* Step 1: download the whole package from https://github.com/jessieren/VirHostMatcher
 
-		taxaFile=/Path_to_taxonomy_file/hostTaxa.txt
+* Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files
 
+* Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. One line for one host sequence. The sequence names should keep the same as the names of the host fasta files.
 
-* Step 1: path settings
+* Step 4: Run the program use the following command. 
 
-	Let codeDIR be the directory where the two c++ scripts locate.
+	> python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder> -b <Path_to_host_folder> -o <Path_to_output> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
 
-		codeDIR=/Path_to_VirHostMatcher_dir/VirHostMatcher
-
-	Users need to put the fasta sequences under a directory. The phage sequences and the host sequences can be in different folders. Let phageFaDIR be the path to the phage fasta files and hostFaDIR be the path to the host fasta files respectively.
-
-		phageFaDIR=/Path_to_phageFa_dir/phage
-		hostFaDIR=/Path_to_hostFa_dir/host
-
-	An output directory need to be created and set, 
-
-		outDIR=/Path_to_output_dir/output
-		mkdir $outDIR
-
-* Step 2: compile the two c++ scripts
-
-	Use a C++ compiler to compile the two c++ script countKmer.cpp and computeMeasure.cpp.
-
-		g++ $codeDIR/countKmer.cpp -o $codeDIR/countKmer.out
-		g++ $codeDIR/computeMeasure.cpp -o $codeDIR/computeMeasure.out
-
-* Step 3: count kmer frequency and compute the various measures
-
-	Two files containing the list of phages and the list of hosts are going to be generated. These files will be used in the final step: computing the various measures. 
-
-		outDIRtmp=$outDIR/tmp
-		mkdir $outDIRtmp
-		> $outDIRtmp/hostList
-		> $outDIRtmp/phageList
-
-	Now let us count the 1-6-mers for each of the phage and host fasta sequences.
-
-		##  for each of the phage fasta file, count the 1-6 mers and register the species to the list of phages (file phageList)
-		for fa in $phageFaDIR/*
-		do
-		name=`basename $fa`
-		kmerDIR=$outDIRtmp/kmerCount/$name
-		## count 1-6 mer freq using a for loop from k=1,2,...,6
-		for klength in $(seq 1 $k)
-		do
-		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR 
-		done
-		## register the species into the list of phages (file phageList) with its name, kmer freq files and the order of MC.
-		echo $name $kmerDIR $order >> $outDIRtmp/phageList 
-		done
-
-		##  for each of the host fasta file, count the 1-6 mers and register the species to the list of hosts (file hostList)
-		for fa in $hostFaDIR/*
-		do
-		name=`basename $fa`
-		kmerDIR=$outDIRtmp/kmerCount/$name
-		## count 1-6 mer freq using a for loop from k=1,2,...,6
-		for klength in $(seq 1 $k)
-		do
-		$codeDIR/countKmer.out -l -k $klength -i $fa -o $kmerDIR
-		done
-		## register the species into the list of hosts (file hostList) with its name, kmer freq files and the order of MC.
-		echo $name $kmerDIR $order >> $outDIRtmp/hostList
-		done
-
-	Now we can finally compute the various distance/dissimialrity measures
-
-		$codeDIR/computeMeasure.out -k $k -i $outDIRtmp/phageList -j $outDIRtmp/hostList -o $outDIR -t $taxaFile
-
-	If the user need only the pairwise dissimilairty matrix for d2*
-
-		$codeDIR/computeMeasure_onlyd2star.out -k $k -i $outDIRtmp/phageList -j $outDIRtmp/hostList -o $outDIR -t $taxaFile
+	For detailed description of the paramter settings,
+	> python /Path_to_VirHostMatcher/vhm.py --help 
 
 * Congratulations! The results can be find in $outDIR. The output folder contains,
 
