@@ -545,6 +545,116 @@ void loadSpeciesInfo(string speciesInfoFilePathName, vector<SPECIESINFO>& specie
 
 
 
+int loadTaxaInfo (string taxaFile, vector<string>& hostNCBIName, vector<string>& hostName, vector<string>& hostSuperkingdom, vector<string>& hostPhylum, vector<string>& hostClass, vector<string>& hostOrder, vector<string>& hostFamily, vector<string>& hostGenus, vector<string>& hostSpecies)
+{
+	ifstream taxaFileIn(taxaFile.c_str());
+	string currentTaxaLine;
+	string token;
+	int lineNum = 0;
+	int taxaColCount = 0;
+	int errorTaxa = 0;
+	
+	while( getline(taxaFileIn, currentTaxaLine) )
+	{
+		//cout << currentTaxaLine << endl;
+		lineNum++;
+		
+		if( lineNum == 1 )
+		{
+			// first line is the header
+			std::istringstream ss(currentTaxaLine);
+			taxaColCount = 0;
+			while(std::getline(ss, token, '\t')) {
+				taxaColCount++;
+				//cout << taxaColCount << endl;
+				//cout << token << endl;
+				if(taxaColCount == 1){
+					if(token != "hostNCBIName"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 2){
+					if(token != "hostName"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 3){
+					if(token != "hostSuperkingdom"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 4){
+					if(token != "hostPhylum"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 5){
+					if(token != "hostClass"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 6){
+					if(token != "hostOrder"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 7){
+					if(token != "hostFamily"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 8){
+					if(token != "hostGenus"){
+						errorTaxa = 1;
+					}
+				}else if(taxaColCount == 9){
+					if(token != "hostSpecies"){
+						errorTaxa = 1;
+					}
+				}
+			}
+			if(errorTaxa == 1)
+			{
+				cerr << "the format of taxaFile is not correct!" << endl;
+				return 0;
+			}
+			
+		}else{
+			
+			std::istringstream ss(currentTaxaLine);
+			taxaColCount = 0;
+			while(std::getline(ss, token, '\t')) {
+				taxaColCount++;
+				//cout << taxaColCount << endl;
+				//cout << token << endl;
+				if(taxaColCount == 1){
+					hostNCBIName.push_back(token);
+					//cout << "check token " << hostNCBIName[0] << endl;
+				}else if(taxaColCount == 2){
+					hostName.push_back(token);
+					//cout << "check token " << token << endl;
+				}else if(taxaColCount == 3){
+					hostSuperkingdom.push_back(token);
+					//cout << "check token " << token << endl;
+				}else if(taxaColCount == 4){
+					hostPhylum.push_back(token);
+				}else if(taxaColCount == 5){
+					hostClass.push_back(token);
+				}else if(taxaColCount == 6){
+					hostOrder.push_back(token);
+				}else if(taxaColCount == 7){
+					hostFamily.push_back(token);
+				}else if(taxaColCount == 8){
+					hostGenus.push_back(token);
+					//cout << "check token " << token << endl;
+				}else if(taxaColCount == 9){
+					hostSpecies.push_back(token);
+					//cout << "check token " << token << endl;
+				}
+			}
+		}
+		
+	}
+	
+	return lineNum-1;
+}
+
+
+
+
 
 
 
@@ -1684,6 +1794,9 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	
 	string speciesInfoFilePathNameA;
 	string speciesInfoFilePathNameB;
+	string taxaFile;
+	string outDIR;
+	string htmlTmpDIR;
 	
 	vector<string> *measureNames = new vector<string>;
 	
@@ -1710,12 +1823,14 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			{"kvalue",  required_argument, 0, 'k'},
 			{"inputFileDir1",  required_argument, 0, 'i'},
 			{"inputFileDir2",  required_argument, 0, 'j'},
+			{"taxaFile",  required_argument, 0, 't'},
+			{"outDir",  required_argument, 0, 'o'},
 			{0,         0,                 0,  0 }
 		};
 		/* getopt_long stores the option index here. */
 		int option_index = 0;
 		
-		c = getopt_long (argc, argv, "k:i:j:",
+		c = getopt_long (argc, argv, "k:i:j:t:o:",
 										 long_options, &option_index);
 		
 		/* Detect the end of the options. */
@@ -1768,6 +1883,16 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 				//printf ("option -j, the input kmer count file directory, with value `%s'\n", optarg);
 				break;
 				
+			case 't':
+				taxaFile = string(optarg);
+				//printf ("option -t, the taxonomy file for host contigs, with value `%s'\n", optarg);
+				break;
+				
+			case 'o':
+				outDIR = string(optarg);
+				//printf ("option -o, the output directory, with value `%s'\n", optarg);
+				break;
+				
 			case '?':
 				/* getopt_long already printed an error message. */
 				break;
@@ -1778,10 +1903,28 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	}
 
 	
+	/////////// preparation for visualization: loading taxa files ////////////////
+	// cp Yang's visualization files to outDIR
+	string cmdString = string(argv[0]);
+	size_t found = cmdString.find_last_of("/");
+	string cmdDIR = cmdString.substr(0,found);
+	
+	string cpCssCMD = "cp -r " + cmdDIR + "/css" + " " + outDIR;
+	system(cpCssCMD.c_str());
+	string cpLibCMD = "cp -r " + cmdDIR + "/lib" + " " + outDIR;
+	system(cpLibCMD.c_str());
+	string cpLogoCMD = "cp -r " + cmdDIR + "/logo.jpg" + " " + outDIR;
+	system(cpLogoCMD.c_str());
+	
+	htmlTmpDIR = outDIR + "/" + "tmp_html";
+	system(("mkdir " + htmlTmpDIR).c_str());
+	
 
 	///////////////////////////////////////////////////////////////////////
 	//////////////////// load the species information /////////////////////
 	///////////////////////////////////////////////////////////////////////
+	cerr << "......computing measures......" << endl;
+	
 	vector<SPECIESINFO> speciesInfoListA;
 	loadSpeciesInfo(speciesInfoFilePathNameA, speciesInfoListA);
 	
@@ -2040,6 +2183,57 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		delete iniProbB;
 		delete transMatrixB;
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////
+	////////////////////////// load taxa file ////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	
+	vector<string> hostNCBIName;
+	vector<string> hostName;
+	vector<string> hostSuperkingdom;
+	vector<string> hostPhylum;
+	vector<string> hostClass;
+	vector<string> hostOrder;
+	vector<string> hostFamily;
+	vector<string> hostGenus;
+	vector<string> hostSpecies;
+	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus, hostSpecies);
+	
+	if( taxaLineNum != speciesInfoListB.size() )
+	{
+		cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
+		return 0;
+	}
+	////////// sort the taxa info by NCBINames in the input hostList file /////////
+	vector<string> hostName_sort;
+	vector<string> hostSuperkingdom_sort;
+	vector<string> hostPhylum_sort;
+	vector<string> hostClass_sort;
+	vector<string> hostOrder_sort;
+	vector<string> hostFamily_sort;
+	vector<string> hostGenus_sort;
+	vector<string> hostSpecies_sort;
+	for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+	{
+		SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
+		string currentHostNCBIName = speciesInfoB.name;
+		vector<string>::iterator it=find(hostNCBIName.begin(),hostNCBIName.end(),currentHostNCBIName);
+		int pos = distance(hostNCBIName.begin(), it);
+		//cout << currentHostNCBIName << ":" << pos << endl;
+		hostName_sort.push_back(hostName[pos]);
+		hostSuperkingdom_sort.push_back(hostSuperkingdom[pos]);
+		hostPhylum_sort.push_back(hostPhylum[pos]);
+		hostClass_sort.push_back(hostClass[pos]);
+		hostOrder_sort.push_back(hostOrder[pos]);
+		hostFamily_sort.push_back(hostFamily[pos]);
+		hostGenus_sort.push_back(hostGenus[pos]);
+		hostSpecies_sort.push_back(hostSpecies[pos]);
+	}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////// output //////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
 
 	// output the matrix
 	for( int statID = 0; statID < measureNames->size(); statID++ )
@@ -2047,32 +2241,194 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		string statName = measureNames->at(statID);
 		
 		// first row: statName and colnames
-		cout << statName << ",";
-		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
-		{
-			SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
-			cout << speciesInfoB.name << ",";
-		}
-		cout << endl;
+		//cout << statName << ",";
 		
+		ofstream csvOut;
+		string csvFileName = outDIR + "/" + statName + "_k" + kstr + ".csv";
+		csvOut.open(csvFileName.c_str());
+		
+		ofstream html2Out;
+		string html2FileName = htmlTmpDIR + "/" + statName + "_k" + kstr + "_main.html_part2";
+		html2Out.open(html2FileName.c_str());
+		
+		// create variables for Yang's visualization: virusNameArr
+		html2Out << "var virusNameArr = [";
 		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
 		{
 			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
-			cout << speciesInfoA.name << ",";
-			
+			html2Out << "\"" << speciesInfoA.name << "\"";
+			if(IDA != speciesInfoListA.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		// first row: statName and colnames
+		csvOut << statName << ",";
+		
+		// create variables for Yang's visualization: hostNameArr
+		html2Out << "var hostNameArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
+		{
+			SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
+			csvOut << speciesInfoB.name << ",";
+			html2Out << "\"" << speciesInfoB.name << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		csvOut << endl;
+		html2Out << "];" << endl;
+		
+		/////////////// output the matrix: csv files //////////////
+		// create variables for Yang's visualization: virusHostMat
+		html2Out << "var virusHostMat = [";
+		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
+		{
+			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
+			csvOut << speciesInfoA.name << ",";
+			html2Out << "[";
 			for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 			{
 				SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
-				cout << resultMatrix[statID][IDA][IDB] << ",";
+				csvOut << resultMatrix[statID][IDA][IDB] << ",";
+				html2Out << resultMatrix[statID][IDA][IDB];
+				if( IDB != speciesInfoListB.size()-1 )
+				{
+					html2Out << ",";
+				}
 			}
-			cout << endl;
+			html2Out << "]";
+			csvOut << endl;
+			if(IDA != speciesInfoListA.size()-1 )
+			{
+				html2Out << "," << endl;
+			}
 		}
+		csvOut.close();
+		html2Out << "];" << endl;
+		
+		
+		
+		//////////////////// preparation for visualization ////////////////////////
+		// create variable for Yang's visualization: host taxonomy
+		
+		
+		
+		html2Out << "var superkingdomArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostSuperkingdom_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var phylumArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostPhylum_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var classArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostClass_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var orderArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostOrder_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var familyArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostFamily_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var genusArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostGenus_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var speciesArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostSpecies_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		html2Out << "var organismArr = [";
+		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+		{
+			html2Out << "\"" << hostName_sort[IDB] << "\"";
+			if(IDB != speciesInfoListB.size()-1 ){
+				html2Out << ", ";
+			}
+		}
+		html2Out << "];" << endl;
+		
+		// cat html_part1, 2 and 3
+		string html1FileName = cmdDIR + "/main.html_part1";
+		string html3FileName = cmdDIR + "/main.html_part3";
+		string htmlFileName = outDIR + "/" + statName + "_k" + kstr + "_main.html";
+		string catCMD = "cat " + html1FileName + " " + html2FileName + " " + html3FileName + " > " + htmlFileName;
+		system(catCMD.c_str());
+		
 	}
 	
+	system(("rm -rf " + htmlTmpDIR).c_str());
 	
   //fout.close();
-  
 
   return 0;
 }
 
+
+
+//		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
+//		{
+//			SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
+//			cout << speciesInfoB.name << ",";
+//		}
+//		cout << endl;
+//
+//		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
+//		{
+//			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
+//			cout << speciesInfoA.name << ",";
+//
+//			for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
+//			{
+//				SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
+//				cout << resultMatrix[statID][IDA][IDB] << ",";
+//			}
+//			cout << endl;
+//		}

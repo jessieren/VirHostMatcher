@@ -650,14 +650,6 @@ char* dataPreProcess(char *inputFileName, char *outputFileDir, char *shortName, 
 
 
 
-
-
-
-
-
-
-
-
 ///////////////////////////////////
 /* Define the global variables */
 
@@ -773,6 +765,7 @@ int main (int argc, char **argv)
 		while (optind < argc)
 			printf ("%s ", argv[optind++]);
 		putchar ('\n');
+		return 0;
 	}
 	
 
