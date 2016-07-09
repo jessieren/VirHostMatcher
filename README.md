@@ -27,10 +27,10 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 
 * Step 4: Run the program use the following command. 
 
-	python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder> -b <Path_to_host_folder> -o <Path_to_output> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
+		python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder> -b <Path_to_host_folder> -o <Path_to_output> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
 
 	For detailed description of the paramter settings,
-	python /Path_to_VirHostMatcher/vhm.py --help 
+		python /Path_to_VirHostMatcher/vhm.py --help 
 
 * Congratulations! The results can be find in $outDIR. The output folder contains,
 
