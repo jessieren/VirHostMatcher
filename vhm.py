@@ -152,7 +152,7 @@ hostListFileWrite.close()
 sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
 								" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
-print cmdCptMeasure
+#print cmdCptMeasure
 cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
 														 stderr = subprocess.PIPE, \
 														 stdout = subprocess.PIPE)
