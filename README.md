@@ -19,13 +19,6 @@ To use the tool, please simply follow the steps and copy and paste the following
 
 You can find an folder named "test" containing 2 virus sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
-* Step 0: parameter settings
-
-	We set the kmer length k=6, and the Markov chian order=2.
-
-		k=6
-		order=2
-
 * Step 1: download the whole package from https://github.com/jessieren/VirHostMatcher
 
 * Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files
@@ -34,10 +27,10 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 
 * Step 4: Run the program use the following command. 
 
-	> python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder> -b <Path_to_host_folder> -o <Path_to_output> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
+	python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder> -b <Path_to_host_folder> -o <Path_to_output> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
 
 	For detailed description of the paramter settings,
-	> python /Path_to_VirHostMatcher/vhm.py --help 
+	python /Path_to_VirHostMatcher/vhm.py --help 
 
 * Congratulations! The results can be find in $outDIR. The output folder contains,
 
