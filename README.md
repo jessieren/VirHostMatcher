@@ -23,11 +23,12 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 
 * Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files
 
-* Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. One line for one host sequence. The sequence names should keep the same as the names of the host fasta files.
+* Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. One line for one host sequence. The sequence names should keep the same as the names of the host fasta files. 
+	If there is no taxonomy information, a hostTaxa.txt file will be generated with all "unknown"s.
 
 * Step 4: Run the program use the following command. 
 
-		python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder> -b <Path_to_host_folder> -o <Path_to_output> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
+		python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder(required)> -b <Path_to_host_folder(required)> -o <Path_to_output(required)> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
 
 	For detailed description of the paramter settings,
 		python /Path_to_VirHostMatcher/vhm.py --help 
