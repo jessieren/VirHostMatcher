@@ -24,7 +24,7 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 * Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files
 
 * Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. One line for one host sequence. The sequence names should keep the same as the names of the host fasta files. 
-	If there is no taxonomy information, a hostTaxa.txt file will be generated with all "unknown"s.
+	If there is no taxonomy information, a hostTaxa.txt file will be generated in the output directory with all "unknown"s.
 
 * Step 4: Run the program use the following command. 
 
