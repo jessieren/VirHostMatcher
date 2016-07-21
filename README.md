@@ -21,7 +21,7 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 
 * Step 1: download the whole package from https://github.com/jessieren/VirHostMatcher
 
-* Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files
+* Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files. No subfolders are allowed. All fasta files should be put in the same directory.
 
 * Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. One line for one host sequence. The sequence names should keep the same as the names of the host fasta files. 
 	If there is no taxonomy information, a hostTaxa.txt file will be generated in the output directory with all "unknown"s.
