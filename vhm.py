@@ -24,7 +24,7 @@ parser.add_option("-d", "--d2star", action = "store", type = "string", dest = "o
 (options, args) = parser.parse_args()
 if (options.virusFaDir is None or
 		options.hostFaDir is None) :
-	sys.stderr.write(prog_base + ": error: missing required command-line argument")
+	sys.stderr.write(prog_base + ": Error: missing required command-line argument")
 	parser.print_help()
 	sys.exit(0)
 
@@ -56,7 +56,7 @@ countKmerOut = os.path.join(vhmPath, "countKmer.out")
 if os.path.exists(countKmerCpp) :
 	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
 else :
-	sys.stderr.write( "can't find countKmer.cpp file in " + vhmPath + "\n")
+	sys.stderr.write( "Error: can't find countKmer.cpp file in " + vhmPath + "\n")
 	sys.exit(0)
 
 
@@ -70,7 +70,7 @@ computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
 if os.path.exists(computeMeasureCpp) :
 	os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
 else :
-	sys.stderr.write( "can't find computeMeasure.cpp file in " + vhmPath + "\n")
+	sys.stderr.write( "Error: can't find computeMeasure.cpp file in " + vhmPath + "\n")
 	sys.exit(0)
 
 computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
@@ -83,7 +83,7 @@ computed2starOut = os.path.join(vhmPath, "computeMeasure_onlyd2star.out")
 if os.path.exists(computed2starCpp) :
 	os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
 else :
-	sys.stderr.write( "can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
+	sys.stderr.write( "Error: can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
 	sys.exit(0)
 
 
@@ -175,7 +175,7 @@ for currentFileName in virusFaList :
 													 currentKmerCountPath + " " +\
 													str(2) + "\n")
 	else :
-		sys.stderr.write( "error in counting kmers for " + currentFileNameS + "\n")
+		sys.stderr.write( "Error in counting kmers for " + currentFileNameS + "\n")
 		sys.exit(0)
 
 virusListFileWrite.close()
@@ -184,6 +184,9 @@ virusListFileWrite.close()
 for currentFileName in hostFaList :
 	if currentFileName.startswith('.') :
 		continue
+	if os.path.isdir(os.path.join(options.hostFaDir, currentFileName)) :
+		sys.stderr.write( "Error: zero bytes of file " + currentFileNameS + "\n")
+		sys.exit(0)
 	if len(currentFileName) > nameLen :
 		currentFileNameS = currentFileName[:nameLen]
 	else :
@@ -201,9 +204,14 @@ for currentFileName in hostFaList :
 																			stderr = subprocess.PIPE, \
 																			stdout = subprocess.PIPE)
 		cmdKmerOut.wait()
-	hostListFileWrite.write(currentFileNameS + " " + \
-												 currentKmerCountPath + " " +\
-												 str(2) + "\n")
+
+	if len(os.listdir(currentKmerCountPath)) == ( kmax + 1 ) :
+		hostListFileWrite.write(currentFileNameS + " " + \
+												currentKmerCountPath + " " +\
+												str(2) + "\n")
+	else :
+		sys.stderr.write( "Error in counting kmers for " + currentFileNameS + "\n")
+		sys.exit(0)
 hostListFileWrite.close()
 
 
