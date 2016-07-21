@@ -34,6 +34,9 @@ nameLen = 25
 #################### 0: preparation ############################
 ## path to the programs
 vhmPath  = os.path.dirname(sys.argv[0])
+if len(vhmPath) == 0 :
+	vhmPath="./"
+#print vhmPath
 
 ## kmer length and MC order
 kmax = 6
@@ -42,7 +45,7 @@ order = 2
 ## compile c++ code if not
 countKmerCpp = os.path.join(vhmPath, "countKmer.cpp")
 countKmerOut = os.path.join(vhmPath, "countKmer.out")
-#print countKmerCpp
+#print countKmerOut
 
 #if not os.path.exists(countKmerOut) and os.path.exists(countKmerCpp) :
 #	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
