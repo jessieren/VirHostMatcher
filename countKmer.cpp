@@ -524,9 +524,9 @@ unsigned long DataKmerCount(char* combinefileName, char* outputFileDir, char* sh
 	}
 	if (doubleStrand == false) {
 		// single strand
-		strcat(kmerCountfile,"_singleStrand_wordcount");
+		strcat(kmerCountfile,"_ss_wc");
 	}else{
-		strcat(kmerCountfile,"_doubleStrand_wordcount");
+		strcat(kmerCountfile,"_ds_wc");
 	}
 	cout << "kmerCountFileName: " << kmerCountfile << endl;
 	ofstream foutKmerCount(kmerCountfile);

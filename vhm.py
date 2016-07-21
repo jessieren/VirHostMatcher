@@ -29,7 +29,8 @@ if (options.virusFaDir is None or
 	sys.exit(0)
 
 
-nameLen = 25
+nameLen = 93 - len(options.outDir)
+## possibly because of the kmercount folder name for each contig is too long?
 
 #################### 0: preparation ############################
 ## path to the programs
@@ -99,7 +100,7 @@ if not os.path.exists(tmpDir) :
 	os.makedirs(tmpDir)
 
 ## kmer count directory
-kmerCountPath = os.path.join(tmpDir, "kmerCount")
+kmerCountPath = os.path.join(tmpDir, "KC")
 if not os.path.exists(kmerCountPath) :
 	os.makedirs(kmerCountPath)
 
@@ -133,7 +134,7 @@ for currentFileName in hostFaList :
 	if currentFileName.startswith('.') :
 		continue
 	if len(currentFileName) > nameLen :
-		sys.stdout.write( " the file name has more than 25 letters! Use the first 25 letters as the name \n")
+		sys.stdout.write( " the file name has more than " + str(nameLen) + " letters! Use the first " + str(nameLen) + " letters as the name \n")
 		currentFileNameS = currentFileName[:nameLen]
 	else :
 		currentFileNameS = currentFileName
@@ -168,9 +169,15 @@ for currentFileName in virusFaList :
 																			stderr = subprocess.PIPE, \
 																			stdout = subprocess.PIPE)
 		cmdKmerOut.wait()
-	virusListFileWrite.write(currentFileNameS + " " + \
+
+	if len(os.listdir(currentKmerCountPath)) == ( kmax + 1 ):
+		virusListFileWrite.write(currentFileNameS + " " + \
 													 currentKmerCountPath + " " +\
-														str(2) + "\n")
+													str(2) + "\n")
+	else :
+		sys.stderr.write( "error in counting kmers for " + currentFileNameS + "\n")
+		sys.exit(0)
+
 virusListFileWrite.close()
 
 

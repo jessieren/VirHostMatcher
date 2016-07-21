@@ -1879,18 +1879,18 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		
 		//cout << "======= species " << speciesInfoA.name << " order " << speciesInfoA.order << endl;
 		//KMERINFO* speciesKmerInfoA = new KMERINFO();
-		std::string kmerFilePathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + kstr + "_singleStrand_wordcount";
+		std::string kmerFilePathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + kstr + "_ss_wc";
 		loadKmerCountHash(kmerFilePathNameA, speciesKmerInfoListA[IDA], "kmerCount");
 		
 		// !!! 20150629, totalK_1/totalK_2 are not the same as totalOrder/totalOrder_1 !!!
 		//cout << "==== HAO: load the kmer count for (k-1) = " << k_1str << " ==" << endl;
-		std::string kmerFilek_1PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + k_1str + "_singleStrand_wordcount";
+		std::string kmerFilek_1PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + k_1str + "_ss_wc";
 		//cout << "kmerFile: " << kmerFilek_1PathNameA << endl;
 		loadKmerCountHash(kmerFilek_1PathNameA, speciesKmerInfoListA[IDA], "kmerCount_1");
 		
 		// load the kmer count for MC: k=order+1
 		//cout << "==== HAO: load the kmer count for (k-2) = " << k_2str << " ==" << endl;
-		std::string kmerFilek_2PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + k_2str + "_singleStrand_wordcount";
+		std::string kmerFilek_2PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + k_2str + "_ss_wc";
 		//cout << "kmerFile: " << kmerFilek_2PathNameA << endl;
 		loadKmerCountHash(kmerFilek_2PathNameA, speciesKmerInfoListA[IDA], "kmerCount_2");
 
@@ -1905,7 +1905,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		{
 			// load the 1-kmer count for MC: k=order+1
 			//cout << "== load the kmer count for MC, order is " << speciesInfoListA[IDA]->order << " ==" << endl;
-			std::string kmerFileOrder1PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + order1strA + "_singleStrand_wordcount";
+			std::string kmerFileOrder1PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + order1strA + "_ss_wc";
 			//cout << "kmerFile: " << kmerFileOrder1PathName << endl;
 			loadKmerCountHash(kmerFileOrder1PathNameA, speciesKmerInfoListA[IDA], "kmerOrder+1");
 			// compute the pw
@@ -1920,13 +1920,13 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			
 			// load the kmer count for MC: k=order
 			//cout << "== load the kmer count for MC, order is " << order << " ==" << endl;
-			std::string kmerFileOrderPathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + orderstrA + "_singleStrand_wordcount";
+			std::string kmerFileOrderPathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + orderstrA + "_ss_wc";
 			//cout << "kmerFile: " << kmerFileOrderPathName << endl;
 			loadKmerCountHash(kmerFileOrderPathNameA, speciesKmerInfoListA[IDA], "kmerOrder");
 			
 			// load the kmer count for MC: k=order+1
 			//cout << "== load the kmer count for MC, order+1 is " << order1str << " ==" << endl;
-			std::string kmerFileOrder1PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + order1strA + "_singleStrand_wordcount";
+			std::string kmerFileOrder1PathNameA = speciesInfoA.dir + speciesInfoA.name + "_k" + order1strA + "_ss_wc";
 			//cout << "kmerFile: " << kmerFileOrder1PathName << endl;
 			loadKmerCountHash(kmerFileOrder1PathNameA, speciesKmerInfoListA[IDA], "kmerOrder+1");
 			
@@ -1971,19 +1971,19 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		sprintf(k_2str, "%d", k-2);
 		
 		//cout << "======= species " << speciesInfoB.name << " order " << speciesInfoB.order << endl;
-		std::string kmerFilePathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + kstr + "_singleStrand_wordcount";
+		std::string kmerFilePathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + kstr + "_ss_wc";
 		loadKmerCountHash(kmerFilePathNameB, speciesKmerInfoB, "kmerCount");
 
 		// !!! 20150629, totalK_1/totalK_2 are not the same as totalOrder/totalOrder_1 !!!
 		//cout << "==== HAO: load the kmer count for (k-1) = " << k_1str << " ==" << endl;
-		std::string kmerFilek_1PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + k_1str + "_singleStrand_wordcount";
+		std::string kmerFilek_1PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + k_1str + "_ss_wc";
 		//cout << "kmerFile: " << kmerFilek_1PathNameB << endl;
 		loadKmerCountHash(kmerFilek_1PathNameB, speciesKmerInfoB, "kmerCount_1");
 		//cout << "HashTableK_1 " << " word " << currentKmerRemoveLastTen << " kmercount " << speciesKmerInfoB->HashTableK_1[currentKmerRemoveLastTen] << " totalK_1 " << speciesKmerInfoB->totalK_1 << endl;
 		
 		// load the kmer count for MC: k=order+1
 		//cout << "==== HAO: load the kmer count for (k-2) = " << k_2str << " ==" << endl;
-		std::string kmerFilek_2PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + k_2str + "_singleStrand_wordcount";
+		std::string kmerFilek_2PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + k_2str + "_ss_wc";
 		//cout << "kmerFile: " << kmerFilek_2PathNameB << endl;
 		loadKmerCountHash(kmerFilek_2PathNameB, speciesKmerInfoB, "kmerCount_2");
 		
@@ -2002,7 +2002,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		{
 			// load the 1-kmer count for MC: k=order+1
 			//cout << "== load the kmer count for MC, order is " << speciesInfoListA[IDA]->order << " ==" << endl;
-			std::string kmerFileOrder1PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + order1strB + "_singleStrand_wordcount";
+			std::string kmerFileOrder1PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + order1strB + "_ss_wc";
 			//cout << "kmerFile: " << kmerFileOrder1PathName << endl;
 			loadKmerCountHash(kmerFileOrder1PathNameB, speciesKmerInfoB, "kmerOrder+1");
 			// compute the pw
@@ -2018,13 +2018,13 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			
 			// load the kmer count for MC: k=order
 			//cout << "== load the kmer count for MC, order is " << order << " ==" << endl;
-			std::string kmerFileOrderPathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + orderstrB + "_singleStrand_wordcount";
+			std::string kmerFileOrderPathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + orderstrB + "_ss_wc";
 			//cout << "kmerFile: " << kmerFileOrderPathName << endl;
 			loadKmerCountHash(kmerFileOrderPathNameB, speciesKmerInfoB, "kmerOrder");
 			
 			// load the kmer count for MC: k=order+1
 			//cout << "== load the kmer count for MC, order+1 is " << order1str << " ==" << endl;
-			std::string kmerFileOrder1PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + order1strB + "_singleStrand_wordcount";
+			std::string kmerFileOrder1PathNameB = speciesInfoB.dir + speciesInfoB.name + "_k" + order1strB + "_ss_wc";
 			//cout << "kmerFile: " << kmerFileOrder1PathName << endl;
 			loadKmerCountHash(kmerFileOrder1PathNameB, speciesKmerInfoB, "kmerOrder+1");
 			
