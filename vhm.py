@@ -227,43 +227,12 @@ cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
 cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
 														 stderr = subprocess.PIPE, \
 														 stdout = subprocess.PIPE)
+for line in iter(cmdCptMeasureOut.stderr.readline, b''):
+	sys.stdout.write(line)
 cmdCptMeasureOut.wait()
 
 
 
 
-
-
-
-
-
-#out, err = cmdCptMeasureOut.communicate()
-#print out
-#print err
-
-#sys.stderr.write( processSubGLOB.communicate()[1] )
-#	if processSubGLOB.wait() != 0 :
-#		sys.stderr.write("ERROR: global directory initialization fails \n")
-#
-
-
-
-
-
-#os.system(countKmerOut + " -l -k " + str(w) + " -i " + filePath + " -o " + kmerCountPath)
-
-
-#for fileName in hostFaList :
-#	for w in range(1, kmax) :
-#		filePath = os.path.join(options.hostFaDir, fileName)
-#		os.system(countKmerOut + " -l -k " + str(w) + " -i " + filePath + " -o " + kmerCountPath)
-#
-
-
-
-
-
-
-## python ./vhm.py -v /Users/jessie/Desktop/alignment-free/VirHostMatcher/test/virus -b /Users/jessie/Desktop/alignment-free/VirHostMatcher/test/host -o /Users/jessie/Desktop/alignment-free/VirHostMatcher/test/ -t /Users/jessie/Desktop/alignment-free/VirHostMatcher/hostTaxa.txt
 
 

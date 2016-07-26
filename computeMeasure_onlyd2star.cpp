@@ -1923,7 +1923,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	///////////////////////////////////////////////////////////////////////
 	//////////////////// load the species information /////////////////////
 	///////////////////////////////////////////////////////////////////////
-	cerr << "......computing measures......" << endl;
+	//cerr << "......computing measures......" << endl;
 	
 	vector<SPECIESINFO> speciesInfoListA;
 	loadSpeciesInfo(speciesInfoFilePathNameA, speciesInfoListA);
@@ -2160,7 +2160,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			//cout << "=== start computing statistics === " << endl;
 			//cout << "speciesA:" << IDA << endl;
 			//cout << "speciesB:" << IDB << endl;
-			cerr << speciesInfoA.name << " - " << speciesInfoB.name << endl;
+			cerr << " pair " << speciesInfoA.name << " - " << speciesInfoB.name << endl;
 			
 			vector<double> *measureValues = new vector<double>;
 			measureNames->clear();
