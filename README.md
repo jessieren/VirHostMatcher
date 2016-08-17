@@ -19,7 +19,7 @@ To use the tool, please simply follow the steps and copy and paste the following
 
 You can find an folder named "test" containing 2 virus sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
-* Step 1: download the whole package from https://github.com/jessieren/VirHostMatcher
+* Step 1: Download the whole package from https://github.com/jessieren/VirHostMatcher
 
 * Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files. No subfolders are allowed. All fasta files should be put in the same directory.
 
@@ -33,7 +33,7 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 	For detailed description of the paramter settings,
 		python /Path_to_VirHostMatcher/vhm.py --help 
 
-* Congratulations! The results can be find in <Path_to_output>. The output folder contains,
+* Congratulations! The results can be find in the output folder. The output folder contains,
 
 	[measure Name]_k[k-tuple length].csv	The dissimilarity/distance matrix for paris of virus and hosts;
 
