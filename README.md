@@ -33,7 +33,7 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 	For detailed description of the paramter settings,
 		python /Path_to_VirHostMatcher/vhm.py --help 
 
-* Congratulations! The results can be find in $outDIR. The output folder contains,
+* Congratulations! The results can be find in <Path_to_output>. The output folder contains,
 
 	[measure Name]_k[k-tuple length].csv	The dissimilarity/distance matrix for paris of virus and hosts;
 
