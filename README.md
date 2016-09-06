@@ -15,9 +15,9 @@ Usage
 
 This program is used to compute various oligonucleotide frequency (ONF) based distance/dissimialrity measures between a pair of DNA sequences. Computing these measures with VirHostMatcher is specifically used to predict the potential host of a query virus by identifying the host to which it has the strongest similarity. Predictions are based on the observation that viruses and hosts often share similar ONF patterns (Ahlgren, Ren et al. submitted). The measures computed by VirHostMatcher include Euclidian distance (Eu), Manhattan distance (Ma), Chebyshev distance (Ch), Jensen-Shannon divergence (JS), d2 dissimilarity, d2\* dissimilarity, d2S dissimilarity, Hao dissimilarity, Teeling dissimilarity, EuF distance and Willner distance. There is also the option to only compute d2* dissimilarity. See paper "Alignment-free d2\* oligonucleotide frequency dissimilarity measure improves accuracy of predicting virus-host interactions" (Ahlgren, Ren et al. submitted) for the definitions. The tool also provides user-friendly visualization of virus-host interactions based on the pairwise distance/dissimilarity between viruses and hosts. 
 
-To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (i.e. replace "<Path_to_XXX>" with your own path). 
+To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (i.e. replace <Path_to_XXX> with your own path). 
 
-You can find an folder named "test" containing 2 virus sequences and 3 host sequences in fasta format. Here we use this test data to show how to use the tool.
+You can find an folder named "test" containing 12 virus sequences and 23 host sequences in fasta format. Here we use this test data to show how to use the tool.
 
 * Step 1: Download the whole package from https://github.com/jessieren/VirHostMatcher
 
@@ -40,7 +40,8 @@ You can find an folder named "test" containing 2 virus sequences and 3 host sequ
 	[measure Name]_k[k-tuple length].main.html	The html file for visulization of the virus-host interactions;
 	
 
-
+For the test data, run the program with the following command,
+		python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/virus -b /Path_to_VirHostMatcher/test/host -o /Path_to_VirHostMatcher/out23by12 -t /Path_to_VirHostMatcher/test/hostTaxa.txt
 
 
 Contacts and bug reports
