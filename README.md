@@ -7,7 +7,7 @@ Basic tools for computing various oligonucleotide frequency (ONF) based distance
 Requirements
 ---------------
 
-The source code is written by C++ and wrapped by a python script. Thus it requires python and C++ compiler. It works under Windows, Linux or Mac environment. The phthon script automatically compiles the C++ source codes. No extra compilation is required.  
+The source code is written by C++ and wrapped by a python script. Thus it requires python and C++ compiler. It works under Windows, Linux or Mac environment. The python script automatically compiles the C++ source codes. No extra compilation is required.  
 
 
 Usage
