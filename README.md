@@ -40,9 +40,9 @@ You can find an folder named "test" containing 12 virus sequences and 23 host se
 	[measure Name]_k[k-tuple length].main.html	The html file for visulization of the virus-host interactions;
 	
 
-For the test data, run the program with the following command,
+For the test data, run the program with the following command, 
 
-		python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/virus -b /Path_to_VirHostMatcher/test/host -o /Path_to_VirHostMatcher/out23by12 -t /Path_to_VirHostMatcher/test/hostTaxa.txt
+python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/virus -b /Path_to_VirHostMatcher/test/host -o /Path_to_VirHostMatcher/out23by12 -t /Path_to_VirHostMatcher/test/hostTaxa.txt
 
 
 Contacts and bug reports
