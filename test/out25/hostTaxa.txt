@@ -1,4 +1,0 @@
-hostNCBIName	hostName	hostSuperkingdom	hostPhylum	hostClass	hostOrder	hostFamily	hostGenus	hostSpecies
-NC_002163.1.fasta	unknown	unknown	unknown	unknown	unknown	unknown	unknown	unknown
-NC_003197.1.fasta	unknown	unknown	unknown	unknown	unknown	unknown	unknown	unknown
-NC_007795.1.fasta	unknown	unknown	unknown	unknown	unknown	unknown	unknown	unknown
