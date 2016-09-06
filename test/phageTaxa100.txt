@@ -1,0 +1,11 @@
+phageNCBIName	phageName	hostSuperkingdom	hostPhylum	hostClass	hostOrder	hostFamily	hostGenus	hostSpecies
+317	KM101122	Mycobacterium phage Hades	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Mycobacteriaceae	Mycobacterium	Mycobacterium smegmatis
+359	KM581061	Ruegeria phage DSS3-P1	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	Ruegeria	Ruegeria pomeroyi
+1372	HQ225832	Tetrasphaera phage TJE1	Bacteria	Actinobacteria	Actinobacteria	Micrococcales	Intrasporangiaceae	Tetrasphaera	Tetrasphaera elongata
+39	HE978309	Enterobacteria phage GEC-3S	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli
+1003	KJ094032	Enterococcus phage VD13	Bacteria	Firmicutes	Bacilli	Lactobacillales	Enterococcaceae	Enterococcus	Enterococcus faecalis
+872	HM563683	Enterobacteria phage vB_EcoM-VR7	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli
+1416	KF733017	Enterococcus phage IME-EF4	Bacteria	Firmicutes	Bacilli	Lactobacillales	Enterococcaceae	Enterococcus	Enterococcus faecalis
+572	JN662425	Burkholderia phage DC1	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Burkholderiaceae	Burkholderia	Burkholderia cepacia
+911	JQ182731	Enterobacteria phage mEp235	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli
+1175	JQ740801	Lactococcus Phage ASCC406	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Lactococcus	Lactococcus lactis
