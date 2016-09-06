@@ -124,27 +124,28 @@ hostListFileWrite = open(hostListFile, 'a')
 #time.sleep(6) # delays for 10 seconds
 
 #################### 00: if hostTaxa missing ###################
-hostTaxaFile = os.path.join(options.outDir, "hostTaxa.txt")
-hostTaxaFileWrite = open(hostTaxaFile, 'w') ## make file blank
-hostTaxaFileWrite.close()
-hostTaxaFileWrite = open(hostTaxaFile, 'a')
-
-hostTaxaFileWrite.write("hostNCBIName	hostName	hostSuperkingdom	hostPhylum	hostClass	hostOrder	hostFamily	hostGenus	hostSpecies\n")
-for currentFileName in hostFaList :
-	if currentFileName.startswith('.') :
-		continue
-	if len(currentFileName) > nameLen :
-		sys.stdout.write( " the file name has more than " + str(nameLen) + " letters! Use the first " + str(nameLen) + " letters as the name \n")
-		currentFileNameS = currentFileName[:nameLen]
-	else :
-		currentFileNameS = currentFileName
-	hostTaxaFileWrite.write(currentFileNameS)
-	for i in range(1,9) :
-		hostTaxaFileWrite.write("\t" + "unknown")
-	hostTaxaFileWrite.write("\n")
-hostTaxaFileWrite.close()
-
-options.hostTaxaFile = hostTaxaFile
+if options.hostTaxaFile is None :
+	sys.stdout.write("no hostTaxa file provided, creating a dummy one \n")
+	hostTaxaFile = os.path.join(options.outDir, "hostTaxa.txt")
+	hostTaxaFileWrite = open(hostTaxaFile, 'w') ## make file blank
+	hostTaxaFileWrite.close()
+	hostTaxaFileWrite = open(hostTaxaFile, 'a')
+	
+	hostTaxaFileWrite.write("hostNCBIName	hostName	hostSuperkingdom	hostPhylum	hostClass	hostOrder	hostFamily	hostGenus	hostSpecies\n")
+	for currentFileName in hostFaList :
+		if currentFileName.startswith('.') :
+			continue
+		if len(currentFileName) > nameLen :
+			sys.stdout.write( " the file name has more than " + str(nameLen) + " letters! Use the first " + str(nameLen) + " letters as the name \n")
+			currentFileNameS = currentFileName[:nameLen]
+		else :
+			currentFileNameS = currentFileName
+		hostTaxaFileWrite.write(currentFileNameS)
+		for i in range(1,9) :
+			hostTaxaFileWrite.write("\t" + "unknown")
+		hostTaxaFileWrite.write("\n")
+	hostTaxaFileWrite.close()
+	options.hostTaxaFile = hostTaxaFile
 
 
 
