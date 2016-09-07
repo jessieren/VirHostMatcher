@@ -41,7 +41,7 @@ To use the tool, please simply follow the steps and copy and paste the following
 A test example
 ---------------
 
-You can find an folder named "test" containing 12 virus sequences and 23 host sequences in fasta format. There are three folders under the "test" directory: "virus" contains the 12 virus fasta files, "host" contains the 23 host fasta files, and "out23by12" contains all the output results where the distance matrix files (".csv") and visualization files (".html") can be found. There is also a file called hostTaxa.txt listing the taxonomy information of the 23 host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
+You can find a directory named "test" in the VirHostMatcher package. There are three folders under the "test" directory: "virus" contains the 12 virus fasta files, "host" contains the 23 host fasta files, and "out23by12" contains all the output results where the distance matrix files (".csv") and visualization files (".html") can be found. There is also a file called hostTaxa.txt listing the taxonomy information of the 23 host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
 
 	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/virus -b /Path_to_VirHostMatcher/test/host -o /Path_to_VirHostMatcher/out23by12 -t /Path_to_VirHostMatcher/test/hostTaxa.txt
 
