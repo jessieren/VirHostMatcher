@@ -69,7 +69,7 @@
 		pathArr = [];
 		for(var colIdx=0; colIdx<hostArr.length; colIdx++) { pathArr.push([host2superkingdom[hostArr[colIdx]],host2phylum[hostArr[colIdx]],host2class[hostArr[colIdx]],host2order[hostArr[colIdx]],host2family[hostArr[colIdx]],host2genus[hostArr[colIdx]],host2species[hostArr[colIdx]]]); }
 		rootNode = 	convertToHierarchy(pathArr);
-		consensusArr = getConsensusTaxonomy(rootNode); consensusArr.shift();
+		consensusArr = getConsensusTaxonomy(rootNode); 
 		
 		$("#consensusSuperkingdom").text("Superkingdom: "+consensusArr[0]);
 		$("#consensusPhylum").text("Phylum: "+consensusArr[1]);
@@ -167,7 +167,7 @@
 			
 			maxItem = Object.keys(currNode.children)[arr.indexOf(Math.max.apply(Math,arr))];
 			
-			returnArr = [currNode.id+" ("+String(Math.round(ratio * 100) / 100)+"%)"];
+			returnArr = [currNode.children[maxItem].id+" ("+String(Math.round(ratio * 100) / 100)+"%)"];
 			returnArr = returnArr.concat(getConsensusTaxonomy(currNode.children[maxItem]));
 			return returnArr;
 		}
