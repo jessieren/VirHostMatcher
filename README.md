@@ -46,6 +46,12 @@ You can find a directory named "test" in the VirHostMatcher package. There are t
 	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/virus -b /Path_to_VirHostMatcher/test/host -o /Path_to_VirHostMatcher/out23by12 -t /Path_to_VirHostMatcher/test/hostTaxa.txt
 
 
+VirHostMatcher provides a convenient way to visualize and analyze output result through browser. In particular, for each distance/dissimialrity measure, a corresponding webpage named '[measure Name]_k[k-tuple length].main.html' will be generated under the output folder. For example, 'Hao_k6_main.html' for the case of Hao dissimilarity when k=6. The visualization mainly contains three parts: (1) select the interested host to manipulate from the left panel; (2) plot the distance heatmap between interested host and top-ranked virus in the middle. Users can further look at detailed information by moving the mouse over the corresponding grid; (3) The taxonomic consensus information is summarized in the right.
+
+<p align="center">
+  <img src="snapshot.jpg"/>
+</p>
+	
 Contacts and bug reports
 ------------------------
 Jie Ren
