@@ -102,51 +102,6 @@ else :
 	os.system("chmod 777 " + computed2starOut)
 
 
-
-
-#countKmerCpp = os.path.join(vhmPath, "countKmer.cpp")
-#countKmerOut = os.path.join(vhmPath, "countKmer.out")
-##print countKmerOut
-#
-##if not os.path.exists(countKmerOut) and os.path.exists(countKmerCpp) :
-##	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
-##elif not os.path.exists(countKmerCpp) :
-##	sys.stderr.write( "can't find countKmer.cpp file in " + vhmPath + "\n")
-##	sys.exit(0)
-#if os.path.exists(countKmerCpp) :
-#	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
-#else :
-#	sys.stderr.write( "Error: can't find countKmer.cpp file in " + vhmPath + "\n")
-#	sys.exit(0)
-
-
-#computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
-#computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
-##if not os.path.exists(computeMeasureOut) and os.path.exists(computeMeasureCpp) :
-##  os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
-##elif not os.path.exists(computeMeasureCpp) :
-##	sys.stderr.write( "can't find computeMeasure.cpp file in " + vhmPath + "\n")
-##	sys.exit(0)
-#if os.path.exists(computeMeasureCpp) :
-#	os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
-#else :
-#	sys.stderr.write( "Error: can't find computeMeasure.cpp file in " + vhmPath + "\n")
-#	sys.exit(0)
-#
-#computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
-#computed2starOut = os.path.join(vhmPath, "computeMeasure_onlyd2star.out")
-##if not os.path.exists(computed2starOut) and os.path.exists(computed2starCpp) :
-##	os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
-##elif not os.path.exists(computed2starCpp) :
-##	sys.stderr.write( "can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
-##	sys.exit(0)
-#if os.path.exists(computed2starCpp) :
-#	os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
-#else :
-#	sys.stderr.write( "Error: can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
-#	sys.exit(0)
-#
-
 if int(options.onlyD2star) == 1 :
 	computeMeasureOut=computed2starOut
 else :
@@ -223,18 +178,18 @@ for currentFileName in virusFaList :
 		currentFilePath = os.path.join(options.virusFaDir, currentFileName)
 		currentKmerCountPath = os.path.join(kmerCountPath, currentFileNameS)
 		cmdKmer = countKmerOut + " -l -k " + str(w) + \
-			" -i " + currentFilePath +\
-				" -o " + currentKmerCountPath +\
-					" -s " + currentFileNameS
+										" -i " + currentFilePath +\
+										" -o " + currentKmerCountPath +\
+										" -s " + currentFileNameS
 		cmdKmerOut = subprocess.Popen(cmdKmer, shell=True, \
-																	stderr = subprocess.PIPE, \
-																	stdout = subprocess.PIPE)
-cmdKmerOut.wait()
-	
+																			stderr = subprocess.PIPE, \
+																			stdout = subprocess.PIPE)
+		cmdKmerOut.wait()
+
 	if len(os.listdir(currentKmerCountPath)) == ( kmax + 1 ):
 		virusListFileWrite.write(currentFileNameS + " " + \
-														 currentKmerCountPath + " " +\
-														 str(2) + "\n")
+													 currentKmerCountPath + " " +\
+													str(2) + "\n")
 	else :
 		sys.stderr.write( "Error in counting kmers for " + currentFileNameS + "\n")
 		sys.exit(0)
@@ -257,19 +212,19 @@ for currentFileName in hostFaList :
 		currentFilePath = os.path.join(options.hostFaDir, currentFileName)
 		currentKmerCountPath = os.path.join(kmerCountPath, currentFileNameS)
 		cmdKmer = countKmerOut + " -l -k " + str(w) + \
-			" -i " + currentFilePath +\
-				" -o " + currentKmerCountPath +\
-					" -s " + currentFileNameS
+							" -i " + currentFilePath +\
+							" -o " + currentKmerCountPath +\
+							" -s " + currentFileNameS
 		#print cmdKmer
 		cmdKmerOut = subprocess.Popen(cmdKmer, shell=True, \
-																	stderr = subprocess.PIPE, \
-																	stdout = subprocess.PIPE)
-cmdKmerOut.wait()
-	
+																			stderr = subprocess.PIPE, \
+																			stdout = subprocess.PIPE)
+		cmdKmerOut.wait()
+
 	if len(os.listdir(currentKmerCountPath)) == ( kmax + 1 ) :
 		hostListFileWrite.write(currentFileNameS + " " + \
-														currentKmerCountPath + " " +\
-														str(2) + "\n")
+												currentKmerCountPath + " " +\
+												str(2) + "\n")
 	else :
 		sys.stderr.write( "Error in counting kmers for " + currentFileNameS + "\n")
 		sys.exit(0)
@@ -282,15 +237,15 @@ hostListFileWrite.close()
 ################### 2: compute measures #####################
 sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
-	" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
+								" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
 #print cmdCptMeasure
 #print cmdCptMeasure
 cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
-																		stderr = subprocess.PIPE, \
-																		stdout = subprocess.PIPE)
+														 stderr = subprocess.PIPE, \
+														 stdout = subprocess.PIPE)
 for line in iter(cmdCptMeasureOut.stderr.readline, b''):
 	sys.stdout.write(line)
-cmdCptMeasureOut.wait()
+	cmdCptMeasureOut.wait()
 
 
 
