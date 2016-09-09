@@ -70,6 +70,8 @@ if not os.path.exists(countKmerOut) :
 	else :
 		sys.stderr.write( "Error: can't find file " + countKmerCpp + "\n")
 		sys.exit(0)
+else :
+	os.system("chmod 777 " + countKmerOut)
 
 ## computeMeasure c++ code
 computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
@@ -78,10 +80,12 @@ if not os.path.exists(computeMeasureOut) :
 	sys.stderr.write( "Warning: can't find file " + computeMeasureOut + "\n")
 	sys.stderr.write( "Trying to compile..." + "\n")
 	if os.path.exists(computeMeasureCpp) :
-			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+		os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
 	else :
 		sys.stderr.write( "Error: can't find file " + computeMeasureCpp + "\n")
 		sys.exit(0)
+else :
+	os.system("chmod 777 " + computeMeasureOut)
 
 ## computeMeasure c++ code
 computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
@@ -94,6 +98,8 @@ if not os.path.exists(computed2starOut) :
 	else :
 		sys.stderr.write( "Error: can't find file " + computed2starCpp + "\n")
 		sys.exit(0)
+else :
+	os.system("chmod 777 " + computed2starOut)
 
 
 
@@ -217,18 +223,18 @@ for currentFileName in virusFaList :
 		currentFilePath = os.path.join(options.virusFaDir, currentFileName)
 		currentKmerCountPath = os.path.join(kmerCountPath, currentFileNameS)
 		cmdKmer = countKmerOut + " -l -k " + str(w) + \
-										" -i " + currentFilePath +\
-										" -o " + currentKmerCountPath +\
-										" -s " + currentFileNameS
+			" -i " + currentFilePath +\
+				" -o " + currentKmerCountPath +\
+					" -s " + currentFileNameS
 		cmdKmerOut = subprocess.Popen(cmdKmer, shell=True, \
-																			stderr = subprocess.PIPE, \
-																			stdout = subprocess.PIPE)
-		cmdKmerOut.wait()
-
+																	stderr = subprocess.PIPE, \
+																	stdout = subprocess.PIPE)
+cmdKmerOut.wait()
+	
 	if len(os.listdir(currentKmerCountPath)) == ( kmax + 1 ):
 		virusListFileWrite.write(currentFileNameS + " " + \
-													 currentKmerCountPath + " " +\
-													str(2) + "\n")
+														 currentKmerCountPath + " " +\
+														 str(2) + "\n")
 	else :
 		sys.stderr.write( "Error in counting kmers for " + currentFileNameS + "\n")
 		sys.exit(0)
@@ -251,19 +257,19 @@ for currentFileName in hostFaList :
 		currentFilePath = os.path.join(options.hostFaDir, currentFileName)
 		currentKmerCountPath = os.path.join(kmerCountPath, currentFileNameS)
 		cmdKmer = countKmerOut + " -l -k " + str(w) + \
-							" -i " + currentFilePath +\
-							" -o " + currentKmerCountPath +\
-							" -s " + currentFileNameS
+			" -i " + currentFilePath +\
+				" -o " + currentKmerCountPath +\
+					" -s " + currentFileNameS
 		#print cmdKmer
 		cmdKmerOut = subprocess.Popen(cmdKmer, shell=True, \
-																			stderr = subprocess.PIPE, \
-																			stdout = subprocess.PIPE)
-		cmdKmerOut.wait()
-
+																	stderr = subprocess.PIPE, \
+																	stdout = subprocess.PIPE)
+cmdKmerOut.wait()
+	
 	if len(os.listdir(currentKmerCountPath)) == ( kmax + 1 ) :
 		hostListFileWrite.write(currentFileNameS + " " + \
-												currentKmerCountPath + " " +\
-												str(2) + "\n")
+														currentKmerCountPath + " " +\
+														str(2) + "\n")
 	else :
 		sys.stderr.write( "Error in counting kmers for " + currentFileNameS + "\n")
 		sys.exit(0)
@@ -276,12 +282,12 @@ hostListFileWrite.close()
 ################### 2: compute measures #####################
 sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
-								" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
+	" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
 #print cmdCptMeasure
 #print cmdCptMeasure
 cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
-														 stderr = subprocess.PIPE, \
-														 stdout = subprocess.PIPE)
+																		stderr = subprocess.PIPE, \
+																		stdout = subprocess.PIPE)
 for line in iter(cmdCptMeasureOut.stderr.readline, b''):
 	sys.stdout.write(line)
 cmdCptMeasureOut.wait()
