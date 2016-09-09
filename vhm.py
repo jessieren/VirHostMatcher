@@ -4,6 +4,7 @@ import optparse
 import subprocess
 from subprocess import call
 import time
+import platform
 
 prog_base = os.path.split(sys.argv[0])[1]
 
@@ -44,48 +45,101 @@ kmax = 6
 order = 2
 
 ## compile c++ code if not
+optSys = platform.system()
+if optSys == 'Linux' :
+	exePath = os.path.join(vhmPath, "bin", "linux64")
+elif optSys == 'Darwin' :
+	exePath = os.path.join(vhmPath, "bin", "macDarwin")
+elif optSys == 'Windows' :
+	exePath = os.path.join(vhmPath, "bin", "windows64")
+else :
+	sys.stderr.write("Error: can't recognize the operating system" + optSys + " \n")
+
+## copy exe files to vhmPath
+os.system("cp " + os.path.join(exePath, "*") + " " + vhmPath)
+
+
+## countKmer c++ code
 countKmerCpp = os.path.join(vhmPath, "countKmer.cpp")
 countKmerOut = os.path.join(vhmPath, "countKmer.out")
-#print countKmerOut
+if not os.path.exists(countKmerOut) :
+	sys.stderr.write( "Warning: can't find file " + countKmerOut + "\n")
+	sys.stderr.write( "Trying to compile..." + "\n")
+	if os.path.exists(countKmerCpp) :
+		os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
+	else :
+		sys.stderr.write( "Error: can't find file " + countKmerCpp + "\n")
+		sys.exit(0)
 
-#if not os.path.exists(countKmerOut) and os.path.exists(countKmerCpp) :
-#	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
-#elif not os.path.exists(countKmerCpp) :
-#	sys.stderr.write( "can't find countKmer.cpp file in " + vhmPath + "\n")
-#	sys.exit(0)
-if os.path.exists(countKmerCpp) :
-	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
-else :
-	sys.stderr.write( "Error: can't find countKmer.cpp file in " + vhmPath + "\n")
-	sys.exit(0)
-
-
+## computeMeasure c++ code
 computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
 computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
-#if not os.path.exists(computeMeasureOut) and os.path.exists(computeMeasureCpp) :
-#  os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
-#elif not os.path.exists(computeMeasureCpp) :
-#	sys.stderr.write( "can't find computeMeasure.cpp file in " + vhmPath + "\n")
-#	sys.exit(0)
-if os.path.exists(computeMeasureCpp) :
-	os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
-else :
-	sys.stderr.write( "Error: can't find computeMeasure.cpp file in " + vhmPath + "\n")
-	sys.exit(0)
+if not os.path.exists(computeMeasureOut) :
+	sys.stderr.write( "Warning: can't find file " + computeMeasureOut + "\n")
+	sys.stderr.write( "Trying to compile..." + "\n")
+	if os.path.exists(computeMeasureCpp) :
+			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+	else :
+		sys.stderr.write( "Error: can't find file " + computeMeasureCpp + "\n")
+		sys.exit(0)
 
+## computeMeasure c++ code
 computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
 computed2starOut = os.path.join(vhmPath, "computeMeasure_onlyd2star.out")
-#if not os.path.exists(computed2starOut) and os.path.exists(computed2starCpp) :
-#	os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
-#elif not os.path.exists(computed2starCpp) :
-#	sys.stderr.write( "can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
-#	sys.exit(0)
-if os.path.exists(computed2starCpp) :
-	os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
-else :
-	sys.stderr.write( "Error: can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
-	sys.exit(0)
+if not os.path.exists(computed2starOut) :
+	sys.stderr.write( "Warning: can't find file " + computed2starOut + "\n")
+	sys.stderr.write( "Trying to compile..." + "\n")
+	if os.path.exists(computed2starCpp) :
+		os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
+	else :
+		sys.stderr.write( "Error: can't find file " + computed2starCpp + "\n")
+		sys.exit(0)
 
+
+
+
+#countKmerCpp = os.path.join(vhmPath, "countKmer.cpp")
+#countKmerOut = os.path.join(vhmPath, "countKmer.out")
+##print countKmerOut
+#
+##if not os.path.exists(countKmerOut) and os.path.exists(countKmerCpp) :
+##	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
+##elif not os.path.exists(countKmerCpp) :
+##	sys.stderr.write( "can't find countKmer.cpp file in " + vhmPath + "\n")
+##	sys.exit(0)
+#if os.path.exists(countKmerCpp) :
+#	os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
+#else :
+#	sys.stderr.write( "Error: can't find countKmer.cpp file in " + vhmPath + "\n")
+#	sys.exit(0)
+
+
+#computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
+#computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
+##if not os.path.exists(computeMeasureOut) and os.path.exists(computeMeasureCpp) :
+##  os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+##elif not os.path.exists(computeMeasureCpp) :
+##	sys.stderr.write( "can't find computeMeasure.cpp file in " + vhmPath + "\n")
+##	sys.exit(0)
+#if os.path.exists(computeMeasureCpp) :
+#	os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+#else :
+#	sys.stderr.write( "Error: can't find computeMeasure.cpp file in " + vhmPath + "\n")
+#	sys.exit(0)
+#
+#computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
+#computed2starOut = os.path.join(vhmPath, "computeMeasure_onlyd2star.out")
+##if not os.path.exists(computed2starOut) and os.path.exists(computed2starCpp) :
+##	os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
+##elif not os.path.exists(computed2starCpp) :
+##	sys.stderr.write( "can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
+##	sys.exit(0)
+#if os.path.exists(computed2starCpp) :
+#	os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
+#else :
+#	sys.stderr.write( "Error: can't find computeMeasure_onlyd2star.cpp file in " + vhmPath + "\n")
+#	sys.exit(0)
+#
 
 if int(options.onlyD2star) == 1 :
 	computeMeasureOut=computed2starOut
