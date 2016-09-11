@@ -41,12 +41,25 @@ To use the tool, please simply follow the steps and copy and paste the following
 A test example
 ---------------
 
-You can find a directory named "test" in the VirHostMatcher package. There are three folders under the "test" directory: "virus" contains the 12 virus fasta files, "host" contains the 23 host fasta files, and "out23by12" contains all the output results where the distance matrix files (".csv") and visualization files (".html") can be found. There is also a file called hostTaxa.txt listing the taxonomy information of the 23 host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
+You can find a directory named "test" in the VirHostMatcher package. There are three folders under the "test" directory: "virus" contains the 12 virus fasta files, "host" contains the 23 host fasta files, and "out23by12" contains all the output results where the distance matrix files (".csv") and visualization files (".html") (see below) can be found. There is also a file called hostTaxa.txt listing the taxonomy information of the 23 host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
 
 	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/virus -b /Path_to_VirHostMatcher/test/host -o /Path_to_VirHostMatcher/out23by12 -t /Path_to_VirHostMatcher/test/hostTaxa.txt
 
 
-VirHostMatcher provides a convenient way to visualize and analyze output result through browser. In particular, for each distance/dissimialrity measure, a corresponding webpage named '[measure Name]_k[k-tuple length].main.html' will be generated under the output folder. For example, 'Hao_k6_main.html' for the case of Hao dissimilarity when k=6. The visualization mainly contains three parts: (1) select the interested virus to manipulate from the left panel; (2) plot the distance heatmap between interested virus and top-ranked host in the middle. Users can further look at detailed information by moving the mouse over the corresponding grid; (3) The taxonomic consensus information is summarized in the right. Notice that the consensus percentage is calculated conditional on the upper level information. For example, Bacteria is 23 out of 23 in Superkingdom level, Proteobacteria is 13 out of 23 in Phylum level, Gammaproteobacteria is 8 out of 13 in Class level, etc.
+VirHostMatcher also provides a convenient way to visualize output results through a browser format. For each distance/dissimialrity measure, a corresponding webpage named '[measure Name]_k[k-tuple length].main.html' will be generated under the output folder. For example, 'd2star_k6_main.html' for the case of d2* dissimilarity for k=6. The visualization page allows users to 1) select one or more query viruses for analysis, 2) select the top n most similar hosts (lowest dissimilarity/distance score) to analyze, and 3) impose a threshold requirement to only include hosts with a dissimilarity/distance score below a particular threshold.
+This use of this tool can be explored by opening the .html files in the test/out23by12/ folder for a test case of 23 query viruses and 12 hosts.
+
+Quick tutorial for the visualization tool
+
+On the left panel, select the viruses and parameters you want. Moving from top to bottom select the following:
+(1) Select the interested virus to manipulate from the left panel. One can use a simple search functionality in the ‘Looking for’ box to find specific virus filenames.
+(2) Select the number of n more similar hosts to determine the consensus of taxonomy among those hosts (majority rule consensus). Choosing n=1 will give you the most similar host to the query viruses (This approach is best suited when only selecting a single virus).
+(3) If desired, impose a dissimilarity/distance threshold such that hosts with a score <= to that threshold are considered.
+
+Then press the ‘OK’ button to plot the results. The plot in the main panel shows a heatmap of distances between the select viruses and the top n most similar hosts. Users can further see the specific taxonomy and distance score for each host by moving the mouse over each corresponding grid. The taxonomic consensus information is summarized in the right for the top n most similar hosts at each taxonomic level. The most frequent taxon at each level is listed and the frequency of that taxon is provided in parentheses. Note that the consensus percentage is calculated conditional on selected n and threshold parameters.
+
+An example figure of the visualization tool is shown below from an example in the test folder: 12 viruses versus 23 hosts. Under the selected parameters (consensus of all 23 possible hosts and no threshold requirement), the taxonomic consensus of resulting hosts is shown on the right. For the example, at the phylum level, the most frequent host taxon at the phylum level is Proteobacteria (56.23% or 13 out of the 23 possible hosts), and at the genus level, Coxiella is the most frequent host (100% or all 23 hosts are this genus).
+
 
 <p align="center">
   <img src="snapshot.jpg"/>
