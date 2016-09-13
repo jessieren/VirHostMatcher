@@ -56,9 +56,9 @@ VirHostMatcher provides a convenient way to visualize and analyze output result 
 
 Compilation
 ------------
-VirHostMatcher have prepared executable (compiled) programs under <Path_to_VirHostMatcher/bin> for three main operating systems, Linux, Window and Mac. VirHostMatcher automatically detect the operating system and use the corresponding compiled programs. 
+VirHostMatcher has prepared executable (compiled) programs under \<Path_to_VirHostMatcher/bin\> for three main operating systems, Linux, Window and Mac. VirHostMatcher automatically detect the operating system and use the corresponding compiled programs. 
 For running on other operating systems, VirHostMatcher can automatically compile the source code. 
-If users desire, the source code and Makefile is provided for compilation on their particular machine. VirHostMatcher can be compiled by running make at the command line under the main directory. "
+If users desire, the source code and Makefile are provided for compilation on their particular machine. VirHostMatcher can be compiled by running 'make' at the command line under the main directory. 
 
 
 Contacts and bug reports
