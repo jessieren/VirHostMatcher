@@ -53,54 +53,139 @@ elif optSys == 'Darwin' :
 elif optSys == 'Windows' :
 	exePath = os.path.join(vhmPath, "bin", "windows64")
 else :
-	sys.stderr.write("Error: can't recognize the operating system" + optSys + " \n")
+	#sys.stderr.write("Warning: can't recognize the operating system" + optSys + " \n")
+	exePath = "unknown"
 
-## copy exe files to vhmPath
-os.system("cp " + os.path.join(exePath, "*") + " " + vhmPath)
 
 
 ## countKmer c++ code
 countKmerCpp = os.path.join(vhmPath, "countKmer.cpp")
 countKmerOut = os.path.join(vhmPath, "countKmer.out")
 if not os.path.exists(countKmerOut) :
-	sys.stderr.write( "Warning: can't find file " + countKmerOut + "\n")
-	sys.stderr.write( "Trying to compile..." + "\n")
-	if os.path.exists(countKmerCpp) :
-		os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
+	## recognize OS, copy exe files to vhmPath
+	sys.stderr.write("Warning: can't find the file " + countKmerOut + ", try to copy one from bin \n")
+	preCountKmerOut = os.path.join(exePath, "countKmer.out")
+	if exePath != "unknown" :
+		if os.path.exists(preCountKmerOut) :
+			os.system("cp " + preCountKmerOut + " " + vhmPath)
+		else :
+			sys.stderr.write( "Error: can't find file " + preCountKmerOut + ". \n Please run make under the main directory! \n" )
+			sys.exit(0)
 	else :
-		sys.stderr.write( "Error: can't find file " + countKmerCpp + "\n")
-		sys.exit(0)
+	## can't recognize OS, try to compile
+		sys.stderr.write("Warning: can't recognize the operating system" + optSys + " \n")
+		sys.stderr.write( "Trying to compile..." + "\n")
+		if os.path.exists(countKmerCpp) :
+			os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
+		else :
+			sys.stderr.write( "Error: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
+			sys.exit(0)
 else :
 	os.system("chmod 777 " + countKmerOut)
+
 
 ## computeMeasure c++ code
 computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
 computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
 if not os.path.exists(computeMeasureOut) :
-	sys.stderr.write( "Warning: can't find file " + computeMeasureOut + "\n")
-	sys.stderr.write( "Trying to compile..." + "\n")
-	if os.path.exists(computeMeasureCpp) :
-		os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+	## recognize OS, copy exe files to vhmPath
+	sys.stderr.write("Warning: can't find the file " + computeMeasureOut + ", try to copy one from bin \n")
+	preComputeMeasureOut = os.path.join(exePath, "computeMeasure.out")
+	if exePath != "unknown" :
+		if os.path.exists(preComputeMeasureOut) :
+			os.system("cp " + preComputeMeasureOut + " " + vhmPath)
+		else :
+			sys.stderr.write( "Error: can't find file " + preComputeMeasureOut + ". \n Please run make under the main directory! \n" )
+			sys.exit(0)
 	else :
-		sys.stderr.write( "Error: can't find file " + computeMeasureCpp + "\n")
-		sys.exit(0)
+		## can't recognize OS, try to compile
+		sys.stderr.write("Warning: can't recognize the operating system" + optSys + " \n")
+		sys.stderr.write( "Trying to compile..." + "\n")
+		if os.path.exists(computeMeasureCpp) :
+			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+		else :
+			sys.stderr.write( "Error: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
+			sys.exit(0)
 else :
 	os.system("chmod 777 " + computeMeasureOut)
+
 
 ## computeMeasure c++ code
 computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
 computed2starOut = os.path.join(vhmPath, "computeMeasure_onlyd2star.out")
 if not os.path.exists(computed2starOut) :
-	sys.stderr.write( "Warning: can't find file " + computed2starOut + "\n")
-	sys.stderr.write( "Trying to compile..." + "\n")
-	if os.path.exists(computed2starCpp) :
-		os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
+	## recognize OS, copy exe files to vhmPath
+	sys.stderr.write("Warning: can't find the file " + computed2starOut + ", try to copy one from bin \n")
+	preComputed2starOut = os.path.join(exePath, "computeMeasure_onlyd2star.out")
+	if exePath != "unknown" :
+		if os.path.exists(preComputed2starOut) :
+			os.system("cp " + preComputed2starOut + " " + vhmPath)
+		else :
+			sys.stderr.write( "Error: can't find file " + preComputed2starOut + ". \n Please run make under the main directory! \n" )
+			sys.exit(0)
 	else :
-		sys.stderr.write( "Error: can't find file " + computed2starCpp + "\n")
-		sys.exit(0)
+		## can't recognize OS, try to compile
+		sys.stderr.write("Warning: can't recognize the operating system" + optSys + " \n")
+		sys.stderr.write( "Trying to compile..." + "\n")
+		if os.path.exists(computed2starCpp) :
+			os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
+		else :
+			sys.stderr.write( "Error: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
+			sys.exit(0)
 else :
 	os.system("chmod 777 " + computed2starOut)
 
+
+
+
+#
+#
+### copy exe files to vhmPath
+#os.system("cp " + os.path.join(exePath, "*") + " " + vhmPath)
+#
+#
+### countKmer c++ code
+#countKmerCpp = os.path.join(vhmPath, "countKmer.cpp")
+#countKmerOut = os.path.join(vhmPath, "countKmer.out")
+#if not os.path.exists(countKmerOut) :
+#	sys.stderr.write( "Warning: can't find file " + countKmerOut + "\n")
+#	sys.stderr.write( "Trying to compile..." + "\n")
+#	if os.path.exists(countKmerCpp) :
+#		os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
+#	else :
+#		sys.stderr.write( "Error: can't find file " + countKmerCpp + "\n")
+#		sys.exit(0)
+#else :
+#	os.system("chmod 777 " + countKmerOut)
+#
+### computeMeasure c++ code
+#computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
+#computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
+#if not os.path.exists(computeMeasureOut) :
+#	sys.stderr.write( "Warning: can't find file " + computeMeasureOut + "\n")
+#	sys.stderr.write( "Trying to compile..." + "\n")
+#	if os.path.exists(computeMeasureCpp) :
+#		os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+#	else :
+#		sys.stderr.write( "Error: can't find file " + computeMeasureCpp + "\n")
+#		sys.exit(0)
+#else :
+#	os.system("chmod 777 " + computeMeasureOut)
+#
+### computeMeasure c++ code
+#computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
+#computed2starOut = os.path.join(vhmPath, "computeMeasure_onlyd2star.out")
+#if not os.path.exists(computed2starOut) :
+#	sys.stderr.write( "Warning: can't find file " + computed2starOut + "\n")
+#	sys.stderr.write( "Trying to compile..." + "\n")
+#	if os.path.exists(computed2starCpp) :
+#		os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
+#	else :
+#		sys.stderr.write( "Error: can't find file " + computed2starCpp + "\n")
+#		sys.exit(0)
+#else :
+#	os.system("chmod 777 " + computed2starOut)
+#
 
 if int(options.onlyD2star) == 1 :
 	computeMeasureOut=computed2starOut
