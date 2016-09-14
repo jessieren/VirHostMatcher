@@ -32,7 +32,7 @@
 			<div id='jqxWidget'><label>Select the Virus for visualization: </label><div id="listbox"></div></div>
 			
 			<div class="opacity_slider_container" style="margin-top: 5px;">
-				<div ><label for="topAmount"># of top Hosts: </label><input type="text" value="50" id="topAmount" readonly style="border:0; font-weight:bold; width: 50px;"></div>
+				<div ><label for="topAmount"># of top Hosts: </label><input type="text" value="25" id="topAmount" readonly style="border:0; font-weight:bold; width: 50px;"></div>
 				<div id="topSlider" style="width: 290px;"></div>
 			</div>
 			<div class="opacity_slider_container" style="margin-top: 5px;">
@@ -100,7 +100,7 @@ var organismArr = ["Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC 700819"
    
    topHostNum = Math.min(topHostNum, hostNameArr.length);
    
-   $(function() { $( "#topSlider" ).slider({ value:50, min: 5, max: 100, step: 5, slide: function( event, ui ) { $( "#topAmount" ).val( ui.value ); topHostNum = Math.min(ui.value, hostNameArr.length); updateData(); } }); }); 
+   $(function() { $( "#topSlider" ).slider({ value:25, min: 5, max: 100, step: 1, slide: function( event, ui ) { $( "#topAmount" ).val( ui.value ); topHostNum = Math.min(ui.value, hostNameArr.length); updateData(); } }); }); 
    $(function() { $( "#cutoffSlider" ).slider({ value:1, min: 0, max: 1, step: 0.01, slide: function( event, ui ) { $( "#cutoffAmount" ).val( ui.value ); cutoff = ui.value; } }); });
    
    
@@ -128,6 +128,18 @@ var organismArr = ["Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC 700819"
    		host2species[hostNameArr[t]] = speciesArr[t];
 	}
 	console.log("hostTaxonomy finish loading!");
+	
+	var minDist = 1, maxDist = 0;
+	for(var rowIdx=0; rowIdx<virusHostMat.length; rowIdx++) 
+	{
+		for(var colIdx=0; colIdx<virusHostMat[0].length; colIdx++)
+		{
+			if(virusHostMat[rowIdx][colIdx]<minDist) minDist = virusHostMat[rowIdx][colIdx];
+			if(virusHostMat[rowIdx][colIdx]>maxDist) maxDist = virusHostMat[rowIdx][colIdx];
+		}
+	}
+	minDist = Math.max(0,minDist-0.1); maxDist = Math.min(1,maxDist+0.1);
+	var colorScale = d3.scale.quantile().domain([minDist,maxDist]).range(colors);
 
 	function updateData() {
 
@@ -163,25 +175,21 @@ var organismArr = ["Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC 700819"
 		
 		pathArr = [];
 		for(var colIdx=0; colIdx<hostArr.length; colIdx++) { pathArr.push([host2superkingdom[hostArr[colIdx]],host2phylum[hostArr[colIdx]],host2class[hostArr[colIdx]],host2order[hostArr[colIdx]],host2family[hostArr[colIdx]],host2genus[hostArr[colIdx]],host2species[hostArr[colIdx]]]); }
+		//rootNode = 	convertToHierarchy(pathArr);
+		//consensusArr = getConsensusTaxonomy(rootNode); 
 		
-		rootNode = 	convertToHierarchy(pathArr);console.log(rootNode);
-		
-		consensusArr = getConsensusTaxonomy(rootNode); //consensusArr.shift();
-		
-		
-		$("#consensusSuperkingdom").text("Superkingdom: "+consensusArr[0]);
-		$("#consensusPhylum").text("Phylum: "+consensusArr[1]);
-		$("#consensusClass").text("Class: "+consensusArr[2]);
-		$("#consensusOrder").text("Order: "+consensusArr[3]);
-		$("#consensusFamily").text("Family: "+consensusArr[4]);
-		$("#consensusGenus").text("Genus: "+consensusArr[5]);
-		$("#consensusSpecies").text("Species: "+consensusArr[6]);
+		$("#consensusSuperkingdom").text("Superkingdom: "+getConsensusItem(pathArr,0));
+		$("#consensusPhylum").text("Phylum: "+getConsensusItem(pathArr,1));
+		$("#consensusClass").text("Class: "+getConsensusItem(pathArr,2));
+		$("#consensusOrder").text("Order: "+getConsensusItem(pathArr,3));
+		$("#consensusFamily").text("Family: "+getConsensusItem(pathArr,4));
+		$("#consensusGenus").text("Genus: "+getConsensusItem(pathArr,5));
+		$("#consensusSpecies").text("Species: "+getConsensusItem(pathArr,6));
 		
 		var cellSize = 25, legendElementWidth = cellSize*2, 
 			width = Math.max(hostArr.length*cellSize, 1000 ), height = Math.max(checkedVirusIdxArr.length*cellSize, 700 );
 		
 		console.log();
-		var colorScale = d3.scale.quantile().domain([0,1]).range(colors);
 		
 		d3.selectAll(".canvasSvg").remove(); 
 		var svg = d3.select("#heatCanvas").style("float", "left").attr("width", width).attr("height", height)
@@ -226,13 +234,32 @@ var organismArr = ["Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC 700819"
 				d3.select("#tooltip1").classed("hidden", true);
 			});
       		
-      	var legend = svg.selectAll(".legend").data([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]).enter().append("g").attr("class", "legend");
+      	var legend = svg.selectAll(".legend").data([minDist,minDist+0.1*gap,minDist+0.2*gap,minDist+0.3*gap,minDist+0.4*gap,minDist+0.5*gap,minDist+0.6*gap,minDist+0.7*gap,minDist+0.8*gap,minDist+0.9*gap,maxDist]).enter().append("g").attr("class", "legend");
 		legend.append("rect").attr("x", function(d, i) { return legendElementWidth * i-margin.left; }).attr("y", (cellSize*2) - margin.top)
     		.attr("width", legendElementWidth).attr("height", cellSize)
     		.style("fill", function(d, i) { return colors[i]; });
     
-    	legend.append("text").text(function(d) { return d; }).style("text-anchor", "left")
+    	legend.append("text").text(function(d) { return d3.format(".2f")(d); }).style("text-anchor", "left")
     		.attr("x", function(d, i) { return legendElementWidth * i-margin.left; }).attr("y", (cellSize*4)- margin.top);
+	}
+	
+	function getConsensusItem(pathArr, idx)
+	{
+		var node = {id:"root", cnt:0, children:{}};
+		for (var i = 0; i < pathArr.length; i++) 
+		{
+			var path = pathArr[i];
+			node.cnt ++;
+			item = path[idx];
+			if (!node.children[item]) node.children[item] = {id:item, cnt:0, children:{}};
+			node.children[item].cnt ++;
+		}
+		
+		var arr = Object.keys( node.children ).map(function ( key ) { return node.children[key].cnt; });
+		var ratio = 100;
+		if(math.sum(arr) > 0) ratio = Math.max.apply(Math,arr)*100/math.sum(arr);
+		maxItem = Object.keys(node.children)[arr.indexOf(Math.max.apply(Math,arr))];
+		return node.children[maxItem].id+" ("+String(Math.round(ratio * 100) / 100)+"%)";
 	}
 	
 	function convertToHierarchy(pathArr) {
