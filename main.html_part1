@@ -32,7 +32,7 @@
 			<div id='jqxWidget'><label>Select the Virus for visualization: </label><div id="listbox"></div></div>
 			
 			<div class="opacity_slider_container" style="margin-top: 5px;">
-				<div ><label for="topAmount"># of top Hosts: </label><input type="text" value="50" id="topAmount" readonly style="border:0; font-weight:bold; width: 50px;"></div>
+				<div ><label for="topAmount"># of top Hosts: </label><input type="text" value="25" id="topAmount" readonly style="border:0; font-weight:bold; width: 50px;"></div>
 				<div id="topSlider" style="width: 290px;"></div>
 			</div>
 			<div class="opacity_slider_container" style="margin-top: 5px;">
