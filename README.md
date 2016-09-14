@@ -7,7 +7,7 @@ Basic tools for computing various oligonucleotide frequency (ONF) based distance
 Requirements
 ---------------
 
-The source code is written by C++ and wrapped by a python script. Thus it requires python and C++ compiler. It works under Windows, Linux or Mac environment.  
+The source code is written by C++ and wrapped by a python script. Thus it requires python and C++ compiler. It works under Windows, Linux or Mac environment. Precompiled executables are provided for theese three platforms, and users have the optioin of compiling the source code for their specific platform if desired (see the Compilation section below).
 
 
 Usage
@@ -56,9 +56,9 @@ VirHostMatcher provides a convenient way to visualize and analyze output result 
 
 Compilation
 ------------
-VirHostMatcher has prepared executable (compiled) programs under \<Path_to_VirHostMatcher/bin\> for three main operating systems, Linux, Window and Mac. VirHostMatcher automatically detect the operating system and use the corresponding compiled programs. 
-For running on other operating systems, VirHostMatcher can automatically compile the source code. 
-If users desire, the source code and Makefile are provided for compilation on their particular machine. VirHostMatcher can be compiled by running 'make' at the command line under the main directory. 
+VirHostMatcher has prepared executable (compiled) programs under \<Path_to_VirHostMatcher/bin\> for three main operating systems, Linux, Window and Mac. VirHostMatcher automatically detects the operating system and uses the corresponding compiled programs. 
+For running on other operating systems, VirHostMatcher will automatically attempt compile the source code for your platform by running the Makefile in \<Path_to_VirHostMatcher/bin\> folder.
+If users desire, the source code and Makefile are provided for compilation on their particular machine. VirHostMatcher can be compiled by running 'make' at the command line under the main directory. When using this option the Makefile will copy the compiled executable into the \<Path_to_VirHostMatcher/bin\> folder which then will be detected and used by the main python script.
 
 
 Contacts and bug reports
