@@ -338,6 +338,9 @@ with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:
 		sys.stdout.write(c)
 		filelog.write(c)
 
+
+sys.stdout.write("done \n")
+
 #cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
 #								" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
 ##print cmdCptMeasure
@@ -353,15 +356,30 @@ with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:
 #
 #
 #kmax=6
-#hostListFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp"
-#hostListFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp/hostList"
-#virusListFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp/virusList"
-#outDir="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out_testPairMe"
-#hostTaxaFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/marine_host_taxonomy.txt"
-#
+#tmpDir="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/tmp"
+#hostListFile="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/tmp/hostList"
+#virusListFile="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/tmp/virusList"
+#outDir="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut"
+#hostTaxaFile="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/hostTaxa.txt"
+#computeMeasureOut="/home/jessie/software/tmp/VirHostMatcher-0915/computeMeasure.out"
 #cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
 #	" -i " + virusListFile + " -j " + hostListFile + " -o " + outDir + " -t " + hostTaxaFile
-##print cmdCptMeasure
+#print cmdCptMeasure
+#
+#with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:
+#	cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
+#																			stderr = subprocess.PIPE, \
+#																			stdout = subprocess.PIPE)
+#	for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
+#		sys.stdout.write(c)
+#		filelog.write(c)
+#
+#cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
+#																		stderr = subprocess.PIPE, \
+#																		stdout = subprocess.PIPE)
+#cmdCptMeasureOut.wait()
+#
+
 ##print cmdCptMeasure
 #cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
 #																		stderr = subprocess.PIPE, \
