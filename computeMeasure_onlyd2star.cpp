@@ -608,7 +608,7 @@ int loadTaxaInfo (string taxaFile, vector<string>& hostNCBIName, vector<string>&
 			}
 			if(errorTaxa == 1)
 			{
-				cerr << "the format of taxaFile is not correct!" << endl;
+				cerr << "ERROR: the format of taxaFile is not correct!" << endl;
 				return 0;
 			}
 			
@@ -1963,7 +1963,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	
 	if( taxaLineNum != speciesInfoListB.size() )
 	{
-		cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
+		cerr << "ERROR: number of hosts in taxa file is not equal to number of host fasta files " << endl;
 		return 0;
 	}
 	////////// sort the taxa info by NCBINames in the input hostList file /////////
@@ -1981,6 +1981,12 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		string currentHostNCBIName = speciesInfoB.name;
 		vector<string>::iterator it=find(hostNCBIName.begin(),hostNCBIName.end(),currentHostNCBIName);
 		int pos = distance(hostNCBIName.begin(), it);
+		if( pos == hostNCBIName.size() )
+		{
+			// can't find one!
+			cerr << "ERROR: can't find taxa info for host " << currentHostNCBIName << "! \nThe host names in host taxa file should be the full file name of the host fasta file. \nPlease double check. " << endl;
+			return 0;
+		}
 		//cout << currentHostNCBIName << ":" << pos << endl;
 		hostName_sort.push_back(hostName[pos]);
 		hostSuperkingdom_sort.push_back(hostSuperkingdom[pos]);
@@ -2004,7 +2010,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	// those files are only loaded once. They will be repeatedly used for many times
 	// how many files you put on this list depend on the memory size
 	
-	fstream outMatrixBinFile;
+	ofstream outMatrixBinFile;
 	string matrixBinFileName = outDIR + "/tmp/resultMatrix.bin";
 	outMatrixBinFile.open(matrixBinFileName.c_str(), ios::out|ios::binary);
 	
