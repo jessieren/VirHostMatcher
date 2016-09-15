@@ -12,6 +12,9 @@
 #include <sstream>
 #include <string>
 #include <stdlib.h> 
+
+#include <iomanip>
+
 //strtol(s.c_str(),0,10);
 using namespace std;
 
@@ -1845,6 +1848,50 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 //			resultMatrix[i][j].resize(speciesInfoListB.size());
 //	}
 
+	/////////////////////////////////////////////////////////////////////////////
+	////////////////////////// load taxa file ////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	vector<string> hostNCBIName;
+	vector<string> hostName;
+	vector<string> hostSuperkingdom;
+	vector<string> hostPhylum;
+	vector<string> hostClass;
+	vector<string> hostOrder;
+	vector<string> hostFamily;
+	vector<string> hostGenus;
+	vector<string> hostSpecies;
+	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus, hostSpecies);
+	
+	if( taxaLineNum != speciesInfoListB.size() )
+	{
+		cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
+		return 0;
+	}
+	////////// sort the taxa info by NCBINames in the input hostList file /////////
+	vector<string> hostName_sort;
+	vector<string> hostSuperkingdom_sort;
+	vector<string> hostPhylum_sort;
+	vector<string> hostClass_sort;
+	vector<string> hostOrder_sort;
+	vector<string> hostFamily_sort;
+	vector<string> hostGenus_sort;
+	vector<string> hostSpecies_sort;
+	for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+	{
+		SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
+		string currentHostNCBIName = speciesInfoB.name;
+		vector<string>::iterator it=find(hostNCBIName.begin(),hostNCBIName.end(),currentHostNCBIName);
+		int pos = distance(hostNCBIName.begin(), it);
+		//cout << currentHostNCBIName << ":" << pos << endl;
+		hostName_sort.push_back(hostName[pos]);
+		hostSuperkingdom_sort.push_back(hostSuperkingdom[pos]);
+		hostPhylum_sort.push_back(hostPhylum[pos]);
+		hostClass_sort.push_back(hostClass[pos]);
+		hostOrder_sort.push_back(hostOrder[pos]);
+		hostFamily_sort.push_back(hostFamily[pos]);
+		hostGenus_sort.push_back(hostGenus[pos]);
+		hostSpecies_sort.push_back(hostSpecies[pos]);
+	}
 	
 	
 	///////////////////////////////////////////////////////////////////////
@@ -1857,6 +1904,10 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
   // load the kmer count hashtables of the first file list (the fat list)
 	// those files are only loaded once. They will be repeatedly used for many times
 	// how many files you put on this list depend on the memory size
+	
+	fstream outMatrixBinFile;
+	string matrixBinFileName = outDIR + "/tmp/resultMatrix.bin";
+	outMatrixBinFile.open(matrixBinFileName.c_str(), ios::out|ios::binary);
 
 	vector<KMERINFO*> speciesKmerInfoListA( speciesInfoListA.size() );
 	for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
@@ -2076,8 +2127,8 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			for( int statID = 0; statID < measureValues->size(); statID++ )
 			{
 				resultMatrix[statID][IDA][IDB] = measureValues->at(statID);
+				outMatrixBinFile.write( (char*)&resultMatrix[statID][IDA][IDB], sizeof(double) );
 			}
-			
 			//delete speciesKmerInfoA;
 		
 		}
@@ -2086,52 +2137,61 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		delete probIIDB;
 		delete iniProbB;
 		delete transMatrixB;
+		
+//		ofstream outBinFile;
+//		string binFileName = outDIR + "/resultMatrix.bin";
+//		outBinFile.open(binFileName, ios::out | ios::binary);
+//		outBinFile.write (reinterpret_cast<char*> (&resultMatrix), sizeof(int)) ;
+//		outBinFile.close();
+		
 	}
-
-	/////////////////////////////////////////////////////////////////////////////
-	////////////////////////// load taxa file ////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////
-	vector<string> hostNCBIName;
-	vector<string> hostName;
-	vector<string> hostSuperkingdom;
-	vector<string> hostPhylum;
-	vector<string> hostClass;
-	vector<string> hostOrder;
-	vector<string> hostFamily;
-	vector<string> hostGenus;
-	vector<string> hostSpecies;
-	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus, hostSpecies);
 	
-	if( taxaLineNum != speciesInfoListB.size() )
-	{
-		cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
-		return 0;
-	}
-	////////// sort the taxa info by NCBINames in the input hostList file /////////
-	vector<string> hostName_sort;
-	vector<string> hostSuperkingdom_sort;
-	vector<string> hostPhylum_sort;
-	vector<string> hostClass_sort;
-	vector<string> hostOrder_sort;
-	vector<string> hostFamily_sort;
-	vector<string> hostGenus_sort;
-	vector<string> hostSpecies_sort;
-	for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
-	{
-		SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
-		string currentHostNCBIName = speciesInfoB.name;
-		vector<string>::iterator it=find(hostNCBIName.begin(),hostNCBIName.end(),currentHostNCBIName);
-		int pos = distance(hostNCBIName.begin(), it);
-		//cout << currentHostNCBIName << ":" << pos << endl;
-		hostName_sort.push_back(hostName[pos]);
-		hostSuperkingdom_sort.push_back(hostSuperkingdom[pos]);
-		hostPhylum_sort.push_back(hostPhylum[pos]);
-		hostClass_sort.push_back(hostClass[pos]);
-		hostOrder_sort.push_back(hostOrder[pos]);
-		hostFamily_sort.push_back(hostFamily[pos]);
-		hostGenus_sort.push_back(hostGenus[pos]);
-		hostSpecies_sort.push_back(hostSpecies[pos]);
-	}
+	outMatrixBinFile.close();
+
+//	/////////////////////////////////////////////////////////////////////////////
+//	////////////////////////// load taxa file ////////////////////////////////////
+//	/////////////////////////////////////////////////////////////////////////////
+//	vector<string> hostNCBIName;
+//	vector<string> hostName;
+//	vector<string> hostSuperkingdom;
+//	vector<string> hostPhylum;
+//	vector<string> hostClass;
+//	vector<string> hostOrder;
+//	vector<string> hostFamily;
+//	vector<string> hostGenus;
+//	vector<string> hostSpecies;
+//	int taxaLineNum = loadTaxaInfo(taxaFile, hostNCBIName, hostName, hostSuperkingdom, hostPhylum, hostClass, hostOrder, hostFamily, hostGenus, hostSpecies);
+//	
+//	if( taxaLineNum != speciesInfoListB.size() )
+//	{
+//		cerr << "number of hosts in taxa file is not equal to number of host fasta files " << endl;
+//		return 0;
+//	}
+//	////////// sort the taxa info by NCBINames in the input hostList file /////////
+//	vector<string> hostName_sort;
+//	vector<string> hostSuperkingdom_sort;
+//	vector<string> hostPhylum_sort;
+//	vector<string> hostClass_sort;
+//	vector<string> hostOrder_sort;
+//	vector<string> hostFamily_sort;
+//	vector<string> hostGenus_sort;
+//	vector<string> hostSpecies_sort;
+//	for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++  )
+//	{
+//		SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
+//		string currentHostNCBIName = speciesInfoB.name;
+//		vector<string>::iterator it=find(hostNCBIName.begin(),hostNCBIName.end(),currentHostNCBIName);
+//		int pos = distance(hostNCBIName.begin(), it);
+//		//cout << currentHostNCBIName << ":" << pos << endl;
+//		hostName_sort.push_back(hostName[pos]);
+//		hostSuperkingdom_sort.push_back(hostSuperkingdom[pos]);
+//		hostPhylum_sort.push_back(hostPhylum[pos]);
+//		hostClass_sort.push_back(hostClass[pos]);
+//		hostOrder_sort.push_back(hostOrder[pos]);
+//		hostFamily_sort.push_back(hostFamily[pos]);
+//		hostGenus_sort.push_back(hostGenus[pos]);
+//		hostSpecies_sort.push_back(hostSpecies[pos]);
+//	}
 	
 	
 	/////////////////////////////////////////////////////////////////////////////
