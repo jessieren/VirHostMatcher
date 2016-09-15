@@ -5,7 +5,7 @@
    
    topHostNum = Math.min(topHostNum, hostNameArr.length);
    
-   $(function() { $( "#topSlider" ).slider({ value:25, min: 5, max: 100, step: 1, slide: function( event, ui ) { $( "#topAmount" ).val( ui.value ); topHostNum = Math.min(ui.value, hostNameArr.length); updateData(); } }); }); 
+   $(function() { $( "#topSlider" ).slider({ value:25, min: 1, max: 100, step: 1, slide: function( event, ui ) { $( "#topAmount" ).val( ui.value ); topHostNum = Math.min(ui.value, hostNameArr.length);  } }); }); 
    $(function() { $( "#cutoffSlider" ).slider({ value:1, min: 0, max: 1, step: 0.01, slide: function( event, ui ) { $( "#cutoffAmount" ).val( ui.value ); cutoff = ui.value; } }); });
    
    
@@ -34,7 +34,7 @@
 	}
 	console.log("hostTaxonomy finish loading!");
 	
-	var minDist = 1, maxDist = 0;
+	var minDist = 1, maxDist = 0, gap=0;
 	for(var rowIdx=0; rowIdx<virusHostMat.length; rowIdx++) 
 	{
 		for(var colIdx=0; colIdx<virusHostMat[0].length; colIdx++)
@@ -43,10 +43,11 @@
 			if(virusHostMat[rowIdx][colIdx]>maxDist) maxDist = virusHostMat[rowIdx][colIdx];
 		}
 	}
-	minDist = Math.max(0,minDist-0.1); maxDist = Math.min(1,maxDist+0.1);
+	minDist = Math.max(0,minDist-0.1); maxDist = Math.min(1,maxDist+0.1); gap = maxDist-minDist;
 	var colorScale = d3.scale.quantile().domain([minDist,maxDist]).range(colors);
 
 	function updateData() {
+		topHostNum = Math.min(topHostNum, hostNameArr.length);
 
 		thresArr = [];
 		for(var rowIdx=0; rowIdx<checkedVirusIdxArr.length; rowIdx++) {
