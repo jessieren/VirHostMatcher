@@ -82,8 +82,8 @@ if not os.path.exists(countKmerOut) :
 		else :
 			sys.stderr.write( "Error: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
-else :
-	os.system("chmod 777 " + countKmerOut)
+
+os.system("chmod 777 " + countKmerOut)
 
 
 ## computeMeasure c++ code
@@ -108,8 +108,8 @@ if not os.path.exists(computeMeasureOut) :
 		else :
 			sys.stderr.write( "Error: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
-else :
-	os.system("chmod 777 " + computeMeasureOut)
+
+os.system("chmod 777 " + computeMeasureOut)
 
 
 ## computeMeasure c++ code
@@ -134,8 +134,8 @@ if not os.path.exists(computed2starOut) :
 		else :
 			sys.stderr.write( "Error: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
-else :
-	os.system("chmod 777 " + computed2starOut)
+
+os.system("chmod 777 " + computed2starOut)
 
 
 
