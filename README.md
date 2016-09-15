@@ -21,7 +21,7 @@ To use the tool, please simply follow the steps and copy and paste the following
 
 * Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files. No subfolders are allowed. All fasta files should be put in the same directory.
 
-* Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. One line for one host sequence. The sequence names should keep the same as the names of the host fasta files. 
+* Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. One line for one host sequence. The sequence names should keep the same as the names of the host fasta files. Notice: the host names in the hostTaxa.txt file neet to be exactly the same as the host fasta file names, including the file name extensions. Otherwise the program cannot correspond the host fasta files and the host taxanomy information. 
 	If there is no taxonomy information, a hostTaxa.txt file will be generated in the output directory with all "unknown"s.
 
 * Step 4: Run the program use the following command. 
