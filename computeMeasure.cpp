@@ -1885,7 +1885,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		if( pos == hostNCBIName.size() )
 		{
 			// can't find one!
-			cerr << "ERROR: can't find taxa info for host " << currentHostNCBIName << "! \nThe host names in host taxa file should be the full file name of the host fasta file. \nPlease double check. " << endl;
+			cerr << "ERROR: can't find taxa info for host " << currentHostNCBIName << "! \nThe host names in host taxa file should be the full file name of the host fasta file (including filename extensions). \nPlease double check. " << endl;
 			return 0;
 		}
 		//cout << currentHostNCBIName << ":" << pos << endl;
