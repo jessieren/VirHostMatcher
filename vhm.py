@@ -19,6 +19,8 @@ parser.add_option("-t", "--taxa", action = "store", type = "string", dest = "hos
 									help = "the host taxa file (including the path) ")
 parser.add_option("-d", "--d2star", action = "store", type = "string", dest = "onlyD2star",
 									default=0, help = "compute only d2star dissimilarity? 1 for yes, 0 for no")
+#parser.add_option("-u", "--continue", action = "store", type = "string", dest = "onlyComputeMeasure",
+#									default=0, help = "kmer count is ready only compute measures? 1 for yes, 0 for no")
 #parser.add_option("-k", "--kLen", action = "store", type = "string", dest = "kLen",
 #									help = "the length of k-tuple")
 
@@ -254,6 +256,9 @@ if options.hostTaxaFile is None :
 for currentFileName in virusFaList :
 	if currentFileName.startswith('.') :
 		continue
+	if os.path.isdir(os.path.join(options.virusFaDir, currentFileName)) :
+		sys.stderr.write( "Error: zero bytes of file " + currentFileName + "\n")
+		sys.exit(0)
 	if len(currentFileName) > nameLen :
 		currentFileNameS = currentFileName[:nameLen]
 	else :
@@ -286,7 +291,7 @@ for currentFileName in hostFaList :
 	if currentFileName.startswith('.') :
 		continue
 	if os.path.isdir(os.path.join(options.hostFaDir, currentFileName)) :
-		sys.stderr.write( "Error: zero bytes of file " + currentFileNameS + "\n")
+		sys.stderr.write( "Error: zero bytes of file " + currentFileName + "\n")
 		sys.exit(0)
 	if len(currentFileName) > nameLen :
 		currentFileNameS = currentFileName[:nameLen]
@@ -322,18 +327,55 @@ hostListFileWrite.close()
 ################### 2: compute measures #####################
 sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
-								" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
-#print cmdCptMeasure
-#print cmdCptMeasure
-cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
+								" -i " + virusListFile + " -j " + hostListFile + \
+								" -o " + options.outDir + " -t " + options.hostTaxaFile
+
+with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:
+	cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
 														 stderr = subprocess.PIPE, \
 														 stdout = subprocess.PIPE)
-for line in iter(cmdCptMeasureOut.stderr.readline, b''):
-	sys.stdout.write(line)
-	cmdCptMeasureOut.wait()
+	for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
+		sys.stdout.write(c)
+		filelog.write(c)
+
+#cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
+#								" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
+##print cmdCptMeasure
+##print cmdCptMeasure
+#cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
+#														 stderr = subprocess.PIPE, \
+#														 stdout = subprocess.PIPE)
+#for line in iter(cmdCptMeasureOut.stderr.readline, b''):
+#	sys.stdout.write(line)
+#	cmdCptMeasureOut.wait()
 
 
-
-
-
-
+#
+#
+#kmax=6
+#hostListFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp"
+#hostListFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp/hostList"
+#virusListFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp/virusList"
+#outDir="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out_testPairMe"
+#hostTaxaFile="/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/marine_host_taxonomy.txt"
+#
+#cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
+#	" -i " + virusListFile + " -j " + hostListFile + " -o " + outDir + " -t " + hostTaxaFile
+##print cmdCptMeasure
+##print cmdCptMeasure
+#cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
+#																		stderr = subprocess.PIPE, \
+#																		stdout = subprocess.PIPE)
+#for line in iter(cmdCptMeasureOut.stderr.readline, b''):
+#	sys.stdout.write(line)
+#	cmdCptMeasureOut.wait()
+#
+#
+#
+#with open('/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp/test.log', 'w') as f:
+#	process = subprocess.Popen(cmdCptMeasure, shell=True, \
+#														 stderr = subprocess.PIPE, \
+#														 stdout = subprocess.PIPE)
+#	for c in iter(lambda: process.stderr.read(1), ''):
+#		sys.stdout.write(c)
+#		f.write(c)

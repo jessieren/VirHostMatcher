@@ -2152,6 +2152,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		///////////////////////////////////////////////////////////////////////
 		////////////////////// computing the multiple statistics //////////////
 		///////////////////////////////////////////////////////////////////////
+		cerr << " dissimilarity b/w host " << speciesInfoB.name << " - all viruses " << endl;
 		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
 		{
 			KMERINFO* speciesKmerInfoA = speciesKmerInfoListA[IDA];
@@ -2160,7 +2161,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 			//cout << "=== start computing statistics === " << endl;
 			//cout << "speciesA:" << IDA << endl;
 			//cout << "speciesB:" << IDB << endl;
-			cerr << " pair " << speciesInfoA.name << " - " << speciesInfoB.name << endl;
+			//cerr << " pair " << speciesInfoA.name << " - " << speciesInfoB.name << endl;
 			
 			vector<double> *measureValues = new vector<double>;
 			measureNames->clear();
