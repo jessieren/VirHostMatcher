@@ -42,10 +42,17 @@ To use the tool, please simply follow the steps and copy and paste the following
 A test example
 ---------------
 
-You can find a directory named "test" in the VirHostMatcher package. There are three folders under the "test" directory: "virus" contains the 12 virus fasta files, "host" contains the 23 host fasta files, and "out23by12" contains all the output results where the distance matrix files (".csv") and visualization files (".html") can be found. There is also a file called hostTaxa.txt listing the taxonomy information of the 23 host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
+You can find a directory named "test" in the VirHostMatcher package. Two test examples, one small and one large, have been prepared for users. The small test set named "toyexample" contains the 12 viruses and 23 hosts. The larger test set named "352virus" contains 352 viruses and 71 hosts, which is the dataset used in the Figure 1 of the paper. 
+For each of the two test data, there are three folders, "virus", "host" and "output" and one file "hostTaxa.txt". 
+The folder "virus" contains the virus fasta files, "host" contains the host fasta files, and "output" contains all the output results where the distance matrix files (".csv") and visualization files (".html") can be found. The file hostTaxa.txt lists the taxonomy information of the host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
 
-	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/virus -b /Path_to_VirHostMatcher/test/host -o /Path_to_VirHostMatcher/out23by12 -t /Path_to_VirHostMatcher/test/hostTaxa.txt
+	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/toyexample/virus -b /Path_to_VirHostMatcher/test/toyexample/host -o /Path_to_VirHostMatcher/test/toyexample/output -t /Path_to_VirHostMatcher/test/toyexample/hostTaxa.txt
+	
+	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/352virus/virus -b /Path_to_VirHostMatcher/test/352virus/host -o /Path_to_VirHostMatcher/test/352virus/output -t /Path_to_VirHostMatcher/test/352virus/hostTaxa.txt
 
+
+Visualization
+---------------
 
 VirHostMatcher provides a convenient way to visualize and analyze output result through browser. In particular, for each distance/dissimialrity measure, a corresponding webpage named '[measure Name]_k[k-tuple length].main.html' will be generated under the output folder. For example, 'Hao_k6_main.html' for the case of Hao dissimilarity when k=6. The visualization mainly contains three parts: (1) select the interested virus to manipulate from the left panel; (2) plot the distance heatmap between interested virus and top-ranked host in the middle. Users can further look at detailed information by moving the mouse over the corresponding grid; (3) The taxonomic consensus information is summarized in the right. Notice that the consensus percentage is calculated conditional on the upper level information. For example, Bacteria is 23 out of 23 in Superkingdom level, Proteobacteria is 13 out of 23 in Phylum level, Gammaproteobacteria is 8 out of 13 in Class level, etc.
 

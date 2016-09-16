@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <title>Virus Bacteria Interaction Prediction</title>
+    <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/css/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/jqwidgets/styles/jqx.base.css" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/css/custom_new.css">
+    
+    <script type="text/javascript" src="lib/js/d3.js"></script>
+    <script type="text/javascript" src="lib/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="lib/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/js/math.min.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqx-all.js"></script>
+</head>
+
+
+<body>
+	
+<div id="tooltip1" class="hidden"><p><span id="value"></div>
+
+<div id="container-id-1" style="width: 1670px; height: 1000px; clear: both;">
+	<div class="sidebar_wrapper" style="float: left; width: 300px; height: 1000px; overflow: hidden; display: block; border-right: 1px solid grey;">
+		<div class="title_section">
+			<img class="title_image" src="logo.jpg" alt="" style="width: 290px; margin-left: 2px; margin-top: 5px;">
+		</div>
+		
+		<div class="reorder_section" style="margin: 1px; margin-top: 10px; padding:2px; font-size: 11px; border: 0.5px solid grey;">
+			<div id='jqxWidget'><label>Select the Virus for visualization: </label><div id="listbox"></div></div>
+			
+			<div class="opacity_slider_container" style="margin-top: 5px;">
+				<div ><label for="topAmount"># of top Hosts: </label><input type="text" value="25" id="topAmount" readonly style="border:0; font-weight:bold; width: 50px;"></div>
+				<div id="topSlider" style="width: 290px;"></div>
+			</div>
+			<div class="opacity_slider_container" style="margin-top: 5px;">
+				<div ><label for="cutoffAmount">Max distance &lt;= </label><input type="text" value="1" id="cutoffAmount" readonly style="border:0; font-weight:bold; width: 50px;"></div>
+				<div id="cutoffSlider" style="width: 290px;"></div>
+			</div>
+			<div class="btn-group gene_search_button" data-toggle="buttons" style="margin-top: 10px;">
+				<div><button id="okBtn" class="sidebar_text btn btn-primary submit_gene_button" type="button" disabled="true" onclick="updateData()" style="float: left; padding-top: 6px; padding-bottom: 6px;">OK</button></div>
+			</div>
+		</div>
+	</div>
+	<div id="vizcontainer" style="float: left; width: 1000px; height: 800px; overflow: auto; ">
+		<svg id="heatCanvas"></svg> 
+	</div>
+	<div style="float: left;margin-left: 20px; margin-top: 50px; ">
+		<div><b>Consensus Information</b></div>
+		<div id="consensusSuperkingdom"></div>
+		<div id="consensusPhylum"></div>
+		<div id="consensusClass"></div>
+		<div id="consensusOrder"></div>
+		<div id="consensusFamily"></div>
+		<div id="consensusGenus"></div>
+		<div id="consensusSpecies"></div>
+	</div>
+</div>
+
+
+<footer id="footer_div" class="footer navbar-fixed-bottom">
+    <div class="row"><div class="col-xs-12 footer_section"><p class="text-muted">Copyright (C) 2016 Yang Lu &lt;<a href="mailto:ylu465@usc.edu">ylu465@usc.edu</a>&gt; @ Computational and Molecular Biology, Department of Biological Science, University of Southern California, LA, CA 90089, USA </p></div></div>
+</footer>
+
+<script type="text/javascript">
+	var margin = {top: 200, right: 10, bottom: 10, left: 200};
+   var colors = ['#91003F','#9B1A53','#A63467','#B14F7C','#BB6990','#C684A4','#D19EB9','#DBB9CD','#E6D3E1','#F1EEF6','#FFFFFF'];
+   
+   var virusNameIdxMap = new Object(), hostNameIdxMap = new Object();   
+   var topHostNum = 50, cutoff = 1;
+   var checkedVirusIdxArr = [], checkedVirusArr = [], hostArr = [], edgeData =[];
+   var virusNameArr = ["AJ609634.fasta", "DQ113772.fasta", "HE978309.fasta", "HM563683.fasta", "HQ225832.fasta", "JN662425.fasta", "JQ182731.fasta", "JQ740801.fasta", "KF733017.fasta", "KJ094032.fasta", "KM101122.fasta", "KM581061.fasta"];
+var hostNameArr = ["NC_002163.fasta", "NC_002971.fasta", "NC_003197.fasta", "NC_004129.fasta", "NC_005773.fasta", "NC_006369.fasta", "NC_007795.fasta", "NC_008022.fasta", "NC_011072.fasta", "NC_011566.fasta", "NC_012856.fasta", "NC_012985.fasta", "NC_013124.fasta", "NC_013456.fasta", "NC_014158.fasta", "NC_017042.fasta", "NC_017469.fasta", "NC_017545.fasta", "NC_018936.fasta", "NC_019978.fasta", "NC_021887.fasta", "NC_022364.fasta", "NC_022997.fasta"];
+var virusHostMat = [[0.437575,0.425993,0.443386,0.473586,0.458307,0.420451,0.411047,0.383143,0.364486,0.426422,0.465643,0.417671,0.478087,0.412917,0.48283,0.435822,0.455519,0.393732,0.379668,0.441029,0.433693,0.43752,0.476111],
+[0.449827,0.43196,0.456869,0.482599,0.464771,0.44442,0.425696,0.392588,0.391294,0.438829,0.476799,0.431346,0.492952,0.433051,0.493845,0.455467,0.47815,0.41373,0.391365,0.456695,0.441507,0.448575,0.485235],
+[0.449592,0.39047,0.37799,0.458995,0.435801,0.394208,0.418163,0.396058,0.417898,0.402409,0.450634,0.392121,0.457623,0.394828,0.46674,0.417872,0.42796,0.413806,0.394284,0.42938,0.405786,0.36023,0.445731],
+[0.437101,0.433066,0.403553,0.456245,0.450104,0.399793,0.396716,0.380808,0.383859,0.424906,0.444773,0.416791,0.457862,0.400459,0.45956,0.427899,0.433929,0.392105,0.377545,0.403778,0.392939,0.392699,0.461817],
+[0.48807,0.478042,0.44617,0.352424,0.396582,0.447235,0.477716,0.476738,0.476314,0.470242,0.369664,0.465415,0.392657,0.472419,0.379801,0.46288,0.399857,0.473288,0.475097,0.472863,0.481638,0.440571,0.397215],
+[0.484005,0.467526,0.428106,0.369818,0.378811,0.466272,0.474272,0.465931,0.462262,0.454619,0.304307,0.449233,0.348128,0.460006,0.34508,0.465609,0.414585,0.460979,0.46431,0.452642,0.480952,0.437719,0.319879],
+[0.464253,0.387765,0.338806,0.440708,0.401389,0.37823,0.4366,0.426847,0.446615,0.397324,0.431668,0.414452,0.460205,0.377427,0.468844,0.435352,0.449828,0.426762,0.42785,0.466147,0.413031,0.320964,0.447163],
+[0.444754,0.42799,0.452866,0.480571,0.470301,0.432752,0.410417,0.403941,0.407375,0.438289,0.483523,0.416019,0.485322,0.442935,0.493675,0.441943,0.465685,0.395896,0.402156,0.428286,0.454059,0.444029,0.49302],
+[0.453913,0.418881,0.458957,0.495184,0.491019,0.433504,0.380341,0.380658,0.413355,0.430374,0.487819,0.412588,0.484769,0.431798,0.49472,0.452272,0.484993,0.385259,0.377674,0.409079,0.437352,0.45864,0.493524],
+[0.462231,0.431053,0.453552,0.494056,0.477071,0.460724,0.426121,0.426555,0.425853,0.436257,0.489776,0.433883,0.489389,0.429401,0.500771,0.44444,0.502379,0.447897,0.424978,0.457234,0.399458,0.453468,0.489023],
+[0.457107,0.422239,0.421018,0.395934,0.413629,0.453639,0.456692,0.455452,0.459698,0.43125,0.3792,0.443861,0.403074,0.42344,0.381476,0.438174,0.436697,0.452477,0.456461,0.469432,0.436992,0.413083,0.38188],
+[0.48026,0.490367,0.446068,0.373184,0.401357,0.474047,0.486257,0.48957,0.493209,0.488013,0.368771,0.487197,0.391937,0.488592,0.374086,0.475151,0.403065,0.478369,0.489271,0.474648,0.501369,0.442775,0.359561]];
+var superkingdomArr = ["Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria", "Bacteria"];
+var phylumArr = ["Proteobacteria", "Proteobacteria", "Proteobacteria", "Proteobacteria", "Proteobacteria", "Proteobacteria", "Firmicutes", "Firmicutes", "Firmicutes", "Proteobacteria", "Proteobacteria", "Proteobacteria", "Actinobacteria", "Proteobacteria", "Actinobacteria", "Proteobacteria", "Firmicutes", "Firmicutes", "Firmicutes", "Firmicutes", "Chlamydiae", "Proteobacteria", "Proteobacteria"];
+var classArr = ["Epsilonproteobacteria", "Gammaproteobacteria", "Gammaproteobacteria", "Gammaproteobacteria", "Gammaproteobacteria", "Gammaproteobacteria", "Bacilli", "Bacilli", "Bacilli", "Gammaproteobacteria", "Betaproteobacteria", "Alphaproteobacteria", "Actinobacteria", "Gammaproteobacteria", "Actinobacteria", "Alphaproteobacteria", "Bacilli", "Bacilli", "Bacilli", "Clostridia", "Chlamydiia", "Gammaproteobacteria", "Alphaproteobacteria"];
+var orderArr = ["Campylobacterales", "Legionellales", "Enterobacteriales", "Pseudomonadales", "Pseudomonadales", "Legionellales", "Bacillales", "Lactobacillales", "Lactobacillales", "Alteromonadales", "Burkholderiales", "Rhizobiales", "Acidimicrobiales", "Vibrionales", "Actinomycetales", "Rickettsiales", "Lactobacillales", "Bacillales", "Lactobacillales", "Halanaerobiales", "Chlamydiales", "Enterobacteriales", "Rhizobiales"];
+var familyArr = ["Campylobacteraceae", "Coxiellaceae", "Enterobacteriaceae", "Pseudomonadaceae", "Pseudomonadaceae", "Legionellaceae", "Staphylococcaceae", "Streptococcaceae", "Streptococcaceae", "Shewanellaceae", "Burkholderiaceae", "Rhizobiaceae", "Acidimicrobiaceae", "Vibrionaceae", "Tsukamurellaceae", "Rickettsiaceae", "Lactobacillaceae", "Listeriaceae", "Streptococcaceae", "Halobacteroidaceae", "Chlamydiaceae", "Enterobacteriaceae", "Hyphomicrobiaceae"];
+var genusArr = ["Campylobacter", "Coxiella", "Salmonella", "Pseudomonas", "Pseudomonas", "Legionella", "Staphylococcus", "Streptococcus", "Streptococcus", "Shewanella", "Ralstonia", "Candidatus Liberibacter", "Acidimicrobium", "Vibrio", "Tsukamurella", "Rickettsia", "Lactobacillus", "Listeria", "Streptococcus", "Halobacteroides", "Chlamydia", "Escherichia", "Hyphomicrobium"];
+var speciesArr = ["Campylobacter jejuni", "Coxiella burnetii", "Salmonella enterica", "Pseudomonas protegens", "Pseudomonas savastanoi", "Legionella pneumophila", "Staphylococcus aureus", "Streptococcus pyogenes", "Streptococcus pneumoniae", "Shewanella piezotolerans", "Ralstonia pickettii", "Candidatus Liberibacter asiaticus", "Acidimicrobium ferrooxidans", "Vibrio sp. Ex25", "Tsukamurella paurometabola", "Rickettsia rhipicephali", "Lactobacillus delbrueckii", "Listeria monocytogenes", "Streptococcus pyogenes", "Halobacteroides halobius", "Chlamydia trachomatis", "Escherichia coli", "Hyphomicrobium nitrativorans"];
+var organismArr = ["Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC 700819", "Coxiella burnetii RSA 493", "Salmonella enterica subsp. enterica serovar Typhimurium str. LT2", "Pseudomonas protegens Pf-5", "Pseudomonas syringae pv. phaseolicola 1448A", "Legionella pneumophila str. Lens", "Staphylococcus aureus subsp. aureus NCTC 8325", "Streptococcus pyogenes MGAS10270", "Streptococcus pneumoniae G54", "Shewanella piezotolerans WP3", "Ralstonia pickettii 12D chromosome 1", "Candidatus Liberibacter asiaticus str. psy62", "Acidimicrobium ferrooxidans DSM 10331", "Vibrio sp. Ex25 chromosome 1", "Tsukamurella paurometabola DSM 20162", "Rickettsia rhipicephali str. 3-7-female6-CWPP", "Lactobacillus delbrueckii subsp. bulgaricus 2038", "Listeria monocytogenes J0161", "Streptococcus pyogenes A20", "Halobacteroides halobius DSM 5150", "Chlamydia trachomatis RC-L2(s)/46", "Escherichia coli LY180", "Hyphomicrobium nitrativorans NL23"];
+
+   for(var hostIdx=0; hostIdx<hostNameArr.length; hostIdx++) hostNameIdxMap[hostNameArr[hostIdx]] = hostIdx;
+   for(var virusIdx=0; virusIdx<virusNameArr.length; virusIdx++) virusNameIdxMap[virusNameArr[virusIdx]] = virusIdx;
+   console.log("phageToHost finish loading!");
+   
+   topHostNum = Math.min(topHostNum, hostNameArr.length);
+   
+   $(function() { $( "#topSlider" ).slider({ value:25, min: 1, max: 100, step: 1, slide: function( event, ui ) { $( "#topAmount" ).val( ui.value ); topHostNum = Math.min(ui.value, hostNameArr.length);  } }); }); 
+   $(function() { $( "#cutoffSlider" ).slider({ value:1, min: 0, max: 1, step: 0.01, slide: function( event, ui ) { $( "#cutoffAmount" ).val( ui.value ); cutoff = ui.value; } }); });
+   
+   
+   $("#listbox").jqxListBox({width: 290, height: 300, source: virusNameArr, checkboxes: true, filterable: true});
+		$("#listbox").on('checkChange', function (event) {
+			var items = $("#listbox").jqxListBox('getCheckedItems');
+			checkedVirusIdxArr = []; checkedVirusArr = [];
+			$.each(items, function (index) { checkedVirusIdxArr.push(this.index); checkedVirusArr.push(this.label); });
+			
+			if(checkedVirusIdxArr.length > 0) $("#okBtn").prop('disabled', false);
+			else $("#okBtn").prop('disabled', true);
+   });
+   
+   var host2organism = [], host2superkingdom = [], host2phylum = [], host2class = [], 
+		host2order = [], host2family = [], host2genus = [], host2species = [];
+   
+   for(var t=0; t<hostNameArr.length; t++){
+   		host2organism[hostNameArr[t]] = organismArr[t];
+   		host2superkingdom[hostNameArr[t]] = superkingdomArr[t];
+   		host2phylum[hostNameArr[t]] = phylumArr[t];
+   		host2class[hostNameArr[t]] = classArr[t];
+   		host2order[hostNameArr[t]] = orderArr[t];
+   		host2family[hostNameArr[t]] = familyArr[t];
+   		host2genus[hostNameArr[t]] = genusArr[t];
+   		host2species[hostNameArr[t]] = speciesArr[t];
+	}
+	console.log("hostTaxonomy finish loading!");
+	
+	var minDist = 1, maxDist = 0, gap=0;
+	for(var rowIdx=0; rowIdx<virusHostMat.length; rowIdx++) 
+	{
+		for(var colIdx=0; colIdx<virusHostMat[0].length; colIdx++)
+		{
+			if(virusHostMat[rowIdx][colIdx]<minDist) minDist = virusHostMat[rowIdx][colIdx];
+			if(virusHostMat[rowIdx][colIdx]>maxDist) maxDist = virusHostMat[rowIdx][colIdx];
+		}
+	}
+	minDist = Math.max(0,minDist-0.1); maxDist = Math.min(1,maxDist+0.1); gap = maxDist-minDist;
+	var colorScale = d3.scale.quantile().domain([minDist,maxDist]).range(colors);
+
+	function updateData() {
+		topHostNum = Math.min(topHostNum, hostNameArr.length);
+
+		thresArr = [];
+		for(var rowIdx=0; rowIdx<checkedVirusIdxArr.length; rowIdx++) {
+			var currArr = virusHostMat[checkedVirusIdxArr[rowIdx]];
+			var tmpArr = currArr.slice();
+			var thres = tmpArr.sort().slice(topHostNum-1,topHostNum);
+			thresArr.push(thres);
+		}
+		
+		indiceArr = [];
+		for(var colIdx=0; colIdx<virusHostMat[checkedVirusIdxArr[0]].length; colIdx++) {
+			if(indiceArr.length >= topHostNum) break;
+			
+			var success = true; combineddist = 0;
+			for(var rowIdx=0; rowIdx<checkedVirusIdxArr.length; rowIdx++) {
+				if(virusHostMat[checkedVirusIdxArr[rowIdx]][colIdx] > thresArr[rowIdx]) { success = false; break; }
+				combineddist += virusHostMat[checkedVirusIdxArr[rowIdx]][colIdx];
+			}
+			
+			if(success) { indiceArr.push({"idx":colIdx, "dist":combineddist });}
+		}
+		
+		hostArr = []; edgeData =[];
+		for(var colIdx=0; colIdx<indiceArr.length; colIdx++) {
+			var realColIdx = indiceArr[colIdx].idx;
+			hostArr.push(hostNameArr[realColIdx]);
+			
+			for(var rowIdx=0; rowIdx<checkedVirusIdxArr.length; rowIdx++) { edgeData.push({"row":rowIdx, "col":hostArr.length-1, 
+				"value":virusHostMat[checkedVirusIdxArr[rowIdx]][realColIdx]<=cutoff?virusHostMat[checkedVirusIdxArr[rowIdx]][realColIdx]:1}); }
+		}
+		
+		pathArr = [];
+		for(var colIdx=0; colIdx<hostArr.length; colIdx++) { pathArr.push([host2superkingdom[hostArr[colIdx]],host2phylum[hostArr[colIdx]],host2class[hostArr[colIdx]],host2order[hostArr[colIdx]],host2family[hostArr[colIdx]],host2genus[hostArr[colIdx]],host2species[hostArr[colIdx]]]); }
+		//rootNode = 	convertToHierarchy(pathArr);
+		//consensusArr = getConsensusTaxonomy(rootNode); 
+		
+		$("#consensusSuperkingdom").text("Superkingdom: "+getConsensusItem(pathArr,0));
+		$("#consensusPhylum").text("Phylum: "+getConsensusItem(pathArr,1));
+		$("#consensusClass").text("Class: "+getConsensusItem(pathArr,2));
+		$("#consensusOrder").text("Order: "+getConsensusItem(pathArr,3));
+		$("#consensusFamily").text("Family: "+getConsensusItem(pathArr,4));
+		$("#consensusGenus").text("Genus: "+getConsensusItem(pathArr,5));
+		$("#consensusSpecies").text("Species: "+getConsensusItem(pathArr,6));
+		
+		var cellSize = 25, legendElementWidth = cellSize*2, 
+			width = Math.max(hostArr.length*cellSize, 1000 ), height = Math.max(checkedVirusIdxArr.length*cellSize, 700 );
+		
+		console.log();
+		
+		d3.selectAll(".canvasSvg").remove(); 
+		var svg = d3.select("#heatCanvas").style("float", "left").attr("width", width).attr("height", height)
+			.append("g").attr('class', "canvasSvg").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+		var rowLabels = svg.append("g").selectAll(".rowLabelg").data(checkedVirusArr).enter().append("text")
+			.text(function (d) { return d; }).attr("x", 0).attr("y", function (d, i) { return i * cellSize; })
+      		.style("text-anchor", "end").attr("transform", "translate(-6," + cellSize / 1.5 + ")")
+      		.attr("class", function (d,i) { return "rowLabel mono r"+i;} ) ;
+      		
+      	var colLabels = svg.append("g").selectAll(".colLabelg").data(hostArr).enter().append("text")
+      		.text(function (d) { return d; }).attr("x", 0).attr("y", function (d, i) { return i * cellSize; })
+      		.style("text-anchor", "left").attr("transform", "translate("+cellSize/2 + ",-6) rotate (-90)")
+      		.attr("class",  function (d,i) { return "colLabel mono c"+i;} );
+      	
+      	var heatMap = svg.append("g").attr("class","g3").selectAll(".cellg").data(edgeData).enter().append("rect")
+			.attr("x", function(d) { return d.col * cellSize; }).attr("y", function(d) { return d.row * cellSize; })
+        	.attr("class", function(d){return "cell cell-border cr"+(d.row)+" cc"+(d.col);})
+        	.attr("width", cellSize).attr("height", cellSize).style("fill", function(d) { return colorScale(d.value); })
+			.on("mouseover", function(d){
+				d3.selectAll(".cell").filter(function(el) {return d.row == el.row || d.col == el.col; }).classed("cell-hover",true);
+				d3.selectAll(".rowLabel").classed("text-highlight",function(r,ri){ return ri==d.row;});
+				d3.selectAll(".colLabel").classed("text-highlight",function(c,ci){ return ci==d.col;});
+				
+				d3.select("#tooltip1").style("left", (d3.event.pageX+10) + "px").style("top", (d3.event.pageY-10) + "px")
+					.html("Host Information: "+
+						"<br> Superkingdom: "+ host2superkingdom[hostArr[d.col]] +
+						"<br> Phylum: "+ host2phylum[hostArr[d.col]] +
+						"<br> Class: "+ host2class[hostArr[d.col]] +
+						"<br> Order: "+ host2order[hostArr[d.col]] +
+						"<br> Family: "+ host2family[hostArr[d.col]] +
+						"<br> Genus: "+ host2genus[hostArr[d.col]] +
+						"<br> Species: "+ host2species[hostArr[d.col]] +
+						"<br> Organism: "+ host2organism[hostArr[d.col]] +
+						"<br> distance:"+d.value);  
+                d3.select("#tooltip1").classed("hidden", false);
+			})
+			.on("mouseout", function(d){
+				d3.selectAll(".cell").filter(function(el) {return d.row == el.row || d.col == el.col; }).classed("cell-hover",false);
+				d3.selectAll(".rowLabel").classed("text-highlight",false);
+				d3.selectAll(".colLabel").classed("text-highlight",false);
+				d3.select("#tooltip1").classed("hidden", true);
+			});
+      		
+      	var legend = svg.selectAll(".legend").data([minDist,minDist+0.1*gap,minDist+0.2*gap,minDist+0.3*gap,minDist+0.4*gap,minDist+0.5*gap,minDist+0.6*gap,minDist+0.7*gap,minDist+0.8*gap,minDist+0.9*gap,maxDist]).enter().append("g").attr("class", "legend");
+		legend.append("rect").attr("x", function(d, i) { return legendElementWidth * i-margin.left; }).attr("y", (cellSize*2) - margin.top)
+    		.attr("width", legendElementWidth).attr("height", cellSize)
+    		.style("fill", function(d, i) { return colors[i]; });
+    
+    	legend.append("text").text(function(d) { return d3.format(".2f")(d); }).style("text-anchor", "left")
+    		.attr("x", function(d, i) { return legendElementWidth * i-margin.left; }).attr("y", (cellSize*4)- margin.top);
+	}
+	
+	function getConsensusItem(pathArr, idx)
+	{
+		var node = {id:"root", cnt:0, children:{}};
+		for (var i = 0; i < pathArr.length; i++) 
+		{
+			var path = pathArr[i];
+			node.cnt ++;
+			item = path[idx];
+			if (!node.children[item]) node.children[item] = {id:item, cnt:0, children:{}};
+			node.children[item].cnt ++;
+		}
+		
+		var arr = Object.keys( node.children ).map(function ( key ) { return node.children[key].cnt; });
+		var ratio = 100;
+		if(math.sum(arr) > 0) ratio = Math.max.apply(Math,arr)*100/math.sum(arr);
+		maxItem = Object.keys(node.children)[arr.indexOf(Math.max.apply(Math,arr))];
+		return node.children[maxItem].id+" ("+String(Math.round(ratio * 100) / 100)+"%)";
+	}
+	
+	function convertToHierarchy(pathArr) {
+		var rootNode = {id:"root", cnt:0, children:{}};
+		for (var i = 0; i < pathArr.length; i++) {
+			var path = pathArr[i];
+			buildNodeRecursive(rootNode, path, 0);
+		}
+		return rootNode;
+	}
+	
+	function buildNodeRecursive(node, path, idx) {
+		if (idx < path.length) {
+			node.cnt ++;
+			item = path[idx];			
+			if (!node.children[item]) node.children[item] = {id:item, cnt:0, children:{}};
+			buildNodeRecursive(node.children[item], path, idx + 1);
+		}
+	}
+	
+	function getConsensusTaxonomy(currNode) {
+		if(currNode.children && Object.keys(currNode.children).length > 0) {
+			var arr = Object.keys( currNode.children ).map(function ( key ) { return currNode.children[key].cnt; });
+			//console.log(arr + " : " +arr.length);
+			//console.log(arr + " : " +Math.max.apply(Math,arr) +" : " + arr.indexOf(Math.max.apply(Math,arr)));
+			//console.log(Math.max.apply(Math,arr) + " / " +math.sum(arr));
+			
+			var ratio = 100;
+			if(math.sum(arr) > 0) ratio = Math.max.apply(Math,arr)*100/math.sum(arr);
+			
+			maxItem = Object.keys(currNode.children)[arr.indexOf(Math.max.apply(Math,arr))];
+			
+			returnArr = [currNode.children[maxItem].id+" ("+String(Math.round(ratio * 100) / 100)+"%)"];
+			returnArr = returnArr.concat(getConsensusTaxonomy(currNode.children[maxItem]));
+			return returnArr;
+		}
+		return [currNode.id+" (100%)"];
+	}
+	
+
+</script>
+
+</body>
+</html>

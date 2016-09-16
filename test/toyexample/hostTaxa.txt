@@ -1,0 +1,24 @@
+hostNCBIName	hostName	hostSuperkingdom	hostPhylum	hostClass	hostOrder	hostFamily	hostGenus	hostSpecies
+NC_007795.fasta	Staphylococcus aureus subsp. aureus NCTC 8325	Bacteria	Firmicutes	Bacilli	Bacillales	Staphylococcaceae	Staphylococcus	Staphylococcus aureus
+NC_003197.fasta	Salmonella enterica subsp. enterica serovar Typhimurium str. LT2	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Salmonella	Salmonella enterica
+NC_002163.fasta	Campylobacter jejuni subsp. jejuni NCTC 11168 = ATCC 700819	Bacteria	Proteobacteria	Epsilonproteobacteria	Campylobacterales	Campylobacteraceae	Campylobacter	Campylobacter jejuni
+NC_017545.fasta	Listeria monocytogenes J0161	Bacteria	Firmicutes	Bacilli	Bacillales	Listeriaceae	Listeria	Listeria monocytogenes
+NC_022364.fasta	Escherichia coli LY180	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli
+NC_011072.fasta	Streptococcus pneumoniae G54	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus pneumoniae
+NC_014158.fasta	Tsukamurella paurometabola DSM 20162	Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Tsukamurellaceae	Tsukamurella	Tsukamurella paurometabola
+NC_019978.fasta	Halobacteroides halobius DSM 5150	Bacteria	Firmicutes	Clostridia	Halanaerobiales	Halobacteroidaceae	Halobacteroides	Halobacteroides halobius
+NC_021887.fasta	Chlamydia trachomatis RC-L2(s)/46	Bacteria	Chlamydiae	Chlamydiia	Chlamydiales	Chlamydiaceae	Chlamydia	Chlamydia trachomatis
+NC_013124.fasta	Acidimicrobium ferrooxidans DSM 10331	Bacteria	Actinobacteria	Actinobacteria	Acidimicrobiales	Acidimicrobiaceae	Acidimicrobium	Acidimicrobium ferrooxidans
+NC_018936.fasta	Streptococcus pyogenes A20	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus pyogenes
+NC_008022.fasta	Streptococcus pyogenes MGAS10270	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus pyogenes
+NC_017469.fasta	Lactobacillus delbrueckii subsp. bulgaricus 2038	Bacteria	Firmicutes	Bacilli	Lactobacillales	Lactobacillaceae	Lactobacillus	Lactobacillus delbrueckii
+NC_022997.fasta	Hyphomicrobium nitrativorans NL23	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Hyphomicrobiaceae	Hyphomicrobium	Hyphomicrobium nitrativorans
+NC_012856.fasta	Ralstonia pickettii 12D chromosome 1	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Burkholderiaceae	Ralstonia	Ralstonia pickettii
+NC_002971.fasta	Coxiella burnetii RSA 493	Bacteria	Proteobacteria	Gammaproteobacteria	Legionellales	Coxiellaceae	Coxiella	Coxiella burnetii
+NC_004129.fasta	Pseudomonas protegens Pf-5	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas protegens
+NC_017042.fasta	Rickettsia rhipicephali str. 3-7-female6-CWPP	Bacteria	Proteobacteria	Alphaproteobacteria	Rickettsiales	Rickettsiaceae	Rickettsia	Rickettsia rhipicephali
+NC_005773.fasta	Pseudomonas syringae pv. phaseolicola 1448A	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas savastanoi
+NC_013456.fasta	Vibrio sp. Ex25 chromosome 1	Bacteria	Proteobacteria	Gammaproteobacteria	Vibrionales	Vibrionaceae	Vibrio	Vibrio sp. Ex25
+NC_012985.fasta	Candidatus Liberibacter asiaticus str. psy62	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Rhizobiaceae	Candidatus Liberibacter	Candidatus Liberibacter asiaticus
+NC_011566.fasta	Shewanella piezotolerans WP3	Bacteria	Proteobacteria	Gammaproteobacteria	Alteromonadales	Shewanellaceae	Shewanella	Shewanella piezotolerans
+NC_006369.fasta	Legionella pneumophila str. Lens	Bacteria	Proteobacteria	Gammaproteobacteria	Legionellales	Legionellaceae	Legionella	Legionella pneumophila
