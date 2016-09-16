@@ -340,7 +340,7 @@ hostListFileWrite.close()
 sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
 								" -i " + virusListFile + " -j " + hostListFile + \
-								" -o " + options.outDir + " -t " + options.hostTaxaFile
+								" -o " + options.outDir + " -t " + hostTaxaFile
 print cmdCptMeasure
 
 with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:

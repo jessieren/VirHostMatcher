@@ -1,0 +1,72 @@
+hostNCBIName	hostName	hostSuperkingdom	hostPhylum	hostClass	hostOrder	hostFamily	hostGenus	hostSpecies
+NC_007795.1.fasta	Staphylococcus aureus subsp. aureus NCTC 8325	Bacteria	Firmicutes	Bacilli	Bacillales	Staphylococcaceae	Staphylococcus	Staphylococcus aureus
+NC_003197.1.fasta	Salmonella enterica subsp. enterica serovar Typhimurium str. LT2	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Salmonella	Salmonella enterica
+NC_012660.1.fasta	Pseudomonas fluorescens SBW25	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas fluorescens
+NC_003098.1.fasta	Streptococcus pneumoniae R6	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus pneumoniae
+NC_005042.1.fasta	Prochlorococcus marinus subsp. marinus str. CCMP1375	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+NC_006461.1.fasta	Thermus thermophilus HB8	Bacteria	Deinococcus-Thermus	Deinococci	Thermales	Thermaceae	Thermus	Thermus thermophilus
+NC_007205.1.fasta	Candidatus Pelagibacter ubique HTCC1062	Bacteria	Proteobacteria	Alphaproteobacteria	NA	NA	Candidatus Pelagibacter	Candidatus Pelagibacter ubique
+NC_008054.1.fasta	Lactobacillus delbrueckii subsp. bulgaricus ATCC 11842 = JCM 1002	Bacteria	Firmicutes	Bacilli	Lactobacillales	Lactobacillaceae	Lactobacillus	Lactobacillus delbrueckii
+NC_007712.1.fasta	Sodalis glossinidius str. 'morsitans'	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Sodalis	Sodalis glossinidius
+NC_002696.2.fasta	Caulobacter crescentus CB15	Bacteria	Proteobacteria	Alphaproteobacteria	Caulobacterales	Caulobacteraceae	Caulobacter	Caulobacter vibrioides
+NC_017731.1.fasta	Providencia stuartii MRSN 2154	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Providencia	Providencia stuartii
+NC_003888.3.fasta	Streptomyces coelicolor A3(2)	Bacteria	Actinobacteria	Actinobacteria	Streptomycetales	Streptomycetaceae	Streptomyces	Streptomyces coelicolor
+NC_003911.12.fasta	Ruegeria pomeroyi DSS-3	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	Ruegeria	Ruegeria pomeroyi
+NC_003910.7.fasta	Colwellia psychrerythraea 34H	Bacteria	Proteobacteria	Gammaproteobacteria	Alteromonadales	Colwelliaceae	Colwellia	Colwellia psychrerythraea
+NC_004547.2.fasta	Pectobacterium atrosepticum SCRI1043	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Pectobacterium	Pectobacterium atrosepticum
+NC_014230.1.fasta	Croceibacter atlanticus HTCC2559	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Croceibacter	Croceibacter atlanticus
+AAZW01.fasta	Vibrionales bacterium SWAT-3	Bacteria	Proteobacteria	Gammaproteobacteria	Vibrionales	NA	NA	NA
+NC_014010.1.fasta	Candidatus Puniceispirillum marinum IMCC1322	Bacteria	Proteobacteria	Alphaproteobacteria	NA	NA	Candidatus Puniceispirillum	Candidatus Puniceispirillum marinum
+CP001733.1.fasta	Aggregatibacter actinomycetemcomitans D11S-1	Bacteria	Proteobacteria	Gammaproteobacteria	Pasteurellales	Pasteurellaceae	Aggregatibacter	Aggregatibacter actinomycetemcomitans
+NC_015183.1.fasta	Agrobacterium sp. H13-3	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Rhizobiaceae	Agrobacterium	NA
+CP003184.1.fasta	Thermoanaerobacterium saccharolyticum JW/SL-YS485	Bacteria	Firmicutes	Clostridia	Thermoanaerobacterales	Thermoanaerobacterales Family III. Incertae Sedis	Thermoanaerobacterium	Thermoanaerobacterium saccharolyticum
+AJKU01.fasta	Cronobacter muytjensii ATCC 51329	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Cronobacter	Cronobacter muytjensii
+NZ_CP009976.1.fasta	Cellulophaga baltica 18	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Cellulophaga	Cellulophaga baltica
+NZ_CP009887.1.fasta	Cellulophaga baltica NN016038	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Cellulophaga	Cellulophaga baltica
+NC_005835.1.fasta	Thermus thermophilus HB27	Bacteria	Deinococcus-Thermus	Deinococci	Thermales	Thermaceae	Thermus	Thermus thermophilus
+NC_005072.1.fasta	Prochlorococcus marinus subsp. pastoris str. CCMP1986	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+NC_009004.1.fasta	Lactococcus lactis subsp. cremoris MG1363	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Lactococcus	Lactococcus lactis
+CP000312.1.fasta	Clostridium perfringens SM101	Bacteria	Firmicutes	Clostridia	Clostridiales	Clostridiaceae	Clostridium	Clostridium perfringens
+CP000410.1.fasta	Streptococcus pneumoniae D39	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus pneumoniae
+NC_005071.1.fasta	Prochlorococcus marinus str. MIT 9313	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+CP002888.1.fasta	Streptococcus salivarius 57.I	Bacteria	Firmicutes	Bacilli	Lactobacillales	Streptococcaceae	Streptococcus	Streptococcus salivarius
+ATLG01.fasta	Cellulophaga baltica 4	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Cellulophaga	Cellulophaga baltica
+ATLH01.fasta	Cellulophaga baltica 13	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Cellulophaga	Cellulophaga baltica
+NZ_CP009494.1.fasta	Mycobacterium smegmatis str. MC2 155	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Mycobacteriaceae	Mycobacterium	Mycobacterium smegmatis
+CP002491.1.fasta	Enterococcus faecalis 62	Bacteria	Firmicutes	Bacilli	Lactobacillales	Enterococcaceae	Enterococcus	Enterococcus faecalis
+NC_008380.1.fasta	Rhizobium leguminosarum bv. viciae 3841	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Rhizobiaceae	Rhizobium	Rhizobium leguminosarum
+NC_008542.1.fasta	Burkholderia cenocepacia HI2424	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Burkholderiaceae	Burkholderia	Burkholderia cenocepacia
+NC_007335.2.fasta	Prochlorococcus marinus str. NATL2A	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+NC_007577.1.fasta	Prochlorococcus marinus str. MIT 9312	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+NC_002179.2.fasta	Chlamydophila pneumoniae AR39	Bacteria	Chlamydiae	Chlamydiia	Chlamydiales	Chlamydiaceae	Chlamydia	Chlamydia pneumoniae
+NC_017196.2.fasta	Bacillus subtilis subsp. natto BEST195	Bacteria	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus subtilis
+NC_018679.1.fasta	Alteromonas macleodii str. 'Balearic Sea AD45'	Bacteria	Proteobacteria	Gammaproteobacteria	Alteromonadales	Alteromonadaceae	Alteromonas	Alteromonas macleodii
+AE014075.1.fasta	Escherichia coli CFT073	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli
+NC_008817.1.fasta	Prochlorococcus marinus str. MIT 9515	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+NC_020528.1.fasta	Sinorhizobium meliloti 2011	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Rhizobiaceae	Sinorhizobium	Sinorhizobium meliloti
+NC_009481.1.fasta	Synechococcus sp. WH 7803	Bacteria	Cyanobacteria	NA	Chroococcales	NA	Synechococcus	NA
+JPOY01.fasta	Sulfitobacter sp. CB2047	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	Sulfitobacter	NA
+NZ_AP012544.1.fasta	Lactobacillus casei subsp. casei ATCC 393	Bacteria	Firmicutes	Bacilli	Lactobacillales	Lactobacillaceae	Lactobacillus	Lactobacillus casei
+NZ_CP006882.1.fasta	Synechococcus sp. WH 8109	Bacteria	Cyanobacteria	NA	Chroococcales	NA	Synechococcus	NA
+NC_008819.1.fasta	Prochlorococcus marinus str. NATL1A	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+NC_008820.1.fasta	Prochlorococcus marinus str. MIT 9303	Bacteria	Cyanobacteria	NA	Prochlorales	Prochlorococcaceae	Prochlorococcus	Prochlorococcus marinus
+NC_005070.1.fasta	Synechococcus sp. WH 8102	Bacteria	Cyanobacteria	NA	Chroococcales	NA	Synechococcus	NA
+ATYQ01.fasta	Rhizobium leguminosarum bv. viciae VF39	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Rhizobiaceae	Rhizobium	Rhizobium leguminosarum
+NC_016856.1.fasta	Salmonella enterica subsp. enterica serovar Typhimurium str. 14028S	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Salmonella	Salmonella enterica
+NZ_CP009840.1.fasta	Yersinia pestis A1122	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Yersinia	Yersinia pestis
+AAOK01.fasta	Synechococcus sp. WH 7805	Bacteria	Cyanobacteria	NA	Chroococcales	NA	Synechococcus	NA
+NC_016810.1.fasta	Salmonella enterica subsp. enterica serovar Typhimurium str. SL1344	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Salmonella	Salmonella enterica
+ADXL01.fasta	Synechococcus sp. CB0101	Bacteria	Cyanobacteria	NA	Chroococcales	NA	Synechococcus	NA
+NC_012971.2.fasta	Escherichia coli BL21(DE3)	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli
+AZKB01.fasta	Oenococcus oeni S13	Bacteria	Firmicutes	Bacilli	Lactobacillales	Leuconostocaceae	Oenococcus	Oenococcus oeni
+ANJD01.fasta	Pseudomonas syringae pv. actinidiae ICMP 18800	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas syringae
+AZJX01.fasta	Oenococcus oeni S11	Bacteria	Firmicutes	Bacilli	Lactobacillales	Leuconostocaceae	Oenococcus	Oenococcus oeni
+AAJM01.fasta	Bacillus thuringiensis serovar israelensis ATCC 35646	Bacteria	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus thuringiensis
+ASWV01.fasta	Pseudomonas aeruginosa PA14	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa
+NC_022569.1.fasta	Salmonella enterica subsp. enterica serovar Typhimurium str. DT104	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Salmonella	Salmonella enterica
+NZ_CP009789.1.fasta	Escherichia coli K-12	Bacteria	Proteobacteria	Gammaproteobacteria	Enterobacteriales	Enterobacteriaceae	Escherichia	Escherichia coli
+AFAO01.fasta	Helicobacter pylori B45	Bacteria	Proteobacteria	Epsilonproteobacteria	Campylobacterales	Helicobacteraceae	Helicobacter	Helicobacter pylori
+AZUG01.fasta	Pseudomonas aeruginosa PAK	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa
+NC_002754.1.fasta	Sulfolobus solfataricus P2	Archaea	Crenarchaeota	Thermoprotei	Sulfolobales	Sulfolobaceae	Sulfolobus	Sulfolobus solfataricus
+NC_015948.1.fasta	Haloarcula hispanica ATCC 33960	Archaea	Euryarchaeota	Halobacteria	Halobacteriales	Halobacteriaceae	Haloarcula	Haloarcula hispanica
+NC_021058.1.fasta	Sulfolobus islandicus LAL14/1	Archaea	Crenarchaeota	Thermoprotei	Sulfolobales	Sulfolobaceae	Sulfolobus	Sulfolobus islandicus
