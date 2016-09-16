@@ -5,6 +5,7 @@ import subprocess
 from subprocess import call
 import time
 import platform
+import numpy
 
 prog_base = os.path.split(sys.argv[0])[1]
 
@@ -225,10 +226,14 @@ hostListFileWrite = open(hostListFile, 'a')
 
 #time.sleep(6) # delays for 10 seconds
 
+################ 00: hostTaxa issues: ##########################
+############## 1. hostName=hostFileName(with extension) ######
+############## 2. hostTaxa should be no missing   ########
+hostTaxaFile = os.path.join(options.outDir, "hostTaxa.txt")
+
 #################### 00: if hostTaxa missing ###################
 if options.hostTaxaFile is None :
 	sys.stdout.write("no hostTaxa file provided, creating a dummy one \n")
-	hostTaxaFile = os.path.join(options.outDir, "hostTaxa.txt")
 	hostTaxaFileWrite = open(hostTaxaFile, 'w') ## make file blank
 	hostTaxaFileWrite.close()
 	hostTaxaFileWrite = open(hostTaxaFile, 'a')
@@ -248,6 +253,12 @@ if options.hostTaxaFile is None :
 		hostTaxaFileWrite.write("\n")
 	hostTaxaFileWrite.close()
 	options.hostTaxaFile = hostTaxaFile
+
+################### REFORMAT hostTaxa (fill missing) ###############
+else :
+	hostTaxaTable = numpy.genfromtxt(options.hostTaxaFile,delimiter="\t", dtype="|S100")
+	hostTaxaTable[hostTaxaTable=='']='unknown'
+	numpy.savetxt(hostTaxaFile, hostTaxaTable, fmt="%s", delimiter='\t', newline='\n')
 
 
 
