@@ -229,7 +229,7 @@ hostListFileWrite = open(hostListFile, 'a')
 ################ 00: hostTaxa issues: ##########################
 ############## 1. hostName=hostFileName(with extension) ######
 ############## 2. hostTaxa should be no missing   ########
-hostTaxaFile = os.path.join(options.outDir, "hostTaxa.txt")
+hostTaxaFile = os.path.join(options.outDir, os.path.basename(options.hostTaxaFile)+"_new.txt")
 
 #################### 00: if hostTaxa missing ###################
 if options.hostTaxaFile is None :
