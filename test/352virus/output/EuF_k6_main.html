@@ -438,7 +438,7 @@ var organismArr = ["Bacillus thuringiensis serovar israelensis ATCC 35646", "Syn
    for(var virusIdx=0; virusIdx<virusNameArr.length; virusIdx++) virusNameIdxMap[virusNameArr[virusIdx]] = virusIdx;
    console.log("phageToHost finish loading!");
    
-   topHostNum = Math.min(topHostNum, hostNameArr.length);
+   topHostNum = Math.min(25, hostNameArr.length);
    
    $(function() { $( "#topSlider" ).slider({ value:25, min: 1, max: 100, step: 1, slide: function( event, ui ) { $( "#topAmount" ).val( ui.value ); topHostNum = Math.min(ui.value, hostNameArr.length);  } }); }); 
    $(function() { $( "#cutoffSlider" ).slider({ value:1, min: 0, max: 1, step: 0.01, slide: function( event, ui ) { $( "#cutoffAmount" ).val( ui.value ); cutoff = ui.value; } }); });
@@ -484,25 +484,19 @@ var organismArr = ["Bacillus thuringiensis serovar israelensis ATCC 35646", "Syn
 	function updateData() {
 		topHostNum = Math.min(topHostNum, hostNameArr.length);
 
-		thresArr = [];
+		var combinedArr = new Array(virusHostMat[checkedVirusIdxArr[0]].length).fill(0);
 		for(var rowIdx=0; rowIdx<checkedVirusIdxArr.length; rowIdx++) {
-			var currArr = virusHostMat[checkedVirusIdxArr[rowIdx]];
-			var tmpArr = currArr.slice();
-			var thres = tmpArr.sort().slice(topHostNum-1,topHostNum);
-			thresArr.push(thres);
-		}
-		
-		indiceArr = [];
-		for(var colIdx=0; colIdx<virusHostMat[checkedVirusIdxArr[0]].length; colIdx++) {
-			if(indiceArr.length >= topHostNum) break;
-			
-			var success = true; combineddist = 0;
-			for(var rowIdx=0; rowIdx<checkedVirusIdxArr.length; rowIdx++) {
-				if(virusHostMat[checkedVirusIdxArr[rowIdx]][colIdx] > thresArr[rowIdx]) { success = false; break; }
-				combineddist += virusHostMat[checkedVirusIdxArr[rowIdx]][colIdx];
+			for(var colIdx=0; colIdx<virusHostMat[checkedVirusIdxArr[rowIdx]].length; colIdx++) {
+				combinedArr[colIdx] += virusHostMat[checkedVirusIdxArr[rowIdx]][colIdx];
 			}
-			
-			if(success) { indiceArr.push({"idx":colIdx, "dist":combineddist });}
+		}
+		var tmpArr = combinedArr.slice(); 
+		var thres = tmpArr.sort().slice(topHostNum-1,topHostNum);
+
+		indiceArr = [];
+		for(var colIdx=0; colIdx<combinedArr.length; colIdx++) {
+			if(indiceArr.length >= topHostNum) break;
+			if(combinedArr[colIdx] <= thres) { indiceArr.push({"idx":colIdx, "dist":combinedArr[colIdx] }); }
 		}
 		
 		hostArr = []; edgeData =[];
