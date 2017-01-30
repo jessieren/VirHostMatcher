@@ -68,6 +68,14 @@ For running on other operating systems, VirHostMatcher will automatically attemp
 If users desire, the source code and Makefile are provided for compilation on their particular machine. VirHostMatcher can be compiled by running 'make' at the command line under the main directory. When using this option the Makefile will compile the source code into executable files into the main folder \<Path_to_VirHostMatcher\> which then will be detected and used by the main python script.
 
 
+
+Reference and Citation
+------------
+If you use VirHostMatcher, please cite the following paper:
+Ahlgren, Nathan A., Jie Ren, Yang Young Lu, Jed A. Fuhrman, and Fengzhu Sun. "Alignment-free $d_2^*$ oligonucleotide frequency dissimilarity measure improves prediction of hosts from metagenomically-derived viral sequences." Nucleic Acids Research (2016): gkw1002.
+[link](https://academic.oup.com/nar/article/45/1/39/2605663/Alignment-free-d-2-oligonucleotide-frequency)
+
+
 Contacts and bug reports
 ------------------------
 Jie Ren
