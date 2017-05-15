@@ -76,6 +76,8 @@ If you use VirHostMatcher, please cite the following paper:
 [Ahlgren, Nathan A., Jie Ren, Yang Young Lu, Jed A. Fuhrman, and Fengzhu Sun. "Alignment-free d2* oligonucleotide frequency dissimilarity measure improves prediction of hosts from metagenomically-derived viral sequences." Nucleic Acids Research (2016): gkw1002.]
 (https://academic.oup.com/nar/article/45/1/39/2605663/Alignment-free-d-2-oligonucleotide-frequency)
 
+Note that the supplemental table referenced in the above paper published in Nucleic Acids Research that lists the accession numbers of viral and host genomes used in this paper is also provided here as the file "Supplemental_table_virus_and_host_genomes.xlsx".
+
 
 Contacts and bug reports
 ------------------------
