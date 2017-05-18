@@ -7,6 +7,7 @@ import time
 import platform
 import numpy
 
+
 prog_base = os.path.split(sys.argv[0])[1]
 
 parser = optparse.OptionParser()
@@ -29,16 +30,30 @@ parser.add_option("-d", "--d2star", action = "store", type = "string", dest = "o
 if (options.virusFaDir is None or
 		options.hostFaDir is None) :
 	sys.stderr.write(prog_base + ": ERROR: missing required command-line argument")
+	filelog.write(prog_base + ": ERROR: missing required command-line argument")
 	parser.print_help()
 	sys.exit(0)
 
 
+## tmp file directory
+if not os.path.exists(options.outDir) :
+	os.makedirs(options.outDir)
+tmpDir = os.path.join(options.outDir, "tmp")
+if not os.path.exists(tmpDir) :
+	os.makedirs(tmpDir)
+
+## log file ##
+filelog = open(os.path.join(tmpDir, 'vhm.log'), 'w')
+
+## name length ##
 nameLen = 93 - len(options.outDir)
-## possibly because of the kmercount folder name for each contig is too long?
+#### possibly because of the kmercount folder name for each contig is too long?
+
 
 #################### 0: preparation ############################
+
 ## path to the programs
-vhmPath  = os.path.dirname(sys.argv[0])
+vhmPath = os.path.dirname(sys.argv[0])
 if len(vhmPath) == 0 :
 	vhmPath="./"
 #print vhmPath
@@ -67,25 +82,30 @@ countKmerOut = os.path.join(vhmPath, "countKmer.out")
 if not os.path.exists(countKmerOut) :
 	## recognize OS, copy exe files to vhmPath
 	sys.stderr.write("WARNING: can't find the file " + countKmerOut + ", try to copy one from bin \n")
+	filelog.write("WARNING: can't find the file " + countKmerOut + ", try to copy one from bin \n")
 	preCountKmerOut = os.path.join(exePath, "countKmer.out")
 	if exePath != "unknown" :
 		if os.path.exists(preCountKmerOut) :
 			os.system("cp " + preCountKmerOut + " " + vhmPath)
 		else :
 			sys.stderr.write( "ERROR: can't find file " + preCountKmerOut + ". \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + preCountKmerOut + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
 	else :
 	## can't recognize OS, try to compile
 		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + " \n")
 		sys.stderr.write( "Trying to compile..." + "\n")
+		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
+		filelog.write( "Trying to compile..." + "\n")
 		if os.path.exists(countKmerCpp) :
 			os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
 		else :
 			sys.stderr.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
 
 os.system("chmod 777 " + countKmerOut)
-
+filelog.flush()
 
 ## computeMeasure c++ code
 computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
@@ -93,25 +113,30 @@ computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
 if not os.path.exists(computeMeasureOut) :
 	## recognize OS, copy exe files to vhmPath
 	sys.stderr.write("WARNING: can't find the file " + computeMeasureOut + ", try to copy one from bin \n")
+	filelog.write("WARNING: can't find the file " + computeMeasureOut + ", try to copy one from bin \n")
 	preComputeMeasureOut = os.path.join(exePath, "computeMeasure.out")
 	if exePath != "unknown" :
 		if os.path.exists(preComputeMeasureOut) :
 			os.system("cp " + preComputeMeasureOut + " " + vhmPath)
 		else :
 			sys.stderr.write( "ERROR: can't find file " + preComputeMeasureOut + ". \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + preComputeMeasureOut + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
 	else :
 		## can't recognize OS, try to compile
 		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + " \n")
 		sys.stderr.write( "Trying to compile..." + "\n")
+		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
+		filelog.write( "Trying to compile..." + "\n")
 		if os.path.exists(computeMeasureCpp) :
 			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
 		else :
 			sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
 
 os.system("chmod 777 " + computeMeasureOut)
-
+filelog.flush()
 
 ## computeMeasure c++ code
 computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
@@ -125,82 +150,30 @@ if not os.path.exists(computed2starOut) :
 			os.system("cp " + preComputed2starOut + " " + vhmPath)
 		else :
 			sys.stderr.write( "ERROR: can't find file " + preComputed2starOut + ". \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + preComputed2starOut + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
 	else :
 		## can't recognize OS, try to compile
 		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + " \n")
 		sys.stderr.write( "Trying to compile..." + "\n")
+		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
+		filelog.write( "Trying to compile..." + "\n")
 		if os.path.exists(computed2starCpp) :
 			os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
 		else :
 			sys.stderr.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
 			sys.exit(0)
 
 os.system("chmod 777 " + computed2starOut)
+filelog.flush()
 
-
-
-
-#
-#
-### copy exe files to vhmPath
-#os.system("cp " + os.path.join(exePath, "*") + " " + vhmPath)
-#
-#
-### countKmer c++ code
-#countKmerCpp = os.path.join(vhmPath, "countKmer.cpp")
-#countKmerOut = os.path.join(vhmPath, "countKmer.out")
-#if not os.path.exists(countKmerOut) :
-#	sys.stderr.write( "WARNING: can't find file " + countKmerOut + "\n")
-#	sys.stderr.write( "Trying to compile..." + "\n")
-#	if os.path.exists(countKmerCpp) :
-#		os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
-#	else :
-#		sys.stderr.write( "ERROR: can't find file " + countKmerCpp + "\n")
-#		sys.exit(0)
-#else :
-#	os.system("chmod 777 " + countKmerOut)
-#
-### computeMeasure c++ code
-#computeMeasureCpp = os.path.join(vhmPath, "computeMeasure.cpp")
-#computeMeasureOut = os.path.join(vhmPath, "computeMeasure.out")
-#if not os.path.exists(computeMeasureOut) :
-#	sys.stderr.write( "WARNING: can't find file " + computeMeasureOut + "\n")
-#	sys.stderr.write( "Trying to compile..." + "\n")
-#	if os.path.exists(computeMeasureCpp) :
-#		os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
-#	else :
-#		sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + "\n")
-#		sys.exit(0)
-#else :
-#	os.system("chmod 777 " + computeMeasureOut)
-#
-### computeMeasure c++ code
-#computed2starCpp = os.path.join(vhmPath, "computeMeasure_onlyd2star.cpp")
-#computed2starOut = os.path.join(vhmPath, "computeMeasure_onlyd2star.out")
-#if not os.path.exists(computed2starOut) :
-#	sys.stderr.write( "WARNING: can't find file " + computed2starOut + "\n")
-#	sys.stderr.write( "Trying to compile..." + "\n")
-#	if os.path.exists(computed2starCpp) :
-#		os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
-#	else :
-#		sys.stderr.write( "ERROR: can't find file " + computed2starCpp + "\n")
-#		sys.exit(0)
-#else :
-#	os.system("chmod 777 " + computed2starOut)
-#
-
+## if only compute d2star
 if int(options.onlyD2star) == 1 :
 	computeMeasureOut=computed2starOut
 else :
 	computeMeasureOut=computeMeasureOut
 
-## tmp file directory
-if not os.path.exists(options.outDir) :
-	os.makedirs(options.outDir)
-tmpDir = os.path.join(options.outDir, "tmp")
-if not os.path.exists(tmpDir) :
-	os.makedirs(tmpDir)
 
 ## kmer count directory
 kmerCountPath = os.path.join(tmpDir, "KC")
@@ -234,6 +207,7 @@ hostListFileWrite = open(hostListFile, 'a')
 if options.hostTaxaFile is None :
 	hostTaxaFile = os.path.join(options.outDir, "hostTaxa.txt_new.txt")
 	sys.stdout.write("WARNING: no hostTaxa file provided, creating a dummy one \n")
+	filelog.write("WARNING: no hostTaxa file provided, creating a dummy one \n")
 	hostTaxaFileWrite = open(hostTaxaFile, 'w') ## make file blank
 	hostTaxaFileWrite.close()
 	hostTaxaFileWrite = open(hostTaxaFile, 'a')
@@ -244,6 +218,7 @@ if options.hostTaxaFile is None :
 			continue
 		if len(currentFileName) > nameLen :
 			sys.stdout.write( "WARNING: the file name has more than " + str(nameLen) + " letters! Use the first " + str(nameLen) + " letters as the name \n")
+			filelog.write( "WARNING: the file name has more than " + str(nameLen) + " letters! Use the first " + str(nameLen) + " letters as the name \n")
 			currentFileNameS = currentFileName[:nameLen]
 		else :
 			currentFileNameS = currentFileName
@@ -261,7 +236,7 @@ else :
 	hostTaxaTable[hostTaxaTable=='']='unknown'
 	numpy.savetxt(hostTaxaFile, hostTaxaTable, fmt="%s", delimiter='\t', newline='\n')
 
-
+filelog.flush()
 
 #################### 1: count kmer and prepare list files ############################
 #sys.stdout.write("Step 1: counting kmers \n")
@@ -270,12 +245,14 @@ for currentFileName in virusFaList :
 		continue
 	if os.path.isdir(os.path.join(options.virusFaDir, currentFileName)) :
 		sys.stderr.write( "ERROR: zero bytes of file " + currentFileName + "\n")
+		filelog.write( "ERROR: zero bytes of file " + currentFileName + "\n")
 		sys.exit(0)
 	if len(currentFileName) > nameLen :
 		currentFileNameS = currentFileName[:nameLen]
 	else :
 		currentFileNameS = currentFileName
 	sys.stdout.write("Step 1: counting kmers for virus " + currentFileNameS + "\n")
+	filelog.write("Step 1: counting kmers for virus " + currentFileNameS + "\n")
 	for w in range(1, (kmax+1)) :
 		currentFilePath = os.path.join(options.virusFaDir, currentFileName)
 		currentKmerCountPath = os.path.join(kmerCountPath, currentFileNameS)
@@ -294,7 +271,10 @@ for currentFileName in virusFaList :
 													str(2) + "\n")
 	else :
 		sys.stderr.write( "ERROR in counting kmers for " + currentFileNameS + "\n")
+		filelog.write( "ERROR in counting kmers for " + currentFileNameS + "\n")
 		sys.exit(0)
+  
+	filelog.flush()
 
 virusListFileWrite.close()
 
@@ -304,12 +284,14 @@ for currentFileName in hostFaList :
 		continue
 	if os.path.isdir(os.path.join(options.hostFaDir, currentFileName)) :
 		sys.stderr.write( "ERROR: zero bytes of file " + currentFileName + "\n")
+		filelog.write( "ERROR: zero bytes of file " + currentFileName + "\n")
 		sys.exit(0)
 	if len(currentFileName) > nameLen :
 		currentFileNameS = currentFileName[:nameLen]
 	else :
 		currentFileNameS = currentFileName
 	sys.stdout.write("Step 1: counting kmers for host " + currentFileNameS + "\n")
+	filelog.write("Step 1: counting kmers for host " + currentFileNameS + "\n")
 	for w in range(1, (kmax+1)) :
 		currentFilePath = os.path.join(options.hostFaDir, currentFileName)
 		currentKmerCountPath = os.path.join(kmerCountPath, currentFileNameS)
@@ -329,7 +311,11 @@ for currentFileName in hostFaList :
 												str(2) + "\n")
 	else :
 		sys.stderr.write( "ERROR in counting kmers for " + currentFileNameS + "\n")
+		filelog.write( "ERROR in counting kmers for " + currentFileNameS + "\n")
 		sys.exit(0)
+  
+	filelog.flush()
+
 hostListFileWrite.close()
 
 
@@ -338,75 +324,24 @@ hostListFileWrite.close()
 
 ################### 2: compute measures #####################
 sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
+filelog.write("Step 2: compute distance/dissimialrity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
 								" -i " + virusListFile + " -j " + hostListFile + \
 								" -o " + options.outDir + " -t " + hostTaxaFile
 print cmdCptMeasure
 
-with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:
-	cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
+#with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:
+cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
 														 stderr = subprocess.PIPE, \
 														 stdout = subprocess.PIPE)
-	for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
-		sys.stdout.write(c)
-		filelog.write(c)
+for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
+	sys.stdout.write(c)
+	filelog.write(c)
+	filelog.flush()
 
+cmdCptMeasureOut.wait()
+
+filelog.close()
 
 sys.stdout.write("done \n")
 
-#cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
-#								" -i " + virusListFile + " -j " + hostListFile + " -o " + options.outDir + " -t " + options.hostTaxaFile
-##print cmdCptMeasure
-##print cmdCptMeasure
-#cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
-#														 stderr = subprocess.PIPE, \
-#														 stdout = subprocess.PIPE)
-#for line in iter(cmdCptMeasureOut.stderr.readline, b''):
-#	sys.stdout.write(line)
-#	cmdCptMeasureOut.wait()
-
-
-#
-#
-#kmax=6
-#tmpDir="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/tmp"
-#hostListFile="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/tmp/hostList"
-#virusListFile="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/tmp/virusList"
-#outDir="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut"
-#hostTaxaFile="/home/jessie/software/tmp/VirHostMatcher-0915/test/marineOut/hostTaxa.txt"
-#computeMeasureOut="/home/jessie/software/tmp/VirHostMatcher-0915/computeMeasure.out"
-#cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
-#	" -i " + virusListFile + " -j " + hostListFile + " -o " + outDir + " -t " + hostTaxaFile
-#print cmdCptMeasure
-#
-#with open(os.path.join(tmpDir, 'computeMeasureOut.log'), 'w') as filelog:
-#	cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
-#																			stderr = subprocess.PIPE, \
-#																			stdout = subprocess.PIPE)
-#	for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
-#		sys.stdout.write(c)
-#		filelog.write(c)
-#
-#cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
-#																		stderr = subprocess.PIPE, \
-#																		stdout = subprocess.PIPE)
-#cmdCptMeasureOut.wait()
-#
-
-##print cmdCptMeasure
-#cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
-#																		stderr = subprocess.PIPE, \
-#																		stdout = subprocess.PIPE)
-#for line in iter(cmdCptMeasureOut.stderr.readline, b''):
-#	sys.stdout.write(line)
-#	cmdCptMeasureOut.wait()
-#
-#
-#
-#with open('/home/jessie/software/tmp/VirHostMatcher-0914/test/marine_out/tmp/test.log', 'w') as f:
-#	process = subprocess.Popen(cmdCptMeasure, shell=True, \
-#														 stderr = subprocess.PIPE, \
-#														 stdout = subprocess.PIPE)
-#	for c in iter(lambda: process.stderr.read(1), ''):
-#		sys.stdout.write(c)
-#		f.write(c)
