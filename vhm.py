@@ -362,7 +362,7 @@ for c in iter(cmdCptMeasureOut.stderr.readline, b''):
   
 	end_time = time.time()
 	count += 1
-	sys.stdout.write("   (ETR for computing distance(s) for virus-host pairs: " + str(int((end_time - start_time)/count*(len(hostFaList)-count))) + "s) \n")
+	sys.stdout.write("   (ETR for computing dissimialrities for virus-host pairs: " + str(int((end_time - start_time)/count*(len(hostFaList)-count))) + "s) \n")
 
 cmdCptMeasureOut.wait()
 
