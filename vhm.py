@@ -240,6 +240,10 @@ filelog.flush()
 
 #################### 1: count kmer and prepare list files ############################
 #sys.stdout.write("Step 1: counting kmers \n")
+
+start_time = time.time()
+count = 0
+
 for currentFileName in virusFaList :
 	if currentFileName.startswith('.') :
 		continue
@@ -275,9 +279,17 @@ for currentFileName in virusFaList :
 		sys.exit(0)
   
 	filelog.flush()
+  
+	end_time = time.time()
+	count += 1
+	#sys.stdout.write(str(end_time - start_time) + "s for " + str(count) + " seqs \n")
+	sys.stdout.write(" (ETR for counting kmers for viruses: " + str(int((end_time - start_time)/count*(len(virusFaList)-count))) + "s) \n")
 
 virusListFileWrite.close()
 
+
+start_time = time.time()
+count = 0
 
 for currentFileName in hostFaList :
 	if currentFileName.startswith('.') :
@@ -315,6 +327,11 @@ for currentFileName in hostFaList :
 		sys.exit(0)
   
 	filelog.flush()
+  
+	end_time = time.time()
+	count += 1
+	#sys.stdout.write(str(end_time - start_time) + "s for " + str(count) + " seqs \n")
+	sys.stdout.write(" (ETR for counting kmers for hosts: " + str(int((end_time - start_time)/count*(len(hostFaList)-count))) + "s) \n")
 
 hostListFileWrite.close()
 
@@ -323,6 +340,9 @@ hostListFileWrite.close()
 #time.sleep(6) # delays for 10 seconds
 
 ################### 2: compute measures #####################
+start_time = time.time()
+count = 0
+
 sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
 filelog.write("Step 2: compute distance/dissimialrity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
@@ -334,10 +354,15 @@ print cmdCptMeasure
 cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
 														 stderr = subprocess.PIPE, \
 														 stdout = subprocess.PIPE)
-for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
+#for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
+for c in iter(cmdCptMeasureOut.stderr.readline, b''):
 	sys.stdout.write(c)
 	filelog.write(c)
 	filelog.flush()
+  
+	end_time = time.time()
+	count += 1
+	sys.stdout.write("   (ETR for computing distance(s) for virus-host pairs: " + str(int((end_time - start_time)/count*(len(hostFaList)-count))) + "s) \n")
 
 cmdCptMeasureOut.wait()
 
