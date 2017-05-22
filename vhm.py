@@ -283,7 +283,10 @@ for currentFileName in virusFaList :
 	end_time = time.time()
 	count += 1
 	#sys.stdout.write(str(end_time - start_time) + "s for " + str(count) + " seqs \n")
-	sys.stdout.write(" (ETR for counting kmers for viruses: " + str(int((end_time - start_time)/count*(len(virusFaList)-count))) + "s) \n")
+	sys.stdout.write(" (Average time for counting kmers for one virus: " + str(round((end_time - start_time)/count,4)) + "s) \n" )
+	sys.stdout.write(" (ETR for counting kmers for viruses: " + str(round((end_time - start_time)/count*(len(virusFaList)-count), 4)) + "s) \n")
+	filelog.write(" (Average time for counting kmers for one virus: " + str(round((end_time - start_time)/count,4)) + "s) \n" )
+	filelog.write(" (ETR for counting kmers for viruses: " + str(round((end_time - start_time)/count*(len(virusFaList)-count), 4)) + "s) \n")
 
 virusListFileWrite.close()
 
@@ -331,7 +334,10 @@ for currentFileName in hostFaList :
 	end_time = time.time()
 	count += 1
 	#sys.stdout.write(str(end_time - start_time) + "s for " + str(count) + " seqs \n")
-	sys.stdout.write(" (ETR for counting kmers for hosts: " + str(int((end_time - start_time)/count*(len(hostFaList)-count))) + "s) \n")
+	sys.stdout.write(" (Average time for counting kmers for one host: " + str(round((end_time - start_time)/count, 4)) + "s) \n")
+	sys.stdout.write(" (ETR for counting kmers for hosts: " + str(round((end_time - start_time)/count*(len(hostFaList)-count), 4)) + "s) \n")
+	filelog.write(" (Average time for counting kmers for one host: " + str(round((end_time - start_time)/count, 4)) + "s) \n")
+	filelog.write(" (ETR for counting kmers for hosts: " + str(round((end_time - start_time)/count*(len(hostFaList)-count), 4)) + "s) \n")
 
 hostListFileWrite.close()
 
@@ -343,8 +349,8 @@ hostListFileWrite.close()
 start_time = time.time()
 count = 0
 
-sys.stdout.write("Step 2: compute distance/dissimialrity measures \n")
-filelog.write("Step 2: compute distance/dissimialrity measures \n")
+sys.stdout.write("Step 2: compute distance/dissimilarity measures \n")
+filelog.write("Step 2: compute distance/dissimilarity measures \n")
 cmdCptMeasure = computeMeasureOut + " -k " + str(kmax) + \
 								" -i " + virusListFile + " -j " + hostListFile + \
 								" -o " + options.outDir + " -t " + hostTaxaFile
@@ -362,7 +368,10 @@ for c in iter(cmdCptMeasureOut.stderr.readline, b''):
   
 	end_time = time.time()
 	count += 1
-	sys.stdout.write("   (ETR for computing dissimialrities for virus-host pairs: " + str(int((end_time - start_time)/count*(len(hostFaList)-count))) + "s) \n")
+	sys.stdout.write("   (Average time for computing dissimilarities for one virus-host pair: " + str(round((end_time - start_time)/count/len(virusFaList), 4)) + "s) \n")
+	sys.stdout.write("   (ETR for computing dissimilarities for virus-host pairs: " + str(round((end_time - start_time)/count*(len(hostFaList)-count), 4)) + "s) \n")
+	filelog.write("   (Average time for computing dissimilarities for one virus-host pair: " + str(round((end_time - start_time)/count/len(virusFaList), 4)) + "s) \n")
+	filelog.write("   (ETR for computing dissimilarities for virus-host pairs: " + str(round((end_time - start_time)/count*(len(hostFaList)-count), 4)) + "s) \n")
 
 cmdCptMeasureOut.wait()
 
