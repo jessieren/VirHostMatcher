@@ -1917,7 +1917,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	system(cpLogoCMD.c_str());
 	
 	htmlTmpDIR = outDIR + "/" + "tmp_html";
-	system(("mkdir " + htmlTmpDIR).c_str());
+	system(("mkdir -p " + htmlTmpDIR).c_str());
 	
 
 	///////////////////////////////////////////////////////////////////////

@@ -1819,13 +1819,7 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 	system(cpLogoCMD.c_str());
 	
 	htmlTmpDIR = outDIR + "/" + "tmp_html";
-  
-  const int dir_err = mkdir(htmlTmpDIR.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-  if (-1 == dir_err)
-  {
-    cerr << "Error creating directory " << htmlTmpDIR.c_str() << endl;
-    exit(1);
-  }
+  system(("mkdir -p " + htmlTmpDIR).c_str());
 
 
 	///////////////////////////////////////////////////////////////////////
