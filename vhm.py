@@ -362,8 +362,8 @@ cmdCptMeasureOut = subprocess.Popen(cmdCptMeasure, shell=True, \
 														 stdout = subprocess.PIPE)
 #for c in iter(lambda: cmdCptMeasureOut.stderr.read(1), ''):
 for c in iter(cmdCptMeasureOut.stderr.readline, b''):
-	sys.stdout.write(c)
-	filelog.write(c)
+	sys.stdout.write(c.decode("utf-8"))
+	filelog.write(c.decode("utf-8"))
 	filelog.flush()
   
 	end_time = time.time()
