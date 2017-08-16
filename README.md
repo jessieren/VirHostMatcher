@@ -111,7 +111,7 @@ smaller you can make it, the easier it will be.
 
 Copyright and License Information
 ---------------------------------
-Copyright (C) 2016 University of Southern California
+Copyright (C) 2016 University of Southern California, Fengzhu Sun's lab'
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
