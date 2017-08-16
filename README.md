@@ -64,8 +64,12 @@ VirHostMatcher provides a convenient way to visualize and analyze output result 
 Compilation
 ------------
 VirHostMatcher has prepared executable (compiled) programs under \<Path_to_VirHostMatcher/bin\> for three main operating systems, Linux, Window and Mac. VirHostMatcher automatically detects the operating system and uses the corresponding compiled programs. 
-For running on other operating systems, VirHostMatcher will automatically attempt compile the source code for your platform by running the Makefile in the main folder \<Path_to_VirHostMatcher\>.
-If users desire, the source code and Makefile are provided for compilation on their particular machine. VirHostMatcher can be compiled by running 'make' at the command line under the main directory. 
+For running on other operating systems, VirHostMatcher will automatically attempt compile the source code for your platform.
+If users desire, the source code and Makefile are provided for compilation on their particular machine. VirHostMatcher can be compiled by running the following commands under the main directory,
+  
+  cd <Path_to_VirHostMatcher>
+  make
+  
 When using this option the Makefile will compile the source code into executable files into the main folder \<Path_to_VirHostMatcher\> which then will be detected and used by the main python script.
 
 
