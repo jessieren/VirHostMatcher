@@ -88,8 +88,8 @@ if not os.path.exists(countKmerOut) :
 		if os.path.exists(preCountKmerOut) :
 			os.system("cp " + preCountKmerOut + " " + vhmPath)
 		else :
-			sys.stderr.write( "ERROR: can't find file " + preCountKmerOut + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + preCountKmerOut + ". \n Please run make under the main directory! \n" )
+			sys.stderr.write( "ERROR: can't find file " + preCountKmerOut + " \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + preCountKmerOut + " \n Please run make under the main directory! \n" )
 			sys.exit(0)
 	else :
 	## can't recognize OS, try to compile
@@ -100,8 +100,8 @@ if not os.path.exists(countKmerOut) :
 		if os.path.exists(countKmerCpp) :
 			os.system("g++ " + countKmerCpp + " -o " + countKmerOut + "  -std=c++0x" )
 		else :
-			sys.stderr.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
+			sys.stderr.write( "ERROR: can't find file " + countKmerCpp + " \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + countKmerCpp + " \n Please run make under the main directory! \n" )
 			sys.exit(0)
 
 os.system("chmod 777 " + countKmerOut)
@@ -119,8 +119,8 @@ if not os.path.exists(computeMeasureOut) :
 		if os.path.exists(preComputeMeasureOut) :
 			os.system("cp " + preComputeMeasureOut + " " + vhmPath)
 		else :
-			sys.stderr.write( "ERROR: can't find file " + preComputeMeasureOut + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + preComputeMeasureOut + ". \n Please run make under the main directory! \n" )
+			sys.stderr.write( "ERROR: can't find file " + preComputeMeasureOut + " \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + preComputeMeasureOut + " \n Please run make under the main directory! \n" )
 			sys.exit(0)
 	else :
 		## can't recognize OS, try to compile
@@ -131,8 +131,8 @@ if not os.path.exists(computeMeasureOut) :
 		if os.path.exists(computeMeasureCpp) :
 			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut + "  -std=c++0x" )
 		else :
-			sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
+			sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + " \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + computeMeasureCpp + " \n Please run make under the main directory! \n" )
 			sys.exit(0)
 
 os.system("chmod 777 " + computeMeasureOut)
@@ -149,8 +149,8 @@ if not os.path.exists(computed2starOut) :
 		if os.path.exists(preComputed2starOut) :
 			os.system("cp " + preComputed2starOut + " " + vhmPath)
 		else :
-			sys.stderr.write( "ERROR: can't find file " + preComputed2starOut + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + preComputed2starOut + ". \n Please run make under the main directory! \n" )
+			sys.stderr.write( "ERROR: can't find file " + preComputed2starOut + " \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + preComputed2starOut + " \n Please run make under the main directory! \n" )
 			sys.exit(0)
 	else :
 		## can't recognize OS, try to compile
@@ -161,8 +161,8 @@ if not os.path.exists(computed2starOut) :
 		if os.path.exists(computed2starCpp) :
 			os.system("g++ " + computed2starCpp + " -o " + computed2starOut + "  -std=c++0x" )
 		else :
-			sys.stderr.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
+			sys.stderr.write( "ERROR: can't find file " + computed2starCpp + " \n Please run make under the main directory! \n" )
+			filelog.write( "ERROR: can't find file " + computed2starCpp + " \n Please run make under the main directory! \n" )
 			sys.exit(0)
 
 os.system("chmod 777 " + computed2starOut)
