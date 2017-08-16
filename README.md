@@ -28,16 +28,16 @@ To use the tool, please simply follow the steps and copy and paste the following
     
 * Step 4: Run the program use the following command. 
 
-		python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder(required)> -b <Path_to_host_folder(required)> -o <Path_to_output(required)> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
+		> python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder(required)> -b <Path_to_host_folder(required)> -o <Path_to_output(required)> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
 
 	For detailed description of the paramter settings,
-		python /Path_to_VirHostMatcher/vhm.py --help 
+		> python /Path_to_VirHostMatcher/vhm.py --help 
 
 * Congratulations! The results can be find in the output folder. The output folder contains,
 
-	[measure Name]_k[k-tuple length].csv	The dissimilarity/distance matrix for paris of virus and hosts;
+		[measure Name]_k[k-tuple length].csv	The dissimilarity/distance matrix for paris of virus and hosts;
 
-	[measure Name]_k[k-tuple length].main.html	The html file for visulization of the virus-host interactions;
+		[measure Name]_k[k-tuple length].main.html	The html file for visulization of the virus-host interactions;
 
 	
 
@@ -48,9 +48,9 @@ You can find a directory named "test" in the VirHostMatcher package. Two test ex
 For each of the two test data, there are three folders, "virus", "host" and "output" and one file "hostTaxa.txt". 
 The folder "virus" contains the virus fasta files, "host" contains the host fasta files, and "output" contains all the output results where the distance matrix files (".csv") and visualization files (".html") can be found. The file hostTaxa.txt lists the taxonomy information of the host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
 
-	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/toyexample/virus -b /Path_to_VirHostMatcher/test/toyexample/host -o /Path_to_VirHostMatcher/test/toyexample/output -t /Path_to_VirHostMatcher/test/toyexample/hostTaxa.txt
+	> python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/toyexample/virus -b /Path_to_VirHostMatcher/test/toyexample/host -o /Path_to_VirHostMatcher/test/toyexample/output -t /Path_to_VirHostMatcher/test/toyexample/hostTaxa.txt
 	
-	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/352virus/virus -b /Path_to_VirHostMatcher/test/352virus/host -o /Path_to_VirHostMatcher/test/352virus/output -t /Path_to_VirHostMatcher/test/352virus/hostTaxa.txt
+	> python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/352virus/virus -b /Path_to_VirHostMatcher/test/352virus/host -o /Path_to_VirHostMatcher/test/352virus/output -t /Path_to_VirHostMatcher/test/352virus/hostTaxa.txt
 
 
 Visualization
