@@ -48,9 +48,9 @@ You can find a directory named "test" in the VirHostMatcher package. Two test ex
 For each of the two test data, there are three folders, "virus", "host" and "output" and one file "hostTaxa.txt". 
 The folder "virus" contains the virus fasta files, "host" contains the host fasta files, and "output" contains all the output results where the distance matrix files (".csv") and visualization files (".html") can be found. The file hostTaxa.txt lists the taxonomy information of the host species. To run the program with the test data, use the following command after adjusting the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
   
-		python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/toyexample/virus -b /Path_to_VirHostMatcher/test/toyexample/host -o /Path_to_VirHostMatcher/test/toyexample/output -t /Path_to_VirHostMatcher/test/toyexample/hostTaxa.txt
+	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/toyexample/virus -b /Path_to_VirHostMatcher/test/toyexample/host -o /Path_to_VirHostMatcher/test/toyexample/output -t /Path_to_VirHostMatcher/test/toyexample/hostTaxa.txt
   
-		python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/352virus/virus -b /Path_to_VirHostMatcher/test/352virus/host -o /Path_to_VirHostMatcher/test/352virus/output -t /Path_to_VirHostMatcher/test/352virus/hostTaxa.txt
+	python /Path_to_VirHostMatcher/vhm.py -v /Path_to_VirHostMatcher/test/352virus/virus -b /Path_to_VirHostMatcher/test/352virus/host -o /Path_to_VirHostMatcher/test/352virus/output -t /Path_to_VirHostMatcher/test/352virus/hostTaxa.txt
 
 
 Visualization
