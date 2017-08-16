@@ -65,6 +65,7 @@ Compilation
 ------------
 VirHostMatcher has prepared executable (compiled) programs under \<Path_to_VirHostMatcher/bin\> for three main operating systems, Linux, Window and Mac. VirHostMatcher automatically detects the operating system and uses the corresponding compiled programs. 
 For running on other operating systems, VirHostMatcher will automatically attempt compile the source code for your platform.
+
 If users desire, the source code and Makefile are provided for compilation on their particular machine. VirHostMatcher can be compiled by running the following commands under the main directory,
   
 	cd <Path_to_VirHostMatcher>
@@ -111,7 +112,7 @@ smaller you can make it, the easier it will be.
 
 Copyright and License Information
 ---------------------------------
-Copyright (C) 2017 University of Southern California, Fengzhu Sun' lab
+Copyright (C) 2017 University of Southern California, Jie Ren, Nathan Ahlgren, Yang Lu, Fengzhu Sun
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
