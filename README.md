@@ -17,16 +17,14 @@ This program is used to compute various oligonucleotide frequency (ONF) based di
 
 To use the tool, please simply follow the steps and copy and paste the following commands to the terminal command line. Please do not forget to adjust the path variables to your own (i.e. replace \<Path_to_XXX\> with your own path). 
 
-* Step 1: Download the whole package from https://github.com/jessieren/VirHostMatcher
+* Step 1: Download the whole package from https://github.com/jessieren/VirHostMatcher and compile the code using the following command.
+    
+		> make
 
 * Step 2: Prepare a folder containing virus fasta files and a folder containing host fasta files. No subfolders are allowed. All fasta files should be put in the same directory.
 
 * Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. (One line for one host sequence and taxon names are tab delimited. There should be no missing taxon name entries, fill these with text such as 'NA' or 'unkown') The host names in the hostTaxa.txt file neet to exactly be the same as the host fasta file names, including the file name extensions otherwise the program cannot correspond the host fasta files and the host taxanomy information. 
 	If there is no taxonomy information, a hostTaxa.txt file will be generated in the output directory with all "unknown"s.
-
-* Step 4: Compile the C++ program using the following command.
-    
-    make
     
 * Step 4: Run the program use the following command. 
 
