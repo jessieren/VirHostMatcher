@@ -24,6 +24,10 @@ To use the tool, please simply follow the steps and copy and paste the following
 * Step 3: Prepare a text file for taxonomy of the hosts. Please follow the format in /test/hostTaxa.txt. (One line for one host sequence and taxon names are tab delimited. There should be no missing taxon name entries, fill these with text such as 'NA' or 'unkown') The host names in the hostTaxa.txt file neet to exactly be the same as the host fasta file names, including the file name extensions otherwise the program cannot correspond the host fasta files and the host taxanomy information. 
 	If there is no taxonomy information, a hostTaxa.txt file will be generated in the output directory with all "unknown"s.
 
+* Step 4: Compile the C++ program using the following command.
+    
+    make
+    
 * Step 4: Run the program use the following command. 
 
 		python /Path_to_VirHostMatcher/vhm.py -v <Path_to_virus_folder(required)> -b <Path_to_host_folder(required)> -o <Path_to_output(required)> -t <Path_to_hostTaxaFile> -d <1_if_only_compute_d2star>
