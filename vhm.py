@@ -88,21 +88,25 @@ if not os.path.exists(countKmerOut) :
 		if os.path.exists(preCountKmerOut) :
 			os.system("cp " + preCountKmerOut + " " + vhmPath)
 		else :
-			sys.stderr.write( "ERROR: can't find file " + preCountKmerOut + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + preCountKmerOut + ". \n Please run make under the main directory! \n" )
-			sys.exit(0)
+			sys.stderr.write( "WARNING: can't find file " + preCountKmerOut + ", try to run make under the main directory \n" )
+			filelog.write( "WARNING: can't find file " + preCountKmerOut + ", try to run make under the main directory \n" )
+            if os.path.exists(countKmerCpp) :
+                os.system( os.path.join(vhmPath, "make") )
+            else :
+                sys.stderr.write( "ERROR: can't find file " + countKmerCpp + "! \n" )
+                filelog.write( "ERROR: can't find file " + countKmerCpp + "! \n" )
+                sys.exit(0)
+			
 	else :
-	## can't recognize OS, try to compile
-		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + " \n")
-		sys.stderr.write( "Trying to compile..." + "\n")
-		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
-		filelog.write( "Trying to compile..." + "\n")
+        ## can't recognize OS, try to compile
+		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + ", try to run make under the main directory \n" )
+        filelog.write("WARNING: can't recognize the operating system" + optSys + ", try to run make under the main directory \n" )
 		if os.path.exists(countKmerCpp) :
-			os.system("g++ " + countKmerCpp + " -o " + countKmerOut + "  -std=c++0x" )
+            os.system( os.path.join(vhmPath, "make") )
 		else :
-			sys.stderr.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
-			sys.exit(0)
+            sys.stderr.write( "ERROR: can't find file " + countKmerCpp + "! \n" )
+            filelog.write( "ERROR: can't find file " + countKmerCpp + "! \n" )
+            sys.exit(0)
 
 os.system("chmod 777 " + countKmerOut)
 filelog.flush()
@@ -119,21 +123,24 @@ if not os.path.exists(computeMeasureOut) :
 		if os.path.exists(preComputeMeasureOut) :
 			os.system("cp " + preComputeMeasureOut + " " + vhmPath)
 		else :
-			sys.stderr.write( "ERROR: can't find file " + preComputeMeasureOut + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + preComputeMeasureOut + ". \n Please run make under the main directory! \n" )
-			sys.exit(0)
+			sys.stderr.write( "WARNING: can't find file " + preComputeMeasureOut + ", try to run make under the main directory \n" )
+			filelog.write( "WARNING: can't find file " + preComputeMeasureOut + ", try to run make under the main directory \n" )
+            if os.path.exists(computeMeasureCpp) :
+                os.system( os.path.join(vhmPath, "make") )
+            else :
+                sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + "! \n" )
+                filelog.write( "ERROR: can't find file " + computeMeasureCpp + "! \n" )
+                sys.exit(0)
 	else :
 		## can't recognize OS, try to compile
-		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + " \n")
-		sys.stderr.write( "Trying to compile..." + "\n")
-		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
-		filelog.write( "Trying to compile..." + "\n")
+		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + ", try to run make under the main directory \n" )
+        filelog.write("WARNING: can't recognize the operating system" + optSys + ", try to run make under the main directory \n" )
 		if os.path.exists(computeMeasureCpp) :
-			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut + "  -std=c++0x" )
+            os.system( os.path.join(vhmPath, "make") )
 		else :
-			sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
-			sys.exit(0)
+            sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + "! \n" )
+            filelog.write( "ERROR: can't find file " + computeMeasureCpp + "! \n" )
+            sys.exit(0)
 
 os.system("chmod 777 " + computeMeasureOut)
 filelog.flush()
@@ -149,21 +156,24 @@ if not os.path.exists(computed2starOut) :
 		if os.path.exists(preComputed2starOut) :
 			os.system("cp " + preComputed2starOut + " " + vhmPath)
 		else :
-			sys.stderr.write( "ERROR: can't find file " + preComputed2starOut + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + preComputed2starOut + ". \n Please run make under the main directory! \n" )
-			sys.exit(0)
+            sys.stderr.write( "WARNING: can't find file " + preComputed2starOut + ", try to run make under the main directory \n" )
+			filelog.write( "WARNING: can't find file " + preComputed2starOut + ", try to run make under the main directory \n" )
+            if os.path.exists(computed2starCpp) :
+                os.system( os.path.join(vhmPath, "make") )
+            else :
+                sys.stderr.write( "ERROR: can't find file " + computed2starCpp + "! \n" )
+                filelog.write( "ERROR: can't find file " + computed2starCpp + "! \n" )
+                sys.exit(0)
 	else :
-		## can't recognize OS, try to compile
-		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + " \n")
-		sys.stderr.write( "Trying to compile..." + "\n")
-		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
-		filelog.write( "Trying to compile..." + "\n")
+        ## can't recognize OS, try to compile
+		sys.stderr.write("WARNING: can't recognize the operating system" + optSys + ", try to run make under the main directory \n" )
+        filelog.write("WARNING: can't recognize the operating system" + optSys + ", try to run make under the main directory \n" )
 		if os.path.exists(computed2starCpp) :
-			os.system("g++ " + computed2starCpp + " -o " + computed2starOut + "  -std=c++0x" )
+            os.system( os.path.join(vhmPath, "make") )
 		else :
-			sys.stderr.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
-			filelog.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
-			sys.exit(0)
+            sys.stderr.write( "ERROR: can't find file " + computed2starCpp + "! \n" )
+            filelog.write( "ERROR: can't find file " + computed2starCpp + "! \n" )
+            sys.exit(0)
 
 os.system("chmod 777 " + computed2starOut)
 filelog.flush()
