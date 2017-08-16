@@ -22,8 +22,8 @@ using namespace std;
 #include <sys/stat.h>
 
 #include<algorithm>
-#include <tr1/unordered_map>
-using namespace std::tr1;
+#include <unordered_map>
+//using namespace std::tr1;
 
 //#include<ext/hash_map>
 //using __gnu_cxx::hash_map;

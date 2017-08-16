@@ -98,7 +98,7 @@ if not os.path.exists(countKmerOut) :
 		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
 		filelog.write( "Trying to compile..." + "\n")
 		if os.path.exists(countKmerCpp) :
-			os.system("g++ " + countKmerCpp + " -o " + countKmerOut)
+			os.system("g++ " + countKmerCpp + " -o " + countKmerOut + " -std=c++11" )
 		else :
 			sys.stderr.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
 			filelog.write( "ERROR: can't find file " + countKmerCpp + ". \n Please run make under the main directory! \n" )
@@ -129,7 +129,7 @@ if not os.path.exists(computeMeasureOut) :
 		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
 		filelog.write( "Trying to compile..." + "\n")
 		if os.path.exists(computeMeasureCpp) :
-			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut)
+			os.system("g++ " + computeMeasureCpp + " -o " + computeMeasureOut + " -std=c++11" )
 		else :
 			sys.stderr.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
 			filelog.write( "ERROR: can't find file " + computeMeasureCpp + ". \n Please run make under the main directory! \n" )
@@ -159,7 +159,7 @@ if not os.path.exists(computed2starOut) :
 		filelog.write("WARNING: can't recognize the operating system" + optSys + " \n")
 		filelog.write( "Trying to compile..." + "\n")
 		if os.path.exists(computed2starCpp) :
-			os.system("g++ " + computed2starCpp + " -o " + computed2starOut)
+			os.system("g++ " + computed2starCpp + " -o " + computed2starOut + " -std=c++11" )
 		else :
 			sys.stderr.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
 			filelog.write( "ERROR: can't find file " + computed2starCpp + ". \n Please run make under the main directory! \n" )
@@ -259,6 +259,7 @@ for currentFileName in virusFaList :
 	filelog.write("Step 1: counting kmers for virus " + currentFileNameS + "\n")
 	for w in range(1, (kmax+1)) :
 		currentFilePath = os.path.join(options.virusFaDir, currentFileName)
+    
 		currentKmerCountPath = os.path.join(kmerCountPath, currentFileNameS)
 		cmdKmer = countKmerOut + " -l -k " + str(w) + \
 										" -i " + currentFilePath +\
