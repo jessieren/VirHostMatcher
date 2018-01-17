@@ -232,10 +232,12 @@ if options.hostTaxaFile is None :
 ################### REFORMAT hostTaxa (fill missing) ###############
 else :
 	hostTaxaFile = os.path.join(options.outDir, os.path.basename(options.hostTaxaFile)+"_new.txt")
-	hostTaxaTable = numpy.genfromtxt(options.hostTaxaFile,delimiter="\t", dtype="|S100")
+	hostTaxaTable = numpy.genfromtxt(options.hostTaxaFile,delimiter="\t", dtype=str)
+	print(hostTaxaTable) 
 	hostTaxaTable[hostTaxaTable=='']='unknown'
+	print(hostTaxaTable) 
 	numpy.savetxt(hostTaxaFile, hostTaxaTable, fmt="%s", delimiter='\t', newline='\n')
-
+    
 filelog.flush()
 
 #################### 1: count kmer and prepare list files ############################
