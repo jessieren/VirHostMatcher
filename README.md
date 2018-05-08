@@ -115,9 +115,7 @@ Copyright and License Information
 Copyright (C) 2017 University of Southern California, Jie Ren, Nathan Ahlgren, Yang Lu, Fengzhu Sun
 
 This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
+the terms of USC-RL v1.0.
 
 This program is distributed in the hope that it will be useful, but WITHOUT
 ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
