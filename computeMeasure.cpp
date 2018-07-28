@@ -2230,14 +2230,14 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		
 
 		// first row: statName and colnames
-		csvOut << statName << ",";
+		csvOut << statName;
 		
 		// create variables for Yang's visualization: hostNameArr
 		html2Out << "var hostNameArr = [";
 		for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 		{
 			SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
-			csvOut << speciesInfoB.name << ",";
+			csvOut << "," << speciesInfoB.name;
 			html2Out << "\"" << speciesInfoB.name << "\"";
 			if(IDB != speciesInfoListB.size()-1 ){
 				html2Out << ", ";
@@ -2252,12 +2252,12 @@ int main(int argc, char **argv)   //EDIT main(int argc, char *argv[])
 		for(int IDA = 0; IDA < speciesInfoListA.size(); IDA++)
 		{
 			SPECIESINFO speciesInfoA = speciesInfoListA[IDA];
-			csvOut << speciesInfoA.name << ",";
+			csvOut << speciesInfoA.name;
 			html2Out << "[";
 			for(int IDB = 0; IDB < speciesInfoListB.size(); IDB++)
 			{
 				SPECIESINFO speciesInfoB = speciesInfoListB[IDB];
-				csvOut << resultMatrix[statID][IDA][IDB] << ",";
+				csvOut << "," << resultMatrix[statID][IDA][IDB];
 				html2Out << resultMatrix[statID][IDA][IDB];
 				if( IDB != speciesInfoListB.size()-1 )
 				{
