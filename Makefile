@@ -1,11 +1,19 @@
 CC = g++
 
-LSOURCE =  countKmer.cpp computeMeasure.cpp computeMeasure_onlyd2star.cpp
+CFLAGS = -std=c++0x -Wall
 
-VirHostMatcher: $(LSOURCE)
-	$(CC) countKmer.cpp -o countKmer.out -std=c++0x
-	$(CC) computeMeasure.cpp -o computeMeasure.out -std=c++0x
-	$(CC) computeMeasure_onlyd2star.cpp -o computeMeasure_onlyd2star.out -std=c++0x
+.PHONY: clean
+
+all: countKmer computeMeasure computeMeasure_onlyd2star
+
+countKmer:
+	$(CC) $@.cpp -o $@.out $(CFLAGS)
+
+computeMeasure:
+	$(CC) $@.cpp -o $@.out $(CFLAGS)
+
+computeMeasure_onlyd2star:
+	$(CC) $@.cpp -o $@.out $(CFLAGS)
 
 clean:
 	rm -f *.o countKmer.out computeMeasure.out computeMeasure_onlyd2star.out
