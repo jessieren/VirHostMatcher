@@ -433,7 +433,7 @@ vector<int> ten2four(unsigned long ten, int k)
 {
   vector<int> four (k,0);
   unsigned long tmp = ten; 
-  int currentPos = k-1;
+  //int currentPos = k-1;
   for(int currentPos = k-1; currentPos >=0; --currentPos)
   {
     four[currentPos]=tmp%ZI;
@@ -940,7 +940,6 @@ vector<double> EuMaChCombineDistNGS(int ZI, int k, KMERINFO* speciesKmerInfoA, K
 	SCIENTIFIC_NUMBER EuUDist ; EuUDist.value=0; EuUDist.factor=0;
 	SCIENTIFIC_NUMBER MaUDist ; MaUDist.value=0; MaUDist.factor=0;
 	SCIENTIFIC_NUMBER ChUDist ; ChUDist.value=0; ChUDist.factor=0;
-	int count=0;
 	
 	SCIENTIFIC_NUMBER EuFDist ; EuFDist.value=0; EuFDist.factor=0;
   
@@ -1246,7 +1245,8 @@ double WillnerDiNGS(int ZI, int k, KMERINFO* speciesKmerInfoA, KMERINFO* species
     return tauTetra ;
   }
   
-  
+  // If k is not 2, 3, or 4
+  return 0.0;
 }
 
 
