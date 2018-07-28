@@ -813,11 +813,11 @@ int main (int argc, char **argv)
 		char* combinefileName = dataPreProcess(inputFileName, outputFileDir, shortName, fastq, longseq);
 		
 		/* Count the k-tuple */
-		unsigned long total = DataKmerCount(combinefileName, outputFileDir, shortName, k, power, doubleStrand, zeroCountOut);
+		DataKmerCount(combinefileName, outputFileDir, shortName, k, power, doubleStrand, zeroCountOut);
 		
 	}else {
 		/* Count the k-tuple */
-		unsigned long total = DataKmerCount(inputFileName, outputFileDir, shortName, k, power, doubleStrand, zeroCountOut);
+		DataKmerCount(inputFileName, outputFileDir, shortName, k, power, doubleStrand, zeroCountOut);
 		
 	}
 
